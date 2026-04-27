@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Reference drop zone — never committed
+user_input/
+
+# Staging and memory folders
+uploads/
+memory/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+Thumbs.db
