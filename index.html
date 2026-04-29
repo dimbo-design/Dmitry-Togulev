@@ -597,6 +597,11 @@ body::before {
   .header-right:hover { width: calc(890 * var(--u)); }
   .header-right__divider-mini { display: none; }
 
+  /* запрещаем перенос строк в текстовом блоке — иначе на каждом промежуточном кадре */
+  /* анимации текст переносится по-разному (шароебит). Все строки помещаются в 433px. */
+  .header-right__max-desc,
+  .header-right__max-tags span { white-space: nowrap; }
+
   /* в максимальном виде ссылки появляются под текстом, в одну строку.
      top-anchoring чтобы не ехали вниз вместе с растущим bottom контейнера */
   .header-right__links-mini {
@@ -614,13 +619,101 @@ body::before {
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
-    transition: opacity 480ms ease 240ms, transform 480ms cubic-bezier(0.32, 0.72, 0, 1) 100ms;
+    transition: opacity 480ms ease 550ms, transform 480ms cubic-bezier(0.32, 0.72, 0, 1) 410ms;
+  }
+}
+
+@media (max-width: 933px) {
+  /* правый хедер раскрытый: вертикальная раскладка — фото сверху, текст снизу */
+  .header-right:hover {
+    width: calc(463 * var(--u));
+    height: calc(779 * var(--u));
+  }
+  /* фото 361×372 → 399×411 (×1.105 пропорционально) */
+  .header-right:hover .header-right__photo {
+    width: calc(399 * var(--u));
+    height: calc(411 * var(--u));
+  }
+  .header-right:hover .header-right__photo img {
+    left: calc(-19 * var(--u));
+    top: calc(46 * var(--u));
+    width: calc(438 * var(--u));
+    height: calc(438 * var(--u));
+  }
+  /* имя+роль переезжают под фото (+39px из-за роста фото) */
+  .header-right:hover .header-right__mini {
+    left: calc(32 * var(--u));
+    top: calc(459 * var(--u));
+  }
+  /* описание и теги — под именем */
+  .header-right__max {
+    left: calc(32 * var(--u));
+    right: calc(32 * var(--u));
+    top: calc(554 * var(--u));
+    bottom: auto;
+    padding-top: 0;
+  }
+  /* ссылки — внизу */
+  .header-right__links-mini {
+    left: calc(32 * var(--u));
+    top: calc(736 * var(--u));
   }
 
-  /* text: больше задержка появления, чтобы контейнер успел вырасти и не было реflow */
-  .header-right:hover .header-right__max {
-    transition: opacity 480ms ease 500ms, transform 480ms cubic-bezier(0.32, 0.72, 0, 1) 360ms;
+  /* базовая скорость трансформации блока (контейнер + фото + имя): 840 → 700ms */
+  .header-right {
+    transition:
+      width 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      background-color 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      backdrop-filter 700ms cubic-bezier(0.32, 0.72, 0, 1);
   }
+  .header-right__photo {
+    transition:
+      width 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      border-radius 700ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__photo img {
+    transition:
+      left 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      top 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      width 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 700ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__mini {
+    transition:
+      left 700ms cubic-bezier(0.32, 0.72, 0, 1),
+      top 700ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__name { transition: font-size 700ms cubic-bezier(0.32, 0.72, 0, 1); }
+  .header-right__role-mini { transition: font-size 700ms cubic-bezier(0.32, 0.72, 0, 1); }
+
+  /* каскад: родитель .header-right__max — без своей анимации, дети анимируются индивидуально */
+  .header-right__max {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .header-right:hover .header-right__max { transition: none; }
+
+  /* описание (целиком) + теги + ссылки — каждый элемент со своей задержкой, выезжает сверху вниз */
+  .header-right__max-desc,
+  .header-right__max-tags,
+  .header-right__links-mini {
+    opacity: 0;
+    transform: translateY(calc(-20 * var(--u)));
+    transition: opacity 640ms ease, transform 640ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__max-desc { transform: translateY(calc(-30 * var(--u))); }
+  .header-right:hover .header-right__max-desc,
+  .header-right:hover .header-right__max-tags,
+  .header-right:hover .header-right__links-mini {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .header-right:hover .header-right__max-desc { transition-delay: 360ms; }
+  .header-right:hover .header-right__max-tags { transition-delay: 480ms; }
+  .header-right:hover .header-right__links-mini { transition-delay: 660ms; }
 }
 
 @media (max-width: 1550px) {
