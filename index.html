@@ -2,7 +2,21 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dmitry Togulev</title>
+<meta name="description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Dmitry Togulev — Senior Product Designer" />
+<meta property="og:description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+<meta property="og:image" content="https://dimbo-design.github.io/Dmitry-Togulev/assets/og_img.png" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Dmitry Togulev — Senior Product Designer" />
+<meta name="twitter:description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+<meta name="twitter:image" content="https://dimbo-design.github.io/Dmitry-Togulev/assets/og_img.png" />
 <style>
 /* ─── Fixel Display ─── */
 @font-face {
@@ -56,10 +70,19 @@ body::before {
   pointer-events: none;
 }
 
-/* ─── Canvas: 1728px wide design ─── */
+/* ─── Fluid scale unit ───
+   1px at 1728px viewport. Растёт линейно вверх до 4K cap.
+   Вниз масштабируется до 40% (пол) — этот пол только для геометрии (паддингов,
+   ширин, gap'ов). Тексты получают свои собственные минимумы через max() ниже. */
+:root {
+  --u: clamp(1px, calc(100vw / 1728), calc(3840px / 1728));
+}
+
+/* ─── Canvas: fluid, proportionally anchored to 1728px ─── */
 .page {
   position: relative;
-  width: 1728px;
+  width: 100%;
+  max-width: calc(1728 * var(--u));
   margin: 0 auto;
 }
 
@@ -76,9 +99,9 @@ body::before {
 /* LEFT: фрейм 587×143 в левом верхнем углу canvas;
    внутри — наклонная плашка с прогрессивным блюром (за края торчит).  */
 .header-left {
-  left: calc(50% - 864px); /* левый край canvas 1728px */
-  width: 587px;
-  height: 143px;
+  left: max(0px, calc(50% - calc(864 * var(--u))));
+  width: calc(587 * var(--u));
+  height: calc(143 * var(--u));
   pointer-events: none; /* декор; текст внутри получит pointer-events */
 }
 
@@ -86,8 +109,8 @@ body::before {
   position: absolute;
   left: 0;
   top: 0;
-  width: 780px;
-  height: 160.415px;
+  width: calc(780 * var(--u));
+  height: calc(160.415 * var(--u));
   /* поворот ровно как в figma */
   transform: matrix(0.979, -0.202, 0.202, 0.979, -32.434, -14.307);
   transform-origin: 0 0;
@@ -130,13 +153,13 @@ body::before {
 
 .header-left__text {
   position: absolute;
-  left: 44px;
-  top: 42px;
+  left: calc(44 * var(--u));
+  top: calc(42 * var(--u));
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: calc(9 * var(--u));
   pointer-events: auto;
-  font-size: 20px;
+  font-size: calc(20 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.08em;
   color: rgb(42, 36, 40);
@@ -153,11 +176,11 @@ body::before {
 /* RIGHT header: mini → max on hover.
    Якорь — правый верхний угол: right + top фиксированы, меняется width/height. */
 .header-right {
-  right: calc(50% - 864px + 22px);
-  top: 14px;
-  width: 590px;
-  height: 112px;
-  border-radius: 12px;
+  right: max(22px, calc(50% - calc(842 * var(--u))));
+  top: calc(14 * var(--u));
+  width: calc(590 * var(--u));
+  height: calc(112 * var(--u));
+  border-radius: calc(12 * var(--u));
   overflow: hidden;
   background-color: rgba(236, 234, 236, 0.10);
   backdrop-filter: blur(31px);
@@ -169,8 +192,8 @@ body::before {
     backdrop-filter 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover {
-  width: 1308px;
-  height: 580px;
+  width: calc(1308 * var(--u));
+  height: calc(580 * var(--u));
   background-color: rgba(236, 234, 236, 0.53);
   backdrop-filter: blur(36px);
   -webkit-backdrop-filter: blur(36px);
@@ -179,11 +202,11 @@ body::before {
 /* Photo wrapper — анимируется в большой формат при hover */
 .header-right__photo {
   position: absolute;
-  left: 32px;
-  top: 24px;
-  width: 62px;
-  height: 64px;
-  border-radius: 5px;
+  left: calc(32 * var(--u));
+  top: calc(24 * var(--u));
+  width: calc(62 * var(--u));
+  height: calc(64 * var(--u));
+  border-radius: calc(5 * var(--u));
   overflow: hidden;
   background-color: rgb(234, 232, 234);
   border: 1.5px solid rgba(42, 36, 40, 0.14);
@@ -193,16 +216,16 @@ body::before {
     border-radius 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__photo {
-  width: 516px;
-  height: 532px;
-  border-radius: 14px;
+  width: calc(516 * var(--u));
+  height: calc(532 * var(--u));
+  border-radius: calc(14 * var(--u));
 }
 .header-right__photo img {
   position: absolute;
-  left: -50px;
-  top: -2px;
-  width: 154px;
-  height: 154px;
+  left: calc(-50 * var(--u));
+  top: calc(-2 * var(--u));
+  width: calc(154 * var(--u));
+  height: calc(154 * var(--u));
   object-fit: cover;
   transition:
     left 840ms cubic-bezier(0.32, 0.72, 0, 1),
@@ -211,28 +234,28 @@ body::before {
     height 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__photo img {
-  left: -25px;
-  top: 60px;
-  width: 566px;
-  height: 566px;
+  left: calc(-25 * var(--u));
+  top: calc(60 * var(--u));
+  width: calc(566 * var(--u));
+  height: calc(566 * var(--u));
 }
 
 /* Единый блок имя+роль — плавно меняет позицию и размер шрифта */
 .header-right__mini {
   position: absolute;
-  left: 112px;
-  top: 28px;
+  left: calc(112 * var(--u));
+  top: calc(28 * var(--u));
   transition:
     left 840ms cubic-bezier(0.32, 0.72, 0, 1),
     top 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__mini {
-  left: 584px;
-  top: 37px;
+  left: calc(584 * var(--u));
+  top: calc(37 * var(--u));
 }
 .header-right__name {
   font-weight: 700;
-  font-size: 26px;
+  font-size: calc(26 * var(--u));
   line-height: 1.33;
   letter-spacing: 0.02em;
   color: rgb(42, 36, 40);
@@ -240,12 +263,12 @@ body::before {
   transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__name {
-  font-size: 39px;
+  font-size: calc(39 * var(--u));
 }
 .header-right__role-mini {
   margin-top: 0;
   font-weight: 400;
-  font-size: 18px;
+  font-size: calc(18 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.01em;
   color: rgb(42, 36, 40);
@@ -254,16 +277,16 @@ body::before {
   transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__role-mini {
-  font-size: 23px;
+  font-size: calc(23 * var(--u));
 }
 
 /* Вертикальный разделитель в mini — остаётся на месте при трансформации */
 .header-right__divider-mini {
   position: absolute;
-  right: 210px;
-  top: 24px;
+  right: calc(210 * var(--u));
+  top: calc(24 * var(--u));
   width: 1.5px;
-  height: 64px;
+  height: calc(64 * var(--u));
   background-color: rgba(42, 36, 40, 0.14);
   z-index: 10;
 }
@@ -271,15 +294,15 @@ body::before {
 /* Ссылки в mini — остаются на месте при трансформации */
 .header-right__links-mini {
   position: absolute;
-  right: 35px;
-  top: 33px;
+  right: calc(35 * var(--u));
+  top: calc(33 * var(--u));
   z-index: 10;
   display: grid;
   grid-template-columns: auto auto;
-  column-gap: 17px;
-  row-gap: 9px;
+  column-gap: calc(17 * var(--u));
+  row-gap: calc(9 * var(--u));
   font-weight: 500;
-  font-size: 14px;
+  font-size: calc(14 * var(--u));
   line-height: 1.33;
   color: rgb(33, 33, 33);
 }
@@ -309,13 +332,13 @@ body::before {
 /* MAX content — описание + регалии; появляется при hover */
 .header-right__max {
   position: absolute;
-  left: 580px;
-  top: 24px;
-  right: 32px;
-  bottom: 24px;
-  padding-top: 137px;
+  left: calc(580 * var(--u));
+  top: calc(24 * var(--u));
+  right: calc(32 * var(--u));
+  bottom: calc(24 * var(--u));
+  padding-top: calc(137 * var(--u));
   opacity: 0;
-  transform: translateX(120px);
+  transform: translateX(calc(120 * var(--u)));
   pointer-events: none;
   /* disappear: быстро, opacity гасит раньше чем проедет 120px → визуально ~80px */
   transition: opacity 140ms ease, transform 180ms ease;
@@ -329,18 +352,18 @@ body::before {
 }
 .header-right__max-desc {
   font-weight: 500;
-  font-size: 32px;
+  font-size: calc(32 * var(--u));
   line-height: 1.16;
   letter-spacing: -0.03em;
   color: rgb(42, 36, 40);
 }
 .header-right__max-tags {
-  margin-top: 29px;
+  margin-top: calc(29 * var(--u));
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: calc(4 * var(--u));
   font-weight: 400;
-  font-size: 19px;
+  font-size: calc(19 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.03em;
   color: rgb(42, 36, 40);
@@ -359,39 +382,39 @@ body::before {
 }
 .hero__inner {
   position: absolute;
-  left: 123px;
+  left: calc(123 * var(--u));
   /* визуально по макету заголовок сидит примерно по центру по вертикали-ниже */
   top: 51%;
   transform: translateY(-50%);
-  max-width: calc(1728px - 123px - 123px);
+  max-width: calc(1482 * var(--u));
 }
 .hero__title {
   font-weight: 500;
-  font-size: 44px;
+  font-size: calc(44 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.03em;
   color: rgb(42, 36, 40);
 }
 .hero__subtitle {
-  margin-top: 25px;
+  margin-top: calc(21 * var(--u));
   font-weight: 400;
-  font-size: 28px;
+  font-size: calc(28 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.03em;
   color: rgb(42, 36, 40);
-  max-width: 1165px;
+  max-width: calc(1165 * var(--u));
 }
 
 /* ─── Ragged grid (masonry, 12-col base, dense flow) ─── */
 .grid {
   width: 100%;
-  padding: 0 44px;
+  padding: 0 calc(44 * var(--u));
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   /* мелкая базовая строка — задаёт «шаг» по высоте; реальная высота карточки = span × row */
-  grid-auto-rows: 20px;
+  grid-auto-rows: calc(20 * var(--u));
   grid-auto-flow: dense;
-  gap: 24px;
+  gap: calc(24 * var(--u));
   align-items: stretch;
 }
 .tile {
@@ -416,11 +439,11 @@ body::before {
 }
 .tile--named .tile__label {
   font-weight: 500;
-  font-size: 44px;
+  font-size: calc(44 * var(--u));
   line-height: 1.33;
   letter-spacing: -0.03em;
   color: rgb(42, 36, 40);
-  padding: 24px 32px;
+  padding: calc(24 * var(--u)) calc(32 * var(--u));
   align-self: end;
   width: 100%;
 }
@@ -428,18 +451,18 @@ body::before {
 /* ─── Section title (44px slot left) ─── */
 .section {
   width: 100%;
-  margin-top: 186px;
+  margin-top: calc(186 * var(--u));
   position: relative;
 }
 .section__title {
   display: flex;
   align-items: baseline;
-  gap: 9px;
-  padding-left: 44px;
-  font-size: 20px;
+  gap: calc(9 * var(--u));
+  padding-left: calc(44 * var(--u));
+  font-size: calc(20 * var(--u));
   line-height: 1.33;
   color: rgb(42, 36, 40);
-  margin-bottom: 71px;
+  margin-bottom: calc(71 * var(--u));
   text-transform: uppercase;
 }
 .section__title .key {
@@ -451,8 +474,8 @@ body::before {
   letter-spacing: -0.03em;
 }
 .section__body {
-  padding-left: 123px;
-  padding-right: 123px;
+  padding-left: calc(123 * var(--u));
+  padding-right: calc(64 * var(--u));
 }
 
 /* ─── Experience list ─── */
@@ -462,31 +485,31 @@ body::before {
 }
 .exp__row {
   display: grid;
-  grid-template-columns: 206px 1fr;
-  column-gap: 40px;
+  grid-template-columns: calc(206 * var(--u)) minmax(0, 1fr);
+  column-gap: calc(40 * var(--u));
   align-items: baseline;
-  padding: 26px 0;
+  padding: calc(26 * var(--u)) 0;
 }
 .exp__period {
   font-weight: 400;
-  font-size: 16px;
+  font-size: calc(16 * var(--u));
   line-height: 1.33;
   color: rgb(42, 36, 40);
 }
 .exp__main {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: calc(3 * var(--u));
 }
 .exp__role {
   font-weight: 700;
-  font-size: 23px;
+  font-size: calc(23 * var(--u));
   line-height: 1.33;
   color: rgb(33, 33, 33);
 }
 .exp__company {
   font-weight: 400;
-  font-size: 16px;
+  font-size: calc(16 * var(--u));
   line-height: 1.33;
   color: rgb(42, 36, 40);
 }
@@ -495,19 +518,19 @@ body::before {
 /* ─── Contact (5 columns, 5th empty) ─── */
 .contact-cols {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  column-gap: 40px;
-  padding-left: 123px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: calc(40 * var(--u));
+  padding-left: calc(123 * var(--u));
   padding-right: 0; /* пустая 5-я колонка съедает правый отступ */
 }
 .contact-col {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: calc(3 * var(--u));
 }
 .contact-col__label {
   font-weight: 700;
-  font-size: 23px;
+  font-size: calc(23 * var(--u));
   line-height: 1.33;
   color: rgb(33, 33, 33);
   text-decoration: none;
@@ -515,7 +538,7 @@ body::before {
 .contact-col__label--clickable { cursor: pointer; }
 .contact-col__value {
   font-weight: 400;
-  font-size: 16px;
+  font-size: calc(16 * var(--u));
   line-height: 1.33;
   color: rgba(42, 36, 40, 0.8);
   text-decoration: none;
@@ -523,23 +546,23 @@ body::before {
 
 /* footer breathing room */
 .page__bottom {
-  height: 232px;
+  height: calc(232 * var(--u));
 }
 
 /* ─── Copy email toast ─── */
 #copy-toast {
   position: fixed;
-  bottom: 36px;
+  bottom: calc(36 * var(--u));
   left: 50%;
-  transform: translateX(-50%) translateY(6px);
+  transform: translateX(-50%) translateY(calc(6 * var(--u)));
   background: rgb(42, 36, 40);
   color: rgb(234, 232, 234);
   font-family: "Fixel Display", system-ui, sans-serif;
-  font-size: 14px;
+  font-size: calc(14 * var(--u));
   font-weight: 500;
   letter-spacing: -0.01em;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: calc(10 * var(--u)) calc(20 * var(--u));
+  border-radius: calc(8 * var(--u));
   opacity: 0;
   pointer-events: none;
   transition: opacity 180ms ease, transform 180ms ease;
@@ -548,6 +571,155 @@ body::before {
 #copy-toast.visible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Breakpoints ─── */
+@media (max-width: 1350px) {
+  /* правый хедер раскрытый: фото -30%, ширина блока сокращается на ту же дельту */
+  .header-right:hover { width: calc(1153 * var(--u)); height: calc(420 * var(--u)); }
+  .header-right:hover .header-right__photo {
+    width: calc(361 * var(--u));
+    height: calc(372 * var(--u));
+  }
+  .header-right:hover .header-right__photo img {
+    left: calc(-17 * var(--u));
+    top: calc(42 * var(--u));
+    width: calc(396 * var(--u));
+    height: calc(396 * var(--u));
+  }
+  .header-right:hover .header-right__mini { left: calc(429 * var(--u)); }
+  .header-right__max { left: calc(425 * var(--u)); }
+}
+
+@media (max-width: 1199px) {
+  /* правый хедер мини: убираем разделитель и контактные ссылки */
+  .header-right { width: calc(388 * var(--u)); }
+  .header-right:hover { width: calc(890 * var(--u)); }
+  .header-right__divider-mini { display: none; }
+
+  /* в максимальном виде ссылки появляются под текстом, в одну строку.
+     top-anchoring чтобы не ехали вниз вместе с растущим bottom контейнера */
+  .header-right__links-mini {
+    right: auto;
+    bottom: auto;
+    left: calc(425 * var(--u));
+    top: calc(377 * var(--u));
+    grid-template-columns: repeat(3, auto);
+    opacity: 0;
+    transform: translateX(calc(120 * var(--u)));
+    pointer-events: none;
+    transition: opacity 140ms ease, transform 180ms ease;
+  }
+  .header-right:hover .header-right__links-mini {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    transition: opacity 480ms ease 240ms, transform 480ms cubic-bezier(0.32, 0.72, 0, 1) 100ms;
+  }
+
+  /* text: больше задержка появления, чтобы контейнер успел вырасти и не было реflow */
+  .header-right:hover .header-right__max {
+    transition: opacity 480ms ease 500ms, transform 480ms cubic-bezier(0.32, 0.72, 0, 1) 360ms;
+  }
+}
+
+@media (max-width: 1550px) {
+  /* hero: контент адаптируется под ширину экрана через паддинги */
+  .hero__inner {
+    /* left: 1550→768 от 123 до 56 */
+    left: clamp(56px, calc(-9.81px + 8.57vw), 123px);
+    /* right: 1550→320 от 123 до 44 */
+    right: clamp(44px, calc(23.45px + 6.42vw), 123px);
+    max-width: none;
+  }
+  .hero__subtitle { max-width: none; }
+}
+
+@media (max-width: 810px) {
+  /* hero text: title 44→32, subtitle 28→16 между 810 и 320 */
+  .hero__title { font-size: clamp(28px, calc(17.55px + 3.265vw), 44px); }
+  .hero__subtitle {
+    font-size: clamp(18px, calc(11.47px + 2.041vw), 28px);
+    margin-top: clamp(15px, calc(11.08px + 1.224vw), 21px);
+  }
+}
+
+@media (max-width: 768px) {
+  /* hero left padding: 768→320 от 56 до 32 */
+  .hero__inner { left: clamp(32px, calc(14.86px + 5.36vw), 56px); }
+}
+
+/* exp: ≤767 период переезжает наверх, шрифт 14, перенос строки убран */
+@media (max-width: 767px) {
+  .exp__row {
+    display: flex;
+    flex-direction: column;
+  }
+  .exp__period {
+    font-size: 14px;
+  }
+  .exp__period br { display: none; }
+}
+
+/* hero: nbsp по умолчанию, обычный пробел ≤440 */
+.hero__title .hero__br { display: none; }
+@media (max-width: 440px) {
+  .hero__title .hero__nb { display: none; }
+  .hero__title .hero__br { display: inline; }
+}
+
+@media (max-width: 1455px) {
+  /* contacts: 5 → 4 cols, Resume переезжает в row 2 col 1 */
+  .contact-cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 42px;
+  }
+  .contact-col:nth-child(4) { grid-column: 1; grid-row: 2; } /* Resume */
+  .contact-col:nth-child(5) { display: none; }
+}
+
+@media (max-width: 1023px) {
+  /* contacts: 4 → 3 cols, Email в row 2 col 1, Resume в row 3 col 1 */
+  .contact-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .contact-col:nth-child(3) { grid-column: 1; grid-row: 2; } /* Email */
+  .contact-col:nth-child(4) { grid-column: 1; grid-row: 3; } /* Resume */
+
+  /* exp: левая колонка fluid 206px → 140px между 1023 и 550 */
+  .exp__row { grid-template-columns: clamp(140px, calc(63.22px + 13.95vw), 206px) minmax(0, 1fr); }
+
+
+  /* заголовок секции: padding-left fluid 44px → 22px между 1023 и 320 */
+  .section__title { padding-left: clamp(22px, calc(11.98px + 3.13vw), 44px); }
+
+  /* левый хедер: текст синхронно с заголовками секций */
+  .header-left__text { left: clamp(22px, calc(11.98px + 3.13vw), 44px); }
+
+  /* grid: padding 44 → 22 и gap 24 → 12 между 1023 и 320 */
+  .grid {
+    padding: 0 clamp(22px, calc(11.98px + 3.13vw), 44px);
+    gap: clamp(12px, calc(6.54px + 1.707vw), 24px);
+  }
+}
+
+@media (max-width: 639px) {
+  /* mobile */
+}
+
+@media (max-width: 550px) {
+  /* contacts: 3 → 1 col, всё последовательно сверху вниз */
+  .contact-cols { grid-template-columns: minmax(0, 1fr); }
+  .contact-col:nth-child(3),
+  .contact-col:nth-child(4) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  /* ОПЫТ + КОНТАКТЫ: левый паддинг 550→320 от 123 до 32 */
+  .section__body {
+    padding-left: clamp(32px, calc(-94.6px + 39.57vw), 123px);
+    padding-right: clamp(32px, calc(-12.52px + 13.91vw), 64px);
+  }
+  .contact-cols { padding-left: clamp(32px, calc(-94.6px + 39.57vw), 123px); }
 }
 </style>
 </head>
@@ -601,7 +773,7 @@ body::before {
   <!-- ─── Hero ─── -->
   <section class="hero" data-screen-label="hero">
     <div class="hero__inner">
-      <h1 class="hero__title">Проектирую там, где нет готовых ответов</h1>
+      <h1 class="hero__title">Проектирую там, где нет готовых<span class="hero__nb">&nbsp;</span><span class="hero__br"> </span>ответов</h1>
       <p class="hero__subtitle">Специализируюсь на задачах без референсов&nbsp;— внутренние инструменты, новые продукты, физически встроенные интерфейсы</p>
     </div>
   </section>
@@ -614,30 +786,30 @@ body::before {
     <div class="tile" style="--c:5; --r:14;"><img src="assets/grid/big1.png" alt=""></div>
     <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini1.png" alt=""></div>
 
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini2.png" alt=""></div>
-    <div class="tile" style="--c:5; --r:9;"><img src="assets/grid/med2.png" alt=""></div>
-    <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med10.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini3.png" alt=""></div>
-
-    <div class="tile tile--named" style="--c:7; --r:16;">
+     <div class="tile tile--named" style="--c:7; --r:16;">
       <span class="tile__label">mythhand</span>
     </div>
+    
+    <div class="tile" style="--c:3; --r:7;"><img src="assets/grid/mini2.png" alt=""></div>
+    <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med10.png" alt=""></div>
+    
     <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini4.png" alt=""></div>
     <div class="tile" style="--c:3; --r:9;"><img src="assets/grid/med11.png" alt=""></div>
     <div class="tile" style="--c:2; --r:11;"><img src="assets/grid/med4.jpg" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini3.png" alt=""></div>
 
     <div class="tile" style="--c:6; --r:14;"><img src="assets/grid/big2.png" alt=""></div>
     <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini5.png" alt=""></div>
     <div class="tile" style="--c:3; --r:13;"><img src="assets/grid/med3.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini6.png" alt=""></div>
 
-    <div class="tile tile--named" style="--c:5; --r:11;">
+    <div class="tile tile--named" style="--c:7; --r:16;">
       <span class="tile__label">metric case</span>
     </div>
-    <div class="tile" style="--c:3; --r:11;"><img src="assets/grid/mini6.png" alt=""></div>
     <div class="tile" style="--c:6; --r:11;"><img src="assets/grid/big3.png" alt=""></div>
 
-    <div class="tile" style="--c:4; --r:7;"><img src="assets/grid/med13.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini7.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:4;"><img src="assets/grid/med13.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:4;"><img src="assets/grid/med12.png" alt=""></div>
     <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med7.png" alt=""></div>
     <div class="tile" style="--c:2; --r:11;"><img src="assets/grid/med5.png" alt=""></div>
   </section>
@@ -728,7 +900,7 @@ body::before {
   <section class="section" data-screen-label="contact">
     <div class="section__title">
       <span class="key">Contact</span>
-      <span class="val">Open To you Project</span>
+      <span class="val">Let's work</span>
     </div>
     <div class="contact-cols">
       <div class="contact-col">
@@ -766,6 +938,7 @@ function copyEmail(e) {
     setTimeout(function() { toast.classList.remove('visible'); }, 2000);
   });
 }
+
 </script>
 
 </body>
