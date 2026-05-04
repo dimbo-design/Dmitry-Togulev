@@ -405,6 +405,9 @@ body::before {
   max-width: calc(1165 * var(--u));
 }
 
+/* ─── Hero bio (отдельный блок ≤730, дублирует контент раскрытого правого хедера) ─── */
+.hero-bio { display: none; }
+
 /* ─── Ragged grid (masonry, 12-col base, dense flow) ─── */
 .grid {
   width: 100%;
@@ -742,6 +745,153 @@ body::before {
   .hero__inner { left: clamp(32px, calc(14.86px + 5.36vw), 56px); }
 }
 
+@media (max-width: 730px) {
+  /* hero-bio: появляется в самом верху страницы, контент = раскрытый правый хедер */
+  .hero-bio {
+    display: block;
+    width: 100%;
+    min-height: 70vh;
+    padding-top: calc(128 * var(--u));
+    padding-bottom: calc(40 * var(--u));
+    /* боковые паддинги синхронны с левым хедером (расстояние до "DIMBO") */
+    padding-left: clamp(22px, calc(11.98px + 3.13vw), 44px);
+    padding-right: clamp(22px, calc(11.98px + 3.13vw), 44px);
+  }
+
+  /* правый хедер скрыт по умолчанию, выезжает справа-налево когда hero-bio проскроллен на 65% */
+  .header-right {
+    opacity: 0;
+    transform: translateX(110%);
+    pointer-events: none;
+    width: calc(84 * var(--u));
+    height: calc(86 * var(--u));
+    transition:
+      opacity 320ms ease,
+      transform 320ms cubic-bezier(0.32, 0.72, 0, 1),
+      width 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      background-color 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      backdrop-filter 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  /* откатываем 933-ускорение для всех внутренних элементов под единый темп 840ms */
+  .header-right__photo {
+    transition:
+      width 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      border-radius 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__photo img {
+    transition:
+      left 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      top 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      width 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__name { transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1); }
+  .header-right__role-mini { transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1); }
+  body.header-right-visible .header-right {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  /* мини-версия — только фото 62×64 + 11px паддинга со всех сторон */
+  .header-right__photo { left: calc(11 * var(--u)); top: calc(11 * var(--u)); }
+
+  /* имя+роль скрыты в мини-версии, плавно появляются при раскрытии */
+  .header-right__mini {
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 320ms ease,
+      left 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      top 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right:hover .header-right__mini {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* изначальный hero — на узких экранах сжимаем по контенту, убираем 94vh + min 720 */
+  .hero {
+    height: auto;
+    min-height: 0;
+    padding-top: calc(80 * var(--u));
+    padding-bottom: calc(136 * var(--u));
+    padding-left: clamp(32px, calc(14.86px + 5.36vw), 56px);
+    padding-right: clamp(44px, calc(23.45px + 6.42vw), 123px);
+  }
+  .hero__inner {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+  .hero-bio__photo {
+    width: 100%;
+    max-width: calc(399 * var(--u));
+    aspect-ratio: 399 / 411;
+    border-radius: calc(14 * var(--u));
+    overflow: hidden;
+    background-color: rgb(234, 232, 234);
+    border: 1.5px solid rgba(42, 36, 40, 0.14);
+  }
+  .hero-bio__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .hero-bio__name {
+    margin-top: calc(20 * var(--u));
+    font-weight: 700;
+    font-size: clamp(26px, calc(15.85px + 3.17vw), 39px);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: rgb(42, 36, 40);
+  }
+  .hero-bio__role {
+    font-weight: 400;
+    font-size: clamp(15px, calc(8.76px + 1.95vw), 23px);
+    line-height: 1.33;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgb(42, 36, 40);
+  }
+  .hero-bio__desc {
+    margin-top: calc(15 * var(--u));
+    font-weight: 500;
+    font-size: clamp(21px, calc(12.41px + 2.68vw), 32px);
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+    color: rgb(42, 36, 40);
+  }
+  .hero-bio__tags {
+    margin-top: calc(21 * var(--u));
+    display: flex;
+    flex-direction: column;
+    gap: calc(4 * var(--u));
+    font-weight: 400;
+    font-size: calc(19 * var(--u));
+    line-height: 1.33;
+    letter-spacing: -0.03em;
+    color: rgb(42, 36, 40);
+  }
+  .hero-bio__tags b { font-weight: 500; font-style: normal; }
+  .hero-bio__links {
+    margin-top: calc(32 * var(--u));
+    display: flex;
+    gap: calc(17 * var(--u));
+    font-weight: 500;
+    font-size: calc(14 * var(--u));
+    line-height: 1.33;
+    color: rgb(33, 33, 33);
+  }
+  .hero-bio__links a { color: inherit; text-decoration: none; }
+}
+
 /* exp: ≤767 период переезжает наверх, шрифт 14, перенос строки убран */
 @media (max-width: 767px) {
   .exp__row {
@@ -787,11 +937,156 @@ body::before {
   /* левый хедер: текст синхронно с заголовками секций */
   .header-left__text { left: clamp(22px, calc(11.98px + 3.13vw), 44px); }
 
+  /* левый хедер: текст поднимается 42→22 между 1023 и 500 */
+  .header-left__text { top: clamp(22px, calc(2.88px + 3.824vw), 42px); }
+
+  /* правый хедер: блок поднимается 14→6 между 1023 и 500 + отступ от правого края 22→14 */
+  .header-right {
+    top: clamp(6px, calc(-1.65px + 1.53vw), 14px);
+    right: clamp(14px, calc(6.35px + 1.53vw), 22px);
+  }
+
+  /* правый хедер мини: отступы до контента -8 с каждой стороны между 1023 и 500
+     (block остаётся прижатым к правому верхнему углу — left/top меняются, right/top контейнера фиксированы) */
+  .header-right {
+    width: clamp(372px, calc(356.70px + 3.06vw), 388px);
+    height: clamp(96px, calc(80.70px + 3.06vw), 112px);
+  }
+  .header-right__photo {
+    left: clamp(24px, calc(16.35px + 1.53vw), 32px);
+    top: clamp(16px, calc(8.35px + 1.53vw), 24px);
+  }
+  .header-right__mini {
+    left: clamp(104px, calc(96.35px + 1.53vw), 112px);
+    top: clamp(20px, calc(12.35px + 1.53vw), 28px);
+  }
+
   /* grid: padding 44 → 22 и gap 24 → 12 между 1023 и 320 */
   .grid {
     padding: 0 clamp(22px, calc(11.98px + 3.13vw), 44px);
     gap: clamp(12px, calc(6.54px + 1.707vw), 24px);
   }
+}
+
+@media (max-width: 491px) {
+  /* CSS variables для каскадного расчёта позиций и высоты */
+  .header-right {
+    /* горизонтальный padding: 32→13 от 491 к 320 */
+    --pad-x: clamp(13px, calc(-22.55px + 11.11vw), 32px);
+    /* вертикальный padding/gap: 24→10 от 491 к 320 */
+    --pad-y: clamp(10px, calc(-16.21px + 8.19vw), 24px);
+    --photo-w: calc(100vw - 28px - 2 * var(--pad-x));
+    --photo-h: calc(var(--photo-w) * 411 / 399);
+    --name-fs: clamp(26px, calc(1.68px + 7.60vw), 39px);
+    --role-fs: clamp(15px, calc(0.03px + 4.68vw), 23px);
+    --desc-fs: clamp(21px, calc(0.41px + 6.43vw), 32px);
+    --tag-fs: clamp(16px, calc(10.39px + 1.754vw), 19px);
+    /* отдельный gap между ролью и описанием: 24→14 (×1.4 от pad-y на 320) */
+    --gap-rd: clamp(14px, calc(-4.72px + 5.85vw), 24px);
+    /* нижний паддинг (от ссылок до края): 24→16 (×1.6 от pad-y на 320) */
+    --pad-bottom: clamp(16px, calc(1.03px + 4.68vw), 24px);
+    --mini-h: calc(var(--name-fs) * 1.1 + var(--role-fs) * 1.33);
+    /* desc 2 строки + margin tags 29 + tags до 3 строк суммарно + gap */
+    --max-h: calc(var(--desc-fs) * 1.16 * 2 + 29px + var(--tag-fs) * 1.33 * 3 + 4px);
+    --links-h: calc(14px * 1.33);
+    right: 14px;
+  }
+  /* раскрытая версия — почти на всю ширину экрана, высота считается из контента */
+  .header-right:hover {
+    right: 14px;
+    width: calc(100vw - 28px);
+    height: calc(3 * var(--pad-y) + var(--gap-rd) + var(--pad-bottom) + var(--photo-h) + var(--mini-h) + var(--max-h) + var(--links-h));
+  }
+  /* фото: горизонтальный padding-x, вертикальный padding-y */
+  .header-right:hover .header-right__photo {
+    left: var(--pad-x);
+    top: var(--pad-y);
+    right: auto;
+    width: var(--photo-w);
+    height: var(--photo-h);
+  }
+  .header-right:hover .header-right__photo img {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  /* имя+роль — под фото */
+  .header-right:hover .header-right__mini {
+    left: var(--pad-x);
+    right: var(--pad-x);
+    top: calc(2 * var(--pad-y) + var(--photo-h));
+  }
+  /* описание+теги — под именем (gap между ролью и описанием через --gap-rd) */
+  .header-right__max {
+    left: var(--pad-x);
+    right: var(--pad-x);
+    top: calc(2 * var(--pad-y) + var(--gap-rd) + var(--photo-h) + var(--mini-h));
+  }
+  /* ссылки — под описанием */
+  .header-right__links-mini {
+    left: var(--pad-x);
+    right: var(--pad-x);
+    top: calc(3 * var(--pad-y) + var(--gap-rd) + var(--photo-h) + var(--mini-h) + var(--max-h));
+  }
+  /* отменяем nowrap из ≤1199 — текст переносится по ширине фото */
+  .header-right__max-desc,
+  .header-right__max-tags span { white-space: normal; }
+  /* шрифты — через переменные */
+  .header-right:hover .header-right__name { font-size: var(--name-fs); }
+  .header-right:hover .header-right__role-mini { font-size: var(--role-fs); }
+  .header-right__max-desc { font-size: var(--desc-fs); }
+  .header-right__max-tags { font-size: var(--tag-fs); }
+}
+
+@media (max-width: 414px) {
+  /* левый хедер: вторую часть фразы переносим на новую строку */
+  .header-left__text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+}
+
+@media (max-width: 730px) {
+  /* перекрываем 1023 — мини-блок только под фото */
+  .header-right { width: calc(84 * var(--u)); height: calc(86 * var(--u)); }
+  .header-right__photo {
+    left: calc(11 * var(--u));
+    top: calc(11 * var(--u));
+    transition:
+      left 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      top 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      width 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      border-radius 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  /* в раскрытом виде фото возвращается на дефолтную позицию вертикальной раскладки */
+  .header-right:hover .header-right__photo { left: calc(32 * var(--u)); top: calc(24 * var(--u)); }
+}
+
+@media (max-width: 491px) {
+  /* перекрываем ≤730 — фото на hover использует responsive padding из переменных */
+  .header-right:hover .header-right__photo {
+    left: var(--pad-x);
+    top: var(--pad-y);
+    width: var(--photo-w);
+    height: var(--photo-h);
+  }
+}
+
+@media (max-width: 1100px) {
+  /* grid: 12 → 10 колонок; ручное скрытие плиток через [data-hide-md] */
+  .grid { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+  .tile[data-hide-md] { display: none; }
+}
+
+@media (max-width: 600px) {
+  /* grid: 10 → 8 колонок; ручное скрытие плиток через [data-hide-sm] */
+  .grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .tile[data-hide-sm] { display: none; }
 }
 
 @media (max-width: 639px) {
@@ -863,6 +1158,25 @@ body::before {
     </div>
   </aside>
 
+  <!-- ─── Hero bio (≤730: появляется в самом верху, дублирует раскрытый правый хедер) ─── -->
+  <section class="hero-bio" data-screen-label="hero-bio">
+    <div class="hero-bio__photo">
+      <img src="assets/photo.png" alt="" />
+    </div>
+    <div class="hero-bio__name">DMITRY TOGULEV</div>
+    <div class="hero-bio__role">Senior Product Designer</div>
+    <div class="hero-bio__desc">10+ лет опыта в&nbsp;создании<br>цифровых продуктов</div>
+    <div class="hero-bio__tags">
+      <span>founder indy-studio <b>MythHand</b></span>
+      <span>ex <b>Uzum</b> &amp; <b>KazanExpress</b></span>
+    </div>
+    <div class="hero-bio__links">
+      <a href="https://www.instagram.com/dima_dimbo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://t.me/DimaDimbo" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
+    </div>
+  </section>
+
   <!-- ─── Hero ─── -->
   <section class="hero" data-screen-label="hero">
     <div class="hero__inner">
@@ -875,26 +1189,26 @@ body::before {
   <section class="grid" data-screen-label="grid">
     <!-- разнокалиберные карточки; --c = ширина в колонках (из 12), --r = высота в шагах по 20px -->
     <!-- top row: video + big1 + mini -->
-    <div class="tile" style="--c:6; --r:13;"><video src="assets/grid/video1.mov" autoplay muted loop playsinline></video></div>
-    <div class="tile" style="--c:5; --r:14;"><img src="assets/grid/big1.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini1.png" alt=""></div>
+    <div class="tile" style="--c:6; --r:13; --c-sm:8; --r-sm:10;" data-auto-r><video src="assets/grid/video1.mov" autoplay muted loop playsinline></video></div>
+    <div class="tile" style="--c:5; --r:14;" data-auto-r><img src="assets/grid/big1.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini1.png" alt=""></div>
 
      <div class="tile tile--named" style="--c:7; --r:16;">
       <span class="tile__label">mythhand</span>
     </div>
     
-    <div class="tile" style="--c:3; --r:7;"><img src="assets/grid/mini2.png" alt=""></div>
+    <div class="tile" style="--c:3; --r:7;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
     <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med10.png" alt=""></div>
     
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini4.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini4.png" alt=""></div>
     <div class="tile" style="--c:3; --r:9;"><img src="assets/grid/med11.png" alt=""></div>
     <div class="tile" style="--c:2; --r:11;"><img src="assets/grid/med4.jpg" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini3.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;" data-hide-sm><img src="assets/grid/mini3.png" alt=""></div>
 
     <div class="tile" style="--c:6; --r:14;"><img src="assets/grid/big2.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini5.png" alt=""></div>
-    <div class="tile" style="--c:3; --r:13;"><img src="assets/grid/med3.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:7;"><img src="assets/grid/mini6.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini5.png" alt=""></div>
+    <div class="tile" style="--c:3; --r:13;" data-auto-r><img src="assets/grid/med3.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini6.png" alt=""></div>
 
     <div class="tile tile--named" style="--c:7; --r:16;">
       <span class="tile__label">metric case</span>
@@ -1023,6 +1337,81 @@ body::before {
 <div id="copy-toast">Почта скопирована</div>
 
 <script>
+/* ─── Grid: auto row-span для медиа-плиток с [data-auto-r] ─── */
+(function () {
+  var grid = document.querySelector('.grid');
+  if (!grid) return;
+
+  function update() {
+    var cs = getComputedStyle(grid);
+    var track = parseFloat(cs.gridAutoRows);
+    var gap = parseFloat(cs.rowGap);
+    if (!track || isNaN(gap)) return;
+
+    document.querySelectorAll('.tile[data-auto-r]').forEach(function (tile) {
+      var media = tile.querySelector('img, video');
+      if (!media) return;
+      var aw = media.naturalWidth || media.videoWidth;
+      var ah = media.naturalHeight || media.videoHeight;
+      if (!aw || !ah) return;
+      var ar = aw / ah;
+      var targetH = tile.offsetWidth / ar;
+      var r = Math.max(1, Math.round((targetH + gap) / (track + gap)));
+      tile.style.setProperty('--r', r);
+    });
+  }
+
+  // ждём загрузки картинок/видео — иначе naturalWidth = 0
+  document.querySelectorAll('.tile[data-auto-r] img').forEach(function (img) {
+    if (img.complete) return;
+    img.addEventListener('load', update);
+  });
+  document.querySelectorAll('.tile[data-auto-r] video').forEach(function (v) {
+    if (v.readyState >= 1) return;
+    v.addEventListener('loadedmetadata', update);
+  });
+
+  // пересчёт при ресайзе грида (лучше чем window.resize — реагирует только на реальные изменения layout)
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(update).observe(grid);
+  } else {
+    window.addEventListener('resize', update);
+  }
+
+  update();
+})();
+
+/* ─── Right header: на ≤730 появляется когда hero-bio проскроллен на 65% ─── */
+(function () {
+  var heroBio = document.querySelector('.hero-bio');
+  if (!heroBio || !('IntersectionObserver' in window)) return;
+
+  var mq = window.matchMedia('(max-width: 730px)');
+  var observer = null;
+
+  function setup() {
+    if (mq.matches) {
+      if (!observer) {
+        observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            document.body.classList.toggle('header-right-visible', entry.intersectionRatio < 0.35);
+          });
+        }, { threshold: [0.35] });
+        observer.observe(heroBio);
+      }
+    } else {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      document.body.classList.remove('header-right-visible');
+    }
+  }
+
+  setup();
+  mq.addEventListener('change', setup);
+})();
+
 function copyEmail(e) {
   e.preventDefault();
   navigator.clipboard.writeText('dimbo.dancer@gmail.com').then(function() {
