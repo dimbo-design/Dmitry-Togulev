@@ -426,13 +426,19 @@ body::before {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  /* по умолчанию каждая карточка переопределяет span'ы инлайном через --c / --r */
-  grid-column: span var(--c, 3);
+  /* по умолчанию каждая карточка переопределяет span'ы инлайном через --c / --r;
+     опционально --col / --col-md / --col-sm для жёсткой привязки к стартовой колонке */
+  grid-column-start: var(--col, auto);
+  grid-column-end: span var(--c, 3);
   grid-row: span var(--r, 12);
 }
 .tile--named {
   background-color: rgb(217, 217, 217);
 }
+/* spacer — невидимая плитка с обычными --c/--r; занимает место в потоке как любая другая */
+.tile--spacer { visibility: hidden; }
+/* зеркальная пара к data-hide-md / data-hide-sm: показать только на этом и ниже */
+.tile[data-show-md], .tile[data-show-sm] { display: none; }
 .tile > img,
 .tile > video {
   width: 100%;
@@ -1081,20 +1087,24 @@ body::before {
   /* grid: 12 → 10 колонок; ручное скрытие плиток через [data-hide-md] */
   .grid { grid-template-columns: repeat(10, minmax(0, 1fr)); }
   .tile {
-    grid-column: span var(--c-md, var(--c, 3));
-    grid-row:    span var(--r-md, var(--r, 12));
+    grid-column-start: var(--col-md, var(--col, auto));
+    grid-column-end:   span var(--c-md, var(--c, 3));
+    grid-row:          span var(--r-md, var(--r, 12));
   }
   .tile[data-hide-md] { display: none; }
+  .tile[data-show-md] { display: flex; }
 }
 
 @media (max-width: 700px) {
   /* grid: 10 → 8 колонок; ручное скрытие плиток через [data-hide-sm] */
   .grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .tile {
-    grid-column: span var(--c-sm, var(--c-md, var(--c, 3)));
-    grid-row:    span var(--r-sm, var(--r-md, var(--r, 12)));
+    grid-column-start: var(--col-sm, var(--col-md, var(--col, auto)));
+    grid-column-end:   span var(--c-sm, var(--c-md, var(--c, 3)));
+    grid-row:          span var(--r-sm, var(--r-md, var(--r, 12)));
   }
   .tile[data-hide-sm] { display: none; }
+  .tile[data-show-sm] { display: flex; }
 }
 
 @media (max-width: 639px) {
@@ -1200,46 +1210,49 @@ body::before {
     <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video1.mov" autoplay muted loop playsinline></video></div>
     <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r><img src="assets/grid/big1.png" alt=""></div>
     <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/med4.jpg" alt=""></div>
+    <div class="tile" style="--c:5; --c-md:4; --c-sm:8;" data-auto-r ><img src="assets/grid/radio1.png" alt=""></div>
 
-    <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med13.png" alt=""></div>
-    <div class="tile" style="--c:7; --c-md:7; --c-sm:5;" data-auto-r ><img src="assets/grid/fgm1.png" alt=""></div>
-    <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med12.png" alt=""></div>
+    <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med13.png" alt=""></div> -->
+    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm1.png" alt=""></div>
+    <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med12.png" alt=""></div> -->
 
-    <div class="tile" style="--c:2; --r:4; --c-md:1; --r-md:2; --c-sm:3; --r-sm:4;"><img src="assets/grid/mini1.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini1.png" alt=""></div>
 
      <div class="tile tile--named" style="--c:10; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24;">
       <span class="tile__label">mythhand</span>
     </div>
     
-    <div class="tile" style="--c:3; --r:7; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
-    <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med10.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
+    <div class="tile" style="--c:4; --r:15;"><img src="assets/grid/med10.png" alt=""></div>
     
     <div class="tile" style="--c:3; --r:11;" data-hide-md data-hide-sm><img src="assets/grid/mini4.png" alt=""></div>
-    <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med11.png" alt=""></div>
-    <div class="tile" style="--c:6; --r:12;"><img src="assets/grid/big2.png" alt=""></div>
+    <div class="tile" style="--c:4; --r:12; --c-md:5; --r-md:12;" data-hide-sm><img src="assets/grid/med11.png" alt=""></div>
+    <div class="tile" style="--c:6; --r:12; --c-md:7; --r-md:12;"><img src="assets/grid/big2.png" alt=""></div>
 
-    <div class="tile" style="--c:8; --c-md:5; --c-sm:5;" data-auto-r ><img src="assets/grid/fgm2.png" alt=""></div>
-    <div class="tile" style="--c:4; --c-md:3; --c-sm:3;" data-auto-r ><img src="assets/grid/sklad1.png" alt=""></div>
+    <div class="tile" style="--c:8; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm2.png" alt=""></div>
+    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad1.png" alt=""></div>
     
-    <div class="tile" style="--c:2; --r:7; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini3.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:9; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini3.png" alt=""></div>
 
-    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini5.png" alt=""></div>
+    <div class="tile" style="--c:2; --r:8;" data-hide-md data-hide-sm><img src="assets/grid/mini5.png" alt=""></div>
     <div class="tile" style="--c:4; --c-md:4; --c-sm:4;" data-auto-r><img src="assets/grid/med3.png" alt=""></div>
     <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini6.png" alt=""></div>
 
-    <div class="tile tile--named" style="--c:11; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24;">
+    <div class="tile tile--named" style="--c:11; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24; --col:2; --col-sm:1;">
       <span class="tile__label">metric case</span>
     </div>
 
     <div class="tile" style="--c:7; --c-md:10; --c-sm:8;" data-auto-r><img src="assets/grid/big3.png" alt=""></div>
-    <div class="tile" style="--c:9; --c-md:6; --c-sm:4;" data-auto-r ><img src="assets/grid/fgm5.png" alt=""></div>
-    <div class="tile" style="--c:7; --c-md:5; --c-sm:3;" data-auto-r ><img src="assets/grid/fgm3.png" alt=""></div>
+    <div class="tile" style="--c:9; --c-md:10; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm5.png" alt=""></div>
+    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm3.png" alt=""></div>
 
-    <div class="tile" style="--c:3; --r:12;"><img src="assets/grid/med7.png" alt=""></div>
-    <div class="tile" style="--c:5; --c-md:4; --c-sm:3;" data-auto-r ><img src="assets/grid/sklad2.png" alt=""></div>
-    <div class="tile" style="--c:2; --r:11;"><img src="assets/grid/med5.png" alt=""></div>
-    <div class="tile" style="--c:5; --r:14; --c-md:5; --r-md:12; --c-sm:4; --r-sm:12;"><img src="assets/grid/med14.png" alt=""></div>
-    <div class="tile" style="--c:6; --c-md:4; --c-sm:3;" data-auto-r ><img src="assets/grid/fgm4.png" alt=""></div>
+    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video2.mov" autoplay muted loop playsinline></video></div>
+
+    <div class="tile" style="--c:3; --r:12;" data-hide-sm><img src="assets/grid/med7.png" alt=""></div>
+    <div class="tile" style="--c:5; --c-md:4; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad2.png" alt=""></div>
+    <div class="tile" style="--c:4; --r:16; --c-md:4; --r-md:13; --c-sm:4; --r-sm:12;"><img src="assets/grid/med5.png" alt=""></div>
+    <div class="tile" style="--c:5; --r:14; --c-md:3; --r-md:12; --c-sm:4; --r-sm:12;"><img src="assets/grid/med14.png" alt=""></div>
+    <div class="tile" style="--c:6; --c-md:6; --c-sm:4;" data-auto-r ><img src="assets/grid/fgm4.png" alt=""></div>
   </section>
 
   <!-- ─── Experience ─── -->
