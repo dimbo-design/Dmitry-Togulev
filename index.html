@@ -446,6 +446,165 @@ body::before {
   object-fit: cover;
   display: block;
 }
+/* caption — гибкий контейнер с тайтлом+тегами в нижней части плитки, появляется по hover/tap */
+.tile__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: calc(54 * var(--u)) calc(20 * var(--u)) calc(16 * var(--u));
+  background: linear-gradient(to top, rgba(236, 234, 236, 0.9), rgba(236, 234, 236, 0));
+  color: rgb(42, 36, 40);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  /* disappear — быстрая (когда уходит из hover) */
+  transition: opacity 240ms ease;
+}
+/* progressive blur — 2 слоя со статичным блюром, но opacity которая фейдится синхронно с подписью */
+.tile__caption::before,
+.tile__caption::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.tile__caption::before {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgb(0,0,0) 100%);
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgb(0,0,0) 100%);
+}
+.tile__caption::after {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 15%, rgb(0,0,0) 70%);
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 15%, rgb(0,0,0) 70%);
+  z-index: -1;
+}
+.tile:hover .tile__caption::before,
+.tile:hover .tile__caption::after,
+.tile.is-active .tile__caption::before,
+.tile.is-active .tile__caption::after {
+  opacity: 1;
+  transition: opacity 480ms ease;
+}
+.tile:hover .tile__caption,
+.tile.is-active .tile__caption {
+  opacity: 1;
+  pointer-events: auto;
+  /* appear — медленная */
+  transition: opacity 480ms ease;
+}
+.tile__caption-title,
+.tile__caption-tags {
+  transform: translateY(calc(10 * var(--u)));
+  transition: transform 240ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.tile:hover .tile__caption-title,
+.tile:hover .tile__caption-tags,
+.tile.is-active .tile__caption-title,
+.tile.is-active .tile__caption-tags {
+  transform: translateY(0);
+  transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.tile__caption-title {
+  font-weight: 600;
+  font-size: calc(22 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+}
+.tile__caption-tags {
+  font-weight: 400;
+  font-size: calc(19 * var(--u));
+  line-height: 1.33;
+  margin-top: calc(4 * var(--u));
+  color: rgb(42, 36, 40);
+}
+
+/* tile--case: метрический кейс с заголовком и тремя показателями */
+.tile--case {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: calc(40 * var(--u)) calc(48 * var(--u));
+}
+.case__heading {
+  font-weight: 400;
+  font-size: calc(20 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  color: rgb(42, 36, 40);
+}
+.case__heading b { font-weight: 700; }
+.case__body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  gap: calc(48 * var(--u));
+  margin-top: calc(40 * var(--u));
+}
+.case__col-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: calc(40 * var(--u));
+}
+.case__col-right {
+  display: flex;
+  flex-direction: column;
+  gap: calc(28 * var(--u));
+}
+.case__section { display: flex; flex-direction: column; gap: calc(8 * var(--u)); }
+.case__section-heading {
+  font-weight: 700;
+  font-size: calc(16 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: rgb(42, 36, 40);
+}
+.case__section-text {
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+}
+.case__title {
+  font-weight: 500;
+  font-size: calc(28 * var(--u));
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgb(42, 36, 40);
+}
+.case__metrics {
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+}
+.case__metric {
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--u));
+}
+.case__metric-value {
+  font-weight: 500;
+  font-size: calc(44 * var(--u));
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgb(42, 36, 40);
+}
+.case__metric-label {
+  font-weight: 400;
+  font-size: calc(16 * var(--u));
+  line-height: 1.33;
+  color: rgba(42, 36, 40, 0.7);
+}
+
 .tile--named .tile__label {
   font-weight: 500;
   font-size: calc(44 * var(--u));
@@ -1207,49 +1366,160 @@ body::before {
   <section class="grid" data-screen-label="grid">
     <!-- разнокалиберные карточки; --c = ширина в колонках (из 12), --r = высота в шагах по 20px -->
     <!-- top row: video + big1 + mini -->
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video1.mov" autoplay muted loop playsinline></video></div>
-    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r><img src="assets/grid/big1.png" alt=""></div>
-    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/med4.jpg" alt=""></div>
-    <div class="tile" style="--c:5; --c-md:4; --c-sm:8;" data-auto-r ><img src="assets/grid/radio1.png" alt=""></div>
+    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r>
+      <video src="assets/grid/video1.mov" autoplay muted loop playsinline></video>
+      <div class="tile__caption">
+        <div class="tile__caption-tags">loader · web · design&nbsp;&&nbsp;vibecode</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r>
+      <img src="assets/grid/big1.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">MythHand Radio</div>
+        <div class="tile__caption-tags">web · mvp&nbsp;desktop · design&nbsp;&&nbsp;vibecode</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/med4.jpg" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Бармены: Последний ингредиентв</div>
+        <div class="tile__caption-tags">настольная&nbsp;игра · плейтест</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:5; --c-md:4; --c-sm:8;" data-auto-r ><img src="assets/grid/radio1.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">MythHand Radio</div>
+        <div class="tile__caption-tags">web · ui&nbsp;process · canon golden grid</div>
+      </div>
+    </div>
 
     <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med13.png" alt=""></div> -->
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm1.png" alt=""></div>
+    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm1.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Склад KazanExpress</div>
+        <div class="tile__caption-tags">проектирование складских процессов</div>
+      </div>
+    </div>
     <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med12.png" alt=""></div> -->
 
     <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini1.png" alt=""></div>
 
-     <div class="tile tile--named" style="--c:10; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24;">
-      <span class="tile__label">mythhand</span>
+     <div class="tile tile--named tile--case" style="--c:10; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24;">
+      <div class="case__heading">PROJECT <b>MythHand</b></div>
+      <div class="case__body">
+
+      </div>
     </div>
     
     <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
     <div class="tile" style="--c:4; --r:15;"><img src="assets/grid/med10.png" alt=""></div>
     
     <div class="tile" style="--c:3; --r:11;" data-hide-md data-hide-sm><img src="assets/grid/mini4.png" alt=""></div>
-    <div class="tile" style="--c:4; --r:12; --c-md:5; --r-md:12;" data-hide-sm><img src="assets/grid/med11.png" alt=""></div>
+    <div class="tile" style="--c:4; --r:12; --c-md:5; --r-md:12;" data-hide-sm><img src="assets/grid/med11.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Release любой ценой</div>
+        <div class="tile__caption-tags">настольная&nbsp;игра · вариации&nbsp;коробки</div>
+      </div>
+    </div>
     <div class="tile" style="--c:6; --r:12; --c-md:7; --r-md:12;"><img src="assets/grid/big2.png" alt=""></div>
 
-    <div class="tile" style="--c:8; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm2.png" alt=""></div>
-    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad1.png" alt=""></div>
+    <div class="tile" style="--c:8; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm2.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Склад KazanExpress</div>
+        <div class="tile__caption-tags">вариации шагов процесса пересчета товара</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad1.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Склад KazanExpress</div>
+        <div class="tile__caption-tags">проектирование рабочего места</div>
+      </div>
+    </div>
     
     <div class="tile" style="--c:2; --r:9; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini3.png" alt=""></div>
 
     <div class="tile" style="--c:2; --r:8;" data-hide-md data-hide-sm><img src="assets/grid/mini5.png" alt=""></div>
-    <div class="tile" style="--c:4; --c-md:4; --c-sm:4;" data-auto-r><img src="assets/grid/med3.png" alt=""></div>
+    <div class="tile" style="--c:4; --c-md:4; --c-sm:4;" data-auto-r><img src="assets/grid/med3.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Бармены: Последний ингредиентв</div>
+        <div class="tile__caption-tags">настольная игра · дизайн&nbsp;карт · in&nbsp;progress</div>
+      </div>
+    </div>
     <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini6.png" alt=""></div>
 
-    <div class="tile tile--named" style="--c:11; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24; --col:2; --col-sm:1;">
-      <span class="tile__label">metric case</span>
+
+    <div class="tile tile--named tile--case" style="--c:11; --r:17; --c-md:9; --r-md:24; --c-sm:8; --r-sm:32; --col:2; --col-sm:1;">
+      <div class="case__heading">CASE <b>KazanExpress</b> &times; <b>Uzum</b></div>
+      <div class="case__body">
+        <div class="case__col-left">
+          <div class="case__title">"Можем улучшить стол пересчёта на&nbsp;приёмке?" →&nbsp;Перепроектировал процессы приёмки на складе маркетплейса</div>
+          <div class="case__metrics">
+            <div class="case__metric">
+              <div class="case__metric-value">72% → 100%</div>
+              <div class="case__metric-label">SLA при кратном росте трафика SKU</div>
+            </div>
+            <div class="case__metric">
+              <div class="case__metric-value">7% → 2%</div>
+              <div class="case__metric-label">Ошибки при приёмке</div>
+            </div>
+            <div class="case__metric">
+              <div class="case__metric-value">30 → 18 часов</div>
+              <div class="case__metric-label">Среднее время размещения</div>
+            </div>
+          </div>
+        </div>
+        <div class="case__col-right">
+          <div class="case__section">
+            <div class="case__section-heading">Проблема</div>
+            <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
+          </div>
+          <div class="case__section">
+            <div class="case__section-heading">Подход</div>
+            <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
+            <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
+          </div>
+          <div class="case__section">
+            <div class="case__section-heading">Решение</div>
+            <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="tile" style="--c:7; --c-md:10; --c-sm:8;" data-auto-r><img src="assets/grid/big3.png" alt=""></div>
-    <div class="tile" style="--c:9; --c-md:10; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm5.png" alt=""></div>
-    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm3.png" alt=""></div>
 
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video2.mov" autoplay muted loop playsinline></video></div>
+    <div class="tile" style="--c:7; --c-md:10; --c-sm:8;" data-auto-r><img src="assets/grid/big3.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">MythHand Radio Виджет</div>
+        <div class="tile__caption-tags">design&nbsp;&&nbsp;vibecode · in&nbsp;progress</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:9; --c-md:10; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm5.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Spendora</div>
+        <div class="tile__caption-tags">home screen · design process</div>
+      </div>
+    </div>
+    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm3.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Склад Uzum</div>
+        <div class="tile__caption-tags">приложение сотрудника · flow · design</div>
+      </div>
+    </div>
+
+    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video2.mov" autoplay muted loop playsinline></video>
+      <div class="tile__caption">
+        <div class="tile__caption-title">MythHand / 404 page</div>
+        <div class="tile__caption-tags">mini game · design&nbsp;&&nbsp;vibecode</div>
+      </div>
+    </div>
 
     <div class="tile" style="--c:3; --r:12;" data-hide-sm><img src="assets/grid/med7.png" alt=""></div>
-    <div class="tile" style="--c:5; --c-md:4; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad2.png" alt=""></div>
+    <div class="tile" style="--c:5; --c-md:4; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad2.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Склад KazanExpress</div>
+        <div class="tile__caption-tags">проектирование рабочего места</div>
+      </div>
+    </div>
+
     <div class="tile" style="--c:4; --r:16; --c-md:4; --r-md:13; --c-sm:4; --r-sm:12;"><img src="assets/grid/med5.png" alt=""></div>
     <div class="tile" style="--c:5; --r:14; --c-md:3; --r-md:12; --c-sm:4; --r-sm:12;"><img src="assets/grid/med14.png" alt=""></div>
     <div class="tile" style="--c:6; --c-md:6; --c-sm:4;" data-auto-r ><img src="assets/grid/fgm4.png" alt=""></div>
@@ -1413,6 +1683,27 @@ body::before {
   }
 
   update();
+})();
+
+/* ─── Tile caption: tap-toggle на тач-устройствах (десктоп использует :hover) ─── */
+(function () {
+  if (!window.matchMedia('(hover: none)').matches) return;
+
+  document.addEventListener('click', function (e) {
+    var tile = e.target.closest('.tile');
+    if (!tile || !tile.querySelector('.tile__caption')) {
+      // клик вне плитки с caption — закрываем все активные
+      document.querySelectorAll('.tile.is-active').forEach(function (t) {
+        t.classList.remove('is-active');
+      });
+      return;
+    }
+    var wasActive = tile.classList.contains('is-active');
+    document.querySelectorAll('.tile.is-active').forEach(function (t) {
+      t.classList.remove('is-active');
+    });
+    if (!wasActive) tile.classList.add('is-active');
+  });
 })();
 
 /* ─── Right header: на ≤730 появляется когда hero-bio проскроллен на 65% ─── */
