@@ -525,11 +525,11 @@ body::before {
 
 /* tile--case: метрический кейс с заголовком и тремя показателями */
 .tile--case {
+  background-color: #F7FCFE;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  padding: calc(40 * var(--u)) calc(48 * var(--u));
 }
 .case__heading {
   font-weight: 400;
@@ -557,8 +557,29 @@ body::before {
   display: flex;
   flex-direction: column;
   gap: calc(28 * var(--u));
+  padding-bottom: calc(118 * var(--u));
 }
-.case__section { display: flex; flex-direction: column; gap: calc(8 * var(--u)); }
+@media (max-width: 1100px) {
+  .case__body { grid-template-columns: 1fr; }
+  .case__col-right { padding-bottom: 0; }
+}
+.case__section { display: block; }
+.case__section > summary { list-style: none; cursor: pointer; }
+.case__section > summary::-webkit-details-marker { display: none; }
+.case__section-body {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  transition: grid-template-rows 320ms ease;
+}
+.case__section-body > * { min-height: 0; }
+.case__section-inner { padding-top: calc(8 * var(--u)); }
+.case__section:not([open]) > .case__section-body { grid-template-rows: 0fr; }
+.case__section.is-closing > .case__section-body { grid-template-rows: 0fr; }
+@media (min-width: 861px) {
+  /* десктоп: клик по summary отключён, открытое состояние держится JS */
+  .case__section > summary { pointer-events: none; cursor: default; }
+}
 .case__section-heading {
   font-weight: 700;
   font-size: calc(16 * var(--u));
@@ -604,6 +625,51 @@ body::before {
   line-height: 1.33;
   color: rgba(42, 36, 40, 0.7);
 }
+
+/* tile--project: проектная карточка с белым фоном, лого, описанием и ссылкой */
+.tile--project {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+/* адаптивный padding для неформатных блоков: 800→320 vertical 40→20 (×½), horizontal 48→16 (×⅓) */
+.tile--case,
+.tile--project {
+  padding:
+    clamp(20px, calc(6.67px + 4.17vw), 40px)
+    clamp(16px, calc(-5.33px + 6.67vw), 48px);
+}
+.tile > .project__logo {
+  width: clamp(190px, calc(156.67px + 10.42vw), 240px);
+  height: auto;
+  object-fit: initial;
+  display: block;
+  align-self: flex-start;
+  margin-top: calc(12 * var(--u));
+  margin-bottom: calc(32 * var(--u));
+}
+.project__desc {
+  width: clamp(calc(230 * var(--u)), 75%, calc(660 * var(--u)));
+  font-weight: 400;
+  font-size: clamp(13px, calc(8.33px + 1.458vw), 20px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+}
+.project__desc + .project__desc { margin-top: calc(17 * var(--u)); }
+.project__link {
+  margin-top: auto;
+  align-self: flex-start;
+  font-weight: 500;
+  font-size: calc(18 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+  text-decoration: none;
+}
+.project__link:hover { text-decoration: underline; }
 
 .tile--named .tile__label {
   font-weight: 500;
@@ -1403,11 +1469,11 @@ body::before {
 
     <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini1.png" alt=""></div>
 
-     <div class="tile tile--named tile--case" style="--c:10; --r:16; --c-md:9; --r-md:18; --c-sm:8; --r-sm:24;">
-      <div class="case__heading">PROJECT <b>MythHand</b></div>
-      <div class="case__body">
-
-      </div>
+     <div class="tile tile--named tile--project" style="--c:10; --r:16; --c-md:9; --r-md:15; --c-sm:8; --r-sm:14;">
+      <img class="project__logo" src="assets/MythHand.svg" alt="MythHand">
+      <p class="project__desc">Инди-студия которую основал и&nbsp;развиваю как&nbsp;продукт.</p>
+      <p class="project__desc">Карточные игры про IT и коктейли, радио, инструменты для НРИ. Каждый проект проходит полный цикл&nbsp;— от идеи до продакшена и&nbsp;дистрибуции. Смотрю на них одновременно как&nbsp;дизайнер и&nbsp;как&nbsp;основатель.</p>
+      <a class="project__link" href="https://mythhand.com/" target="_blank" rel="noopener noreferrer">mythhand.com</a>
     </div>
     
     <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
@@ -1420,7 +1486,12 @@ body::before {
         <div class="tile__caption-tags">настольная&nbsp;игра · вариации&nbsp;коробки</div>
       </div>
     </div>
-    <div class="tile" style="--c:6; --r:12; --c-md:7; --r-md:12;"><img src="assets/grid/big2.png" alt=""></div>
+    <div class="tile" style="--c:6; --r:12; --c-md:7; --r-md:12;"><img src="assets/grid/big2.png" alt="">
+      <div class="tile__caption">
+        <div class="tile__caption-title">Release любой ценой</div>
+        <div class="tile__caption-tags">настольная&nbsp;игра · фото отзыв</div>
+      </div>
+    </div>
 
     <div class="tile" style="--c:8; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm2.png" alt="">
       <div class="tile__caption">
@@ -1447,7 +1518,7 @@ body::before {
     <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini6.png" alt=""></div>
 
 
-    <div class="tile tile--named tile--case" style="--c:11; --r:17; --c-md:9; --r-md:24; --c-sm:8; --r-sm:32; --col:2; --col-sm:1;">
+    <div class="tile tile--named tile--case" data-auto-r-content style="--c:11; --c-md:9; --c-sm:8; --col:2; --col-sm:1;">
       <div class="case__heading">CASE <b>KazanExpress</b> &times; <b>Uzum</b></div>
       <div class="case__body">
         <div class="case__col-left">
@@ -1468,19 +1539,25 @@ body::before {
           </div>
         </div>
         <div class="case__col-right">
-          <div class="case__section">
-            <div class="case__section-heading">Проблема</div>
-            <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
-          </div>
-          <div class="case__section">
-            <div class="case__section-heading">Подход</div>
-            <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
-            <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
-          </div>
-          <div class="case__section">
-            <div class="case__section-heading">Решение</div>
-            <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
-          </div>
+          <details class="case__section">
+            <summary class="case__section-heading">Проблема</summary>
+            <div class="case__section-body">
+              <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
+            </div>
+          </details>
+          <details class="case__section">
+            <summary class="case__section-heading">Подход</summary>
+            <div class="case__section-body">
+              <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
+              <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
+            </div>
+          </details>
+          <details class="case__section">
+            <summary class="case__section-heading">Решение</summary>
+            <div class="case__section-body">
+              <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
+            </div>
+          </details>
         </div>
       </div>
     </div>
@@ -1681,6 +1758,71 @@ body::before {
   } else {
     window.addEventListener('resize', update);
   }
+
+  update();
+})();
+
+/* ─── Grid: auto row-span для неформатных блоков по высоте контента (через [data-auto-r-content]) ─── */
+(function () {
+  var grid = document.querySelector('.grid');
+  if (!grid) return;
+
+  function update() {
+    var cs = getComputedStyle(grid);
+    var track = parseFloat(cs.gridAutoRows);
+    var gap = parseFloat(cs.rowGap);
+    if (!track || isNaN(gap)) return;
+
+    // активная переменная зависит от текущего вьюпорта (соответствует CSS-каскаду)
+    var matchSm = window.matchMedia('(max-width: 700px)').matches;
+    var matchMd = window.matchMedia('(max-width: 1100px)').matches;
+    var activeVar = matchSm ? '--r-sm' : (matchMd ? '--r-md' : '--r');
+
+    document.querySelectorAll('.tile[data-auto-r-content]').forEach(function (tile) {
+      tile.style.setProperty(activeVar, '1');
+      void tile.offsetHeight;
+      var contentH = tile.scrollHeight;
+      var r = Math.max(1, Math.ceil((contentH + gap) / (track + gap)));
+      tile.style.setProperty(activeVar, r);
+    });
+  }
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+  document.querySelectorAll('.tile[data-auto-r-content] img').forEach(function (img) {
+    if (!img.complete) img.addEventListener('load', update);
+  });
+  if ('ResizeObserver' in window) new ResizeObserver(update).observe(grid);
+  else window.addEventListener('resize', update);
+
+  // Аккордеон: на десктопе (>860) держим все секции открытыми; на ≤860 пользователь сам тогглит.
+  // На toggle — пересчитываем высоту тайла.
+  var sections = document.querySelectorAll('details.case__section');
+  var mqAcc = window.matchMedia('(max-width: 860px)');
+  function syncAccordion() {
+    if (!mqAcc.matches) {
+      sections.forEach(function (d) { d.open = true; });
+    } else {
+      sections.forEach(function (d) { d.open = false; });
+    }
+    update();
+  }
+  sections.forEach(function (d) {
+    d.querySelector('summary').addEventListener('click', function (e) {
+      if (!d.open) return;
+      e.preventDefault();
+      d.classList.add('is-closing');
+      setTimeout(function () {
+        d.open = false;
+        d.classList.remove('is-closing');
+      }, 320);
+    });
+    d.addEventListener('toggle', function () {
+      setTimeout(update, 340);
+      update();
+    });
+  });
+  mqAcc.addEventListener('change', syncAccordion);
+  syncAccordion();
 
   update();
 })();
