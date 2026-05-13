@@ -4,19 +4,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/png" href="assets/favicon.png" />
-<title>Dmitry Togulev</title>
-<meta name="description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+<title>Дмитрий Тогулев</title>
+<meta name="description" content="Продуктовый дизайнер с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Dmitry Togulev — Senior Product Designer" />
-<meta property="og:description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+<meta property="og:title" content="Дмитрий Тогулев — Продуктовый дизайнер" />
+<meta property="og:description" content="Продуктовый дизайнер с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
 <meta property="og:image" content="https://dimbo-design.github.io/Dmitry-Togulev/assets/og_img.png" />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Dmitry Togulev — Senior Product Designer" />
-<meta name="twitter:description" content="Senior Product Designer с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
+<meta name="twitter:title" content="Дмитрий Тогулев — Продуктовый дизайнер" />
+<meta name="twitter:description" content="Продуктовый дизайнер с 10+ летним опытом. Проектирую сложные продукты там, где нет готовых ответов." />
 <meta name="twitter:image" content="https://dimbo-design.github.io/Dmitry-Togulev/assets/og_img.png" />
 <style>
 /* ─── Fixel Display ─── */
@@ -256,7 +256,7 @@ body::before {
 }
 .header-right__name {
   font-weight: 700;
-  font-size: calc(26 * var(--u));
+  font-size: calc(24 * var(--u));
   line-height: 1.33;
   letter-spacing: 0.02em;
   color: rgb(42, 36, 40);
@@ -264,7 +264,7 @@ body::before {
   transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__name {
-  font-size: calc(39 * var(--u));
+  font-size: calc(37 * var(--u));
 }
 .header-right__role-mini {
   margin-top: 0;
@@ -274,7 +274,6 @@ body::before {
   letter-spacing: -0.01em;
   color: rgb(42, 36, 40);
   white-space: nowrap;
-  text-transform: uppercase;
   transition: font-size 840ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .header-right:hover .header-right__role-mini {
@@ -511,14 +510,16 @@ body::before {
 }
 .tile__caption-title {
   font-weight: 600;
-  font-size: calc(22 * var(--u));
+  /* ≥800: 22*--u (с апскейлом выше 1728); 800→320: линейно 22→16 */
+  font-size: clamp(16px, calc(12px + 1.25vw), calc(22 * var(--u)));
   line-height: 1.33;
   letter-spacing: -0.01em;
   color: rgb(42, 36, 40);
 }
 .tile__caption-tags {
   font-weight: 400;
-  font-size: calc(19 * var(--u));
+  /* ≥800: 19*--u (с апскейлом выше 1728); 800→320: линейно 19→13 */
+  font-size: clamp(13px, calc(9px + 1.25vw), calc(19 * var(--u)));
   line-height: 1.33;
   margin-top: calc(4 * var(--u));
   color: rgb(42, 36, 40);
@@ -564,19 +565,44 @@ body::before {
   .case__body { grid-template-columns: 1fr; }
   .case__col-right { padding-bottom: 0; }
 }
+/* ≤860: аккордеон активен, --r тайла прыгает в 44px-шагах при анимации.
+   Прижимаем всё содержимое к верху, чтобы дельта шага уходила в пустое пространство внизу
+   и не редистрибутилась между детьми (иначе метрики и аккардеон дрожат каждый --r-step). */
+@media (max-width: 860px) {
+  .tile--case { justify-content: flex-start; }
+  .case__body { flex: 0 0 auto; align-content: start; }
+  .case__col-left { justify-content: flex-start; }
+}
 .case__section { display: block; }
-.case__section > summary { list-style: none; cursor: pointer; }
+.case__section > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+}
 .case__section > summary::-webkit-details-marker { display: none; }
+.case__section-chevron {
+  display: none;
+  width: calc(18 * var(--u));
+  height: calc(18 * var(--u));
+  flex-shrink: 0;
+  transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  color: rgb(42, 36, 40);
+}
+@media (max-width: 860px) {
+  .case__section-chevron { display: block; }
+}
+.case__section[open] > summary .case__section-chevron { transform: rotate(180deg); }
 .case__section-body {
   display: grid;
   grid-template-rows: 1fr;
   overflow: hidden;
-  transition: grid-template-rows 320ms ease;
 }
 .case__section-body > * { min-height: 0; }
 .case__section-inner { padding-top: calc(8 * var(--u)); }
 .case__section:not([open]) > .case__section-body { grid-template-rows: 0fr; }
-.case__section.is-closing > .case__section-body { grid-template-rows: 0fr; }
 @media (min-width: 861px) {
   /* десктоп: клик по summary отключён, открытое состояние держится JS */
   .case__section > summary { pointer-events: none; cursor: default; }
@@ -1089,7 +1115,6 @@ body::before {
     font-size: clamp(15px, calc(8.76px + 1.95vw), 23px);
     line-height: 1.33;
     letter-spacing: -0.01em;
-    text-transform: uppercase;
     color: rgb(42, 36, 40);
   }
   .hero-bio__desc {
@@ -1144,20 +1169,20 @@ body::before {
 }
 
 @media (max-width: 1455px) {
-  /* contacts: 5 → 4 cols, Resume переезжает в row 2 col 1 */
+  /* contacts: 5 → 4 cols, Резюме переезжает в row 2 col 1 */
   .contact-cols {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     row-gap: 42px;
   }
-  .contact-col:nth-child(4) { grid-column: 1; grid-row: 2; } /* Resume */
+  .contact-col:nth-child(4) { grid-column: 1; grid-row: 2; } /* Резюме */
   .contact-col:nth-child(5) { display: none; }
 }
 
 @media (max-width: 1023px) {
-  /* contacts: 4 → 3 cols, Email в row 2 col 1, Resume в row 3 col 1 */
+  /* contacts: 4 → 3 cols, Email в row 2 col 1, Резюме в row 3 col 1 */
   .contact-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .contact-col:nth-child(3) { grid-column: 1; grid-row: 2; } /* Email */
-  .contact-col:nth-child(4) { grid-column: 1; grid-row: 3; } /* Resume */
+  .contact-col:nth-child(4) { grid-column: 1; grid-row: 3; } /* Резюме */
 
   /* exp: левая колонка fluid 206px → 140px между 1023 и 550 */
   .exp__row { grid-template-columns: clamp(140px, calc(63.22px + 13.95vw), 206px) minmax(0, 1fr); }
@@ -1209,7 +1234,7 @@ body::before {
     --pad-y: clamp(10px, calc(-16.21px + 8.19vw), 24px);
     --photo-w: calc(100vw - 28px - 2 * var(--pad-x));
     --photo-h: calc(var(--photo-w) * 411 / 399);
-    --name-fs: clamp(26px, calc(1.68px + 7.60vw), 39px);
+    --name-fs: clamp(24px, calc(-0.32px + 7.60vw), 37px);
     --role-fs: clamp(15px, calc(0.03px + 4.68vw), 23px);
     --desc-fs: clamp(21px, calc(0.41px + 6.43vw), 32px);
     --tag-fs: clamp(16px, calc(10.39px + 1.754vw), 19px);
@@ -1240,8 +1265,10 @@ body::before {
   .header-right:hover .header-right__photo img {
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    /* пиксельные значения (а не 100%) — чтобы интерполяция width/height шла в едином пиксельном
+       пространстве с контейнером; иначе из-за смеси px↔% скорость img расходится со скоростью .photo */
+    width: var(--photo-w);
+    height: var(--photo-h);
     object-fit: cover;
     object-position: center top;
   }
@@ -1271,15 +1298,6 @@ body::before {
   .header-right:hover .header-right__role-mini { font-size: var(--role-fs); }
   .header-right__max-desc { font-size: var(--desc-fs); }
   .header-right__max-tags { font-size: var(--tag-fs); }
-}
-
-@media (max-width: 414px) {
-  /* левый хедер: вторую часть фразы переносим на новую строку */
-  .header-left__text {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
 }
 
 @media (max-width: 730px) {
@@ -1388,7 +1406,7 @@ body::before {
     </div>
     <div class="header-left__text">
       <span class="brand">DIMBO</span>
-      <span class="role">Creative UX DESIGN</span>
+      <span class="role">MX DESIGN</span>
     </div>
   </header>
 
@@ -1400,14 +1418,14 @@ body::before {
 
     <!-- MINI state -->
     <div class="header-right__mini">
-      <div class="header-right__name">DMITRY TOGULEV</div>
-      <div class="header-right__role-mini">Senior Product Designer</div>
+      <div class="header-right__name">Дмитрий Тогулев</div>
+      <div class="header-right__role-mini">Продуктовый дизайнер</div>
     </div>
     <div class="header-right__divider-mini"></div>
     <div class="header-right__links-mini">
       <a href="https://www.instagram.com/dima_dimbo/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://t.me/DimaDimbo" target="_blank" rel="noopener noreferrer">Telegram</a>
-      <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
+      <a href="#" target="_blank" rel="noopener noreferrer">Резюме</a>
       <span></span>
     </div>
 
@@ -1426,8 +1444,8 @@ body::before {
     <div class="hero-bio__photo">
       <img src="assets/photo.png" alt="" />
     </div>
-    <div class="hero-bio__name">DMITRY TOGULEV</div>
-    <div class="hero-bio__role">Senior Product Designer</div>
+    <div class="hero-bio__name">Дмитрий Тогулев</div>
+    <div class="hero-bio__role">Продуктовый дизайнер</div>
     <div class="hero-bio__desc">10+ лет опыта в&nbsp;создании<br>цифровых продуктов</div>
     <div class="hero-bio__tags">
       <span>founder indy-studio <b>MythHand</b></span>
@@ -1436,7 +1454,7 @@ body::before {
     <div class="hero-bio__links">
       <a href="https://www.instagram.com/dima_dimbo/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://t.me/DimaDimbo" target="_blank" rel="noopener noreferrer">Telegram</a>
-      <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
+      <a href="#" target="_blank" rel="noopener noreferrer">Резюме</a>
     </div>
   </section>
 
@@ -1506,7 +1524,7 @@ body::before {
         <div class="tile__caption-tags">настольная&nbsp;игра · вариации&nbsp;коробки</div>
       </div>
     </div>
-    <div class="tile" style="--c:6; --r:12; --c-md:7; --r-md:12;"><img src="assets/grid/big2.png" alt="">
+    <div class="tile" style="--c:6; --r:12; --c-md:8; --r-md:12;"><img src="assets/grid/big2.png" alt="">
       <div class="tile__caption">
         <div class="tile__caption-title">Release любой ценой</div>
         <div class="tile__caption-tags">настольная&nbsp;игра · фото отзыв</div>
@@ -1539,7 +1557,7 @@ body::before {
 
 
     <div class="tile tile--named tile--case" data-auto-r-content style="--c:11; --c-md:9; --c-sm:8; --col:2; --col-sm:1;">
-      <div class="case__heading">CASE <b>KazanExpress</b> &times; <b>Uzum</b></div>
+      <div class="case__heading">КЕЙС <b>KazanExpress</b> &times; <b>Uzum</b></div>
       <div class="case__body">
         <div class="case__col-left">
           <div class="case__title">"Можем улучшить стол пересчёта на&nbsp;приёмке?" →&nbsp;Перепроектировал процессы приёмки на складе маркетплейса</div>
@@ -1560,22 +1578,28 @@ body::before {
         </div>
         <div class="case__col-right">
           <details class="case__section">
-            <summary class="case__section-heading">Проблема</summary>
+            <summary class="case__section-heading">Проблема<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
-              <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
+              <div class="case__section-inner">
+                <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
+              </div>
             </div>
           </details>
           <details class="case__section">
-            <summary class="case__section-heading">Подход</summary>
+            <summary class="case__section-heading">Подход<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
-              <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
-              <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
+              <div class="case__section-inner">
+                <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
+                <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
+              </div>
             </div>
           </details>
           <details class="case__section">
-            <summary class="case__section-heading">Решение</summary>
+            <summary class="case__section-heading">Решение<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
-              <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
+              <div class="case__section-inner">
+                <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
+              </div>
             </div>
           </details>
         </div>
@@ -1617,8 +1641,8 @@ body::before {
       </div>
     </div>
 
-    <div class="tile" style="--c:4; --r:16; --c-md:4; --r-md:13; --c-sm:4; --r-sm:12;"><img src="assets/grid/med5.png" alt=""></div>
-    <div class="tile" style="--c:5; --r:14; --c-md:3; --r-md:12; --c-sm:4; --r-sm:12;"><img src="assets/grid/med14.png" alt=""></div>
+    <div class="tile" style="--c:4; --r:16; --c-md:4; --r-md:13; --c-sm:4; --r-sm:8;"><img src="assets/grid/med5.png" alt=""></div>
+    <div class="tile" style="--c:5; --r:14; --c-md:3; --r-md:12; --c-sm:4; --r-sm:8;"><img src="assets/grid/med14.png" alt=""></div>
     <div class="tile" style="--c:6; --c-md:6; --c-sm:4;" data-auto-r ><img src="assets/grid/fgm4.png" alt=""></div>
   </section>
 
@@ -1633,21 +1657,21 @@ body::before {
         <div class="exp__row">
           <div class="exp__period"></div>
           <div class="exp__main">
-            <div class="exp__role">Founding Product Designer</div>
+            <div class="exp__role">Продуктовый дизайнер, основатель</div>
             <div class="exp__company"><b>MythHand</b> · Russia</div>
           </div>
         </div>
         <div class="exp__row">
           <div class="exp__period">май 2024<br>— декабрь 2024</div>
           <div class="exp__main">
-            <div class="exp__role">Lead Product Designer</div>
+            <div class="exp__role">Ведущий продуктовый дизайнер</div>
             <div class="exp__company"><b>Uzum</b> · Tashkent, Uzbekistan</div>
           </div>
         </div>
         <div class="exp__row">
           <div class="exp__period">май 2021<br>— май 2024</div>
           <div class="exp__main">
-            <div class="exp__role">Senior Product Designer</div>
+            <div class="exp__role">Старший продуктовый дизайнер</div>
             <div class="exp__company"><b>KazanExpress</b> · Innopolis, Russia</div>
           </div>
         </div>
@@ -1696,7 +1720,7 @@ body::before {
         <div class="exp__row">
           <div class="exp__period"></div>
           <div class="exp__main">
-            <div class="exp__role">Designer</div>
+            <div class="exp__role">Дизайнер</div>
             <div class="exp__company"><b>Freelance</b> · Togliatti, Russia</div>
           </div>
         </div>
@@ -1724,7 +1748,7 @@ body::before {
         <a class="contact-col__value contact-col__email" href="#" onclick="copyEmail(event)">dimbo.dancer@gmail.com</a>
       </div>
       <div class="contact-col">
-        <div class="contact-col__label">Resume</div>
+        <div class="contact-col__label">Резюме</div>
         <a class="contact-col__value" href="#">Download pdf</a>
       </div>
       <div class="contact-col"></div>
@@ -1815,9 +1839,108 @@ body::before {
   else window.addEventListener('resize', update);
 
   // Аккордеон: на десктопе (>860) держим все секции открытыми; на ≤860 пользователь сам тогглит.
-  // На toggle — пересчитываем высоту тайла.
+  // При клике — body раскрывается через CSS (grid-template-rows 0fr↔1fr), параллельно через rAF
+  // пошагово меняется --r (span тайла в гриде) → плитка плавно подтягивается под содержимое,
+  // и грид внизу реплоутится непрерывно (без финального скачка → без прыжка скролла).
+  var caseTile = document.querySelector('.tile--case[data-auto-r-content]');
   var sections = document.querySelectorAll('details.case__section');
   var mqAcc = window.matchMedia('(max-width: 860px)');
+  var accAnimating = false;
+  var accSuppressToggle = false;
+
+  function getActiveRVar() {
+    if (window.matchMedia('(max-width: 700px)').matches) return '--r-sm';
+    if (window.matchMedia('(max-width: 1100px)').matches) return '--r-md';
+    return '--r';
+  }
+  function easeOutCubic(p) { return 1 - Math.pow(1 - p, 3); }
+
+  sections.forEach(function (d) {
+    var body = d.querySelector('.case__section-body');
+    var inner = d.querySelector('.case__section-inner');
+
+    d.querySelector('summary').addEventListener('click', function (e) {
+      if (!mqAcc.matches || accAnimating) return;
+      e.preventDefault();
+      accAnimating = true;
+
+      var cs = getComputedStyle(grid);
+      var track = parseFloat(cs.gridAutoRows);
+      var gap = parseFloat(cs.rowGap);
+      var activeVar = getActiveRVar();
+      function h2r(h) { return Math.max(1, Math.ceil((h + gap) / (track + gap))); }
+
+      var opening = !d.open;
+
+      // Натуральная высота содержимого body (inner — обычный блок, его offsetHeight не зависит от grid-track).
+      // Чтобы offsetHeight был корректным даже когда детали свернуты, временно форсируем body в раскрытое состояние.
+      accSuppressToggle = true;
+      var prevOpen = d.open;
+      d.open = true;
+      body.style.gridTemplateRows = '1fr';
+      var fullH = inner.offsetHeight;
+      d.open = prevOpen;
+      body.style.gridTemplateRows = '';
+      accSuppressToggle = false;
+      void caseTile.offsetHeight;
+
+      var startBodyH = opening ? 0 : fullH;
+      var endBodyH = opening ? fullH : 0;
+
+      var startTileH = caseTile.scrollHeight;
+      var endTileH = startTileH + (endBodyH - startBodyH);
+      var startR = h2r(startTileH);
+      var endR = h2r(endTileH);
+
+      // Готовим body к JS-управлению: фиксированные пиксели, без CSS-перехода.
+      body.style.gridTemplateRows = '1fr';
+      body.style.height = startBodyH + 'px';
+      if (opening) {
+        accSuppressToggle = true;
+        d.open = true;
+        accSuppressToggle = false;
+      }
+      void body.offsetHeight;
+
+      var DUR = 400;
+      var t0 = performance.now();
+      var lastR = startR;
+      caseTile.style.setProperty(activeVar, startR);
+
+      function step(now) {
+        var p = Math.min(1, (now - t0) / DUR);
+        var e = easeOutCubic(p);
+        var bh = startBodyH + (endBodyH - startBodyH) * e;
+        body.style.height = bh + 'px';
+        var r = Math.round(startR + (endR - startR) * e);
+        if (r !== lastR) {
+          caseTile.style.setProperty(activeVar, r);
+          lastR = r;
+        }
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // финал — фиксируем endR без пост-апдейта (никаких догоняющих скачков)
+          if (lastR !== endR) caseTile.style.setProperty(activeVar, endR);
+          body.style.height = '';
+          body.style.gridTemplateRows = '';
+          if (!opening) {
+            accSuppressToggle = true;
+            d.open = false;
+            accSuppressToggle = false;
+          }
+          accAnimating = false;
+        }
+      }
+      requestAnimationFrame(step);
+    });
+
+    d.addEventListener('toggle', function () {
+      if (accSuppressToggle || accAnimating) return;
+      update();
+    });
+  });
+
   function syncAccordion() {
     if (!mqAcc.matches) {
       sections.forEach(function (d) { d.open = true; });
@@ -1826,21 +1949,6 @@ body::before {
     }
     update();
   }
-  sections.forEach(function (d) {
-    d.querySelector('summary').addEventListener('click', function (e) {
-      if (!d.open) return;
-      e.preventDefault();
-      d.classList.add('is-closing');
-      setTimeout(function () {
-        d.open = false;
-        d.classList.remove('is-closing');
-      }, 320);
-    });
-    d.addEventListener('toggle', function () {
-      setTimeout(update, 340);
-      update();
-    });
-  });
   mqAcc.addEventListener('change', syncAccordion);
   syncAccordion();
 
