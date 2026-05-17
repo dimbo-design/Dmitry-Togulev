@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Дмитрий Тогулев — Резюме</title>
+<style>
+@font-face { font-family: "Fixel Display"; src: url("fonts/FixelDisplay-Regular.otf") format("opentype"); font-weight: 400; }
+@font-face { font-family: "Fixel Display"; src: url("fonts/FixelDisplay-Medium.otf") format("opentype"); font-weight: 500; }
+@font-face { font-family: "Fixel Display"; src: url("fonts/FixelDisplay-SemiBold.otf") format("opentype"); font-weight: 600; }
+@font-face { font-family: "Fixel Display"; src: url("fonts/FixelDisplay-Bold.otf") format("opentype"); font-weight: 700; }
+
+@page { size: A4; margin: 14mm 14mm; }
+@media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .ph { background: transparent !important; } }
+
+:root {
+  --c: rgb(42, 36, 40);
+  --c-muted: rgba(42, 36, 40, 0.6);
+  --c-line: rgba(42, 36, 40, 0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: "Fixel Display", -apple-system, BlinkMacSystemFont, sans-serif; color: var(--c); background: #fff; font-size: 10.5pt; line-height: 1.45; letter-spacing: -0.005em; }
+body { max-width: 210mm; margin: 0 auto; }
+
+@media screen {
+  body { padding: 14mm; box-shadow: 0 0 40px rgba(0,0,0,0.06); background: #fff; margin: 30px auto; min-height: 297mm; }
+  html { background: rgb(234, 232, 234); padding: 20px 0; }
+}
+
+.header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16mm; border-bottom: 1px solid var(--c-line); padding-bottom: 7mm; margin-bottom: 7mm; }
+.name { font-weight: 700; font-size: 26pt; line-height: 1.05; letter-spacing: -0.02em; }
+.role { font-size: 11pt; margin-top: 2mm; color: var(--c-muted); }
+.contacts { font-size: 9pt; line-height: 1.55; text-align: right; }
+.contacts a { color: var(--c); text-decoration: none; }
+.contacts a:hover { text-decoration: underline; }
+.contacts span.label { color: var(--c-muted); }
+
+section { margin-bottom: 6mm; }
+section.no-break { page-break-inside: avoid; }
+
+.section-label { font-weight: 700; font-size: 9pt; text-transform: uppercase; letter-spacing: -0.04em; margin-bottom: 3mm; }
+
+.summary { font-size: 11pt; line-height: 1.5; }
+
+.exp-item { margin-bottom: 4mm; page-break-inside: avoid; }
+.exp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; margin-bottom: 1.5mm; }
+.exp-title { font-weight: 600; font-size: 11pt; }
+.exp-title .company { font-weight: 700; }
+.exp-period { font-weight: 400; font-size: 9.5pt; color: var(--c-muted); white-space: nowrap; }
+.exp-bullets { padding-left: 5mm; font-size: 10pt; line-height: 1.45; }
+.exp-bullets li { margin-bottom: 0.8mm; }
+
+.exp-earlier { font-size: 9.5pt; color: var(--c-muted); line-height: 1.5; }
+.exp-earlier b { color: var(--c); font-weight: 500; }
+
+.case-item { margin-bottom: 3mm; font-size: 10pt; line-height: 1.45; }
+.case-title { font-weight: 600; margin-bottom: 1mm; }
+
+.meta-grid { columns: 2; column-gap: 10mm; }
+.meta-grid > div { break-inside: avoid; margin-bottom: 5mm; }
+.meta-grid > div:last-child { margin-bottom: 0; }
+.meta-grid .section-label { margin-bottom: 1.5mm; }
+
+.ph { background: rgba(255, 220, 100, 0.4); padding: 0 3px; border-radius: 2px; color: rgba(42, 36, 40, 0.65); font-style: italic; }
+</style>
+</head>
+<body>
+
+  <header class="header">
+    <div>
+      <div class="name">Дмитрий Тогулев</div>
+      <div class="role">Старший продуктовый дизайнер</div>
+    </div>
+    <div class="contacts">
+      <div><span class="label">email</span>&nbsp;&nbsp;<span>dimbo.dancer@gmail.com</span></div>
+      <div><span class="label">telegram</span>&nbsp;&nbsp;<a href="https://t.me/DimaDimbo">@DimaDimbo</a></div>
+      <div><span class="label">сайт</span>&nbsp;&nbsp;<a href="https://dimbo-design.github.io/Dmitry-Togulev/">dimbo-design.github.io</a></div>
+      <div><span class="label">город</span>&nbsp;&nbsp;<span>Тольятти · UTC+4</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="summary">
+      10+ лет проектирую цифровые продукты. Старший продуктовый дизайнер в маркетплейсах KazanExpress (Россия) и Uzum (Узбекистан). Сейчас — фаундер инди-студии MythHand: настольные игры, брендинг, веб-инструменты. Специализация — операционные интерфейсы там, где цифровое связано с физическим миром: склад, логистика, реальные рабочие процессы.
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Опыт работы</div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title">Основатель, продуктовый дизайнер · <span class="company">MythHand</span></div>
+        <div class="exp-period">ноябрь 2025 — наст. вр.</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Веду продуктовый цикл: концепция, дизайн, продакшн, выход на рынок</li>
+        <li>2 настольные игры на финальной стадии продакшна: тиражи 100 и 200 экз.</li>
+        <li>Веб-инструмент для танцорской импровизации с физическими дайсами (vibecoded): готовится к публичному запуску</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title" style="font-size: 10pt; color: var(--c-muted); font-weight: 500;">2025 — пауза, фриланс, переключение на физические продукты; зарождение MythHand</div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title">Ведущий продуктовый дизайнер · <span class="company">Uzum</span></div>
+        <div class="exp-period">май 2024 — декабрь 2024</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Продуктовый дизайн системы склада маркетплейса (склад, ПВЗ) — операционные интерфейсы на стыке цифрового и физического</li>
+        <li>Временно закрывал позицию дизайн-лида команды системы склада: найм, онбординг, ревью работ дизайнеров</li>
+        <li>Внедрил формат персональных дизайн-спринтов между дизайнером и его кросс-функциональным кластером</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title">Старший продуктовый дизайнер · <span class="company">KazanExpress</span></div>
+        <div class="exp-period">май 2021 — май 2024</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Перепроектировал приёмку склада маркетплейса (вышел на склад физически, спроектировал scan-first интерфейс под физический процесс): SLA 72%→100%, ошибки приёмки 7%→2%, время размещения 30→18 ч, без расширения штата</li>
+        <li>Системно работал над операционными интерфейсами склада: приёмка, размещение, инвентаризация, нестандартные потоки</li>
+        <li>Менторская работа в команде: передача подхода к проектированию операционных систем младшим коллегам</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title">UX Designer · <span class="company">Direct Line</span></div>
+        <div class="exp-period">февраль 2020 — апрель 2021</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Дизайн сайтов, e-commerce-проектов и CRM-систем для клиентов из США и РФ</li>
+        <li>Соавтор внутренней системы шаблонных блоков, позволявшей собирать дизайн новых сайтов за сутки — продуктовый подход к стандартизации и переиспользованию в агентстве</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-head">
+        <div class="exp-title" style="font-size: 9.5pt;">Ранее</div>
+      </div>
+      <div class="exp-earlier">
+        UX/UI&nbsp;Designer&nbsp;·&nbsp;<b>Invite&nbsp;taxi</b> · Motion&nbsp;Designer&nbsp;·&nbsp;<b>AIRA&nbsp;Lab</b> · Content&nbsp;Designer&nbsp;·&nbsp;<b>AdEcoSystem</b> · Web&nbsp;Designer&nbsp;·&nbsp;<b>Rudnik&nbsp;Top</b> · Web&nbsp;Designer&nbsp;·&nbsp;<b>TripAggregator</b> · Designer&nbsp;·&nbsp;<b>Freelance</b>
+      </div>
+    </div>
+  </section>
+
+  <section class="no-break">
+    <div class="section-label">Избранные кейсы</div>
+
+    <div class="case-item">
+      <div class="case-title">Склад KazanExpress × Uzum — перепроектирование приёмки</div>
+      <div>Проблема: SLA приёмки 72%, экстенсивные методы (доп. столы пересчёта, камеры). Подход: scan-first интерфейс под физический процесс, без клавиатуры как основного ввода. Результат: SLA 100%, ошибки 7%→2%, время размещения 30→18 ч.</div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-title">Топология склада маркетплейса</div>
+      <div>Спроектировал систему управления топологией склада маркетплейса для старшего по складу — полная картина склада и оперативное управление перестановками, блокировками, наполнением ячеек. Заложил связь с системой учёта товара (от которой строятся пути сбора заказов) взамен ведения в Excel-таблицах. После приобретения KazanExpress компанией Магнит этот подход лёг в основу топологии склада Магнит Маркета.</div>
+    </div>
+  </section>
+
+  <section class="no-break">
+    <div class="meta-grid">
+      <div>
+        <div class="section-label">Инструменты</div>
+        <div>Figma, FigJam, Miro, Jira, Notion, Claude Code, Grok</div>
+      </div>
+      <div>
+        <div class="section-label">Рабочий цикл</div>
+        <div>Контекст (бизнес, пользователи, разработка) → прототипирование → дизайн (в DS или кастомно) → сопровождение разработки → оценка результата метриками</div>
+      </div>
+      <div>
+        <div class="section-label">Подход</div>
+        <div>Предпочитаю живые исследования вместо массовой аналитики. Прототипы в реальной среде — на DS-компонентах или vibecoded, не prototype-симуляторы.</div>
+      </div>
+      <div>
+        <div class="section-label">Языки</div>
+        <div>Русский — родной<br>Английский — A2</div>
+      </div>
+      <div>
+        <div class="section-label">Образование</div>
+        <div>Поволжский гос. университет сервиса (Тольятти): бакалавр, «Информационные системы» — 2018<br>Нетология (2016–2017): UX-дизайн, веб-дизайн, дизайн мобильных приложений</div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
