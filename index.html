@@ -508,6 +508,23 @@ body::before {
   transform: translateY(0);
   transition: transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
 }
+/* data-caption-pinned: caption всегда виден на этом тайле, без hover/tap; transition отключён,
+   чтобы не было fade-in при загрузке страницы */
+.tile[data-caption-pinned] .tile__caption {
+  opacity: 1;
+  pointer-events: auto;
+  transition: none;
+}
+.tile[data-caption-pinned] .tile__caption::before,
+.tile[data-caption-pinned] .tile__caption::after {
+  opacity: 1;
+  transition: none;
+}
+.tile[data-caption-pinned] .tile__caption-title,
+.tile[data-caption-pinned] .tile__caption-tags {
+  transform: translateY(0);
+  transition: none;
+}
 .tile__caption-title {
   font-weight: 600;
   /* ≥800: 22*--u (с апскейлом выше 1728); 800→320: линейно 22→16 */
@@ -1470,7 +1487,7 @@ body::before {
   <section class="hero" data-screen-label="hero">
     <div class="hero__inner">
       <h1 class="hero__title">Проектирую там, где нет готовых<span class="hero__nb">&nbsp;</span><span class="hero__br"> </span>ответов</h1>
-      <p class="hero__subtitle">Специализируюсь на задачах без референсов&nbsp;— внутренние инструменты, новые продукты, физически встроенные интерфейсы</p>
+      <p class="hero__subtitle">Специализируюсь на задачах без референсов&nbsp;— внутренние инструменты, новые продукты, физически встроенные интерфейсы. Погружаюсь в&nbsp;контекст среды и&nbsp;проектирую от&nbsp;её&nbsp;процессов и&nbsp;ограничений.</p>
     </div>
   </section>
 
@@ -1523,7 +1540,7 @@ body::before {
      <div class="tile tile--named tile--project" style="--c:10; --r:16; --c-md:9; --r-md:15; --c-sm:8; --r-sm:14;">
       <img class="project__logo" src="assets/MythHand.svg" alt="MythHand">
       <p class="project__desc">Инди-студия которую основал и&nbsp;развиваю как&nbsp;продукт.</p>
-      <p class="project__desc">Карточные игры про IT и коктейли, радио, инструменты для НРИ. Каждый проект проходит полный цикл&nbsp;— от идеи до продакшена и&nbsp;дистрибуции. Смотрю на них одновременно как&nbsp;дизайнер и&nbsp;как&nbsp;основатель.</p>
+      <p class="project__desc">Настольные игры в&nbsp;финальном продакшне (тиражи 100 и&nbsp;200&nbsp;экз.) и веб-инструменты для&nbsp;нишевых сообществ. Каждый проект проходит полный цикл&nbsp;— от&nbsp;концепции до&nbsp;выхода на&nbsp;рынок. Смотрю на&nbsp;них одновременно как&nbsp;дизайнер и&nbsp;как&nbsp;основатель.</p>
       <a class="project__link" href="https://mythhand.com/" target="_blank" rel="noopener noreferrer">mythhand.com</a>
     </div>
     

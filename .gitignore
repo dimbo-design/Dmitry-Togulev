@@ -1,6 +1,9 @@
 # Project instructions — local only
 CLAUDE.md
 
+# Personal context — never committed (private)
+me-context.md
+
 # macOS
 .DS_Store
 .AppleDouble
