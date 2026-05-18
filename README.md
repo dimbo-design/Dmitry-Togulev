@@ -1,9 +1,9 @@
 # Dmitry Togulev / Дмитрий Тогулев — CV / Portfolio
 
-> Personal CV & portfolio site · Senior Product Designer · ex-Uzum · ex-KazanExpress
+> Personal CV & portfolio site · Senior Product Designer · ex-Uzum · ex-KazanExpress <br>
 > Личный сайт-портфолио и резюме · Старший продуктовый дизайнер
 
-🔗 **Live site · Сайт**: [dimbo-design.github.io/Dmitry-Togulev](https://dimbo-design.github.io/Dmitry-Togulev/)
+🔗 **Live site · Сайт**: [dimbo-design.github.io/Dmitry-Togulev](https://dimbo-design.github.io/Dmitry-Togulev/) <br>
 📄 **PDF resume · PDF-резюме**: [download · скачать](https://dimbo-design.github.io/Dmitry-Togulev/assets/Product_Design_Dmitry_Togulev.pdf)
 
 ---
