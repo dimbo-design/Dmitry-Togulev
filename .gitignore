@@ -4,6 +4,10 @@ CLAUDE.md
 # Personal context — never committed (private)
 me-context.md
 
+# Internal CV/job-search tooling — local only, не в публичный репо
+resume-pdf.html
+resume-fields.html
+
 # macOS
 .DS_Store
 .AppleDouble
