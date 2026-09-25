@@ -685,7 +685,7 @@ body::before {
     clamp(20px, calc(6.67px + 4.17vw), 40px)
     clamp(16px, calc(-5.33px + 6.67vw), 48px);
 }
-.tile > .project__logo {
+.tile--project > .project__logo {
   width: clamp(190px, calc(156.67px + 10.42vw), 240px);
   height: auto;
   object-fit: initial;
@@ -714,6 +714,154 @@ body::before {
   text-decoration: none;
 }
 .project__link:hover { text-decoration: underline; }
+.project__title {
+  font-weight: 500;
+  font-size: calc(28 * var(--u));
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgb(42, 36, 40);
+  margin-top: calc(12 * var(--u));
+}
+.project--habr {
+  position: relative;
+  overflow: hidden;
+}
+.project--habr > .project__title,
+.project--habr > .project__link {
+  position: relative;
+  z-index: 1;
+}
+/* знак выходит из правого нижнего угла и обрезается карточкой */
+.project__habr-mark {
+  position: absolute;
+  right: calc(-200 * var(--u));
+  bottom: calc(-200 * var(--u));
+  width: calc(540 * var(--u));
+  height: calc(540 * var(--u));
+}
+.cases__cards .project__link { padding-top: calc(40 * var(--u)); }
+/* Хабр: заголовок и ссылка одной группой внизу */
+.project--habr > .project__title { margin-top: auto; }
+.project--habr > .project__link {
+  margin-top: calc(16 * var(--u));
+  padding-top: 0;
+}
+
+/* ─── Cases: строка кейса = медиа слева + текст справа; короткая колонка липнет к длинной ─── */
+.cases {
+  --cases-pad: calc(44 * var(--u));
+  padding: 0 var(--cases-pad);
+  display: flex;
+  flex-direction: column;
+  gap: calc(160 * var(--u));
+}
+.case-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(480 * var(--u));
+  column-gap: calc(64 * var(--u));
+  align-items: start;
+}
+/* кейс склада: медиа + обёртка из двух текстовых колонок. Обёртка липнет к медиа,
+   колонки внутри неё — друг к другу (второй слой липкости) */
+.case-row--case { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.case-row__texts {
+  position: sticky;
+  top: calc(160 * var(--u));
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  column-gap: calc(64 * var(--u));
+  align-items: start;
+}
+.case-row--case .case__title { margin-top: calc(32 * var(--u)); }
+.case-row--case .case__metrics { margin-top: calc(40 * var(--u)); }
+.case-row__text--sections > .case__section { margin-top: calc(28 * var(--u)); }
+/* теги переезжают под «КЕЙС» на ≤1600 (JS), секции тогда начинаются с линии «КЕЙС» */
+.case-row__text--sections > .case__section:first-child { margin-top: 0; }
+.case__heading + .case-row__kind { margin-top: calc(16 * var(--u)); }
+/* обе колонки sticky: длинная занимает всю строку и стоит, короткая едет вдоль неё */
+.case-row__media,
+.case-row__text {
+  position: sticky;
+  top: calc(160 * var(--u));
+}
+.case-row__media {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24 * var(--u));
+}
+/* в линии медиа одной высоты: ширина пропорциональна --ar каждого файла */
+.case-row__line {
+  display: flex;
+  gap: calc(24 * var(--u));
+}
+.case-row__line > img,
+.case-row__line > video {
+  flex: var(--ar) 1 0%;
+  min-width: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* заглушка под медиа, которого пока нет */
+.case-row__stub {
+  flex: var(--ar) 1 0%;
+  min-width: 0;
+  aspect-ratio: var(--ar);
+  background-color: rgb(217, 217, 217);
+}
+/* теги первого уровня — тип кейса, системные */
+.case-row__kind {
+  font-weight: 700;
+  font-size: calc(16 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: rgb(42, 36, 40);
+}
+/* теги второго уровня — про сам проект */
+.case-row__tags {
+  margin-top: calc(4 * var(--u));
+  font-weight: 400;
+  font-size: calc(19 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.03em;
+  color: rgb(42, 36, 40);
+}
+.case-row__title {
+  margin-top: calc(8 * var(--u));
+  font-weight: 500;
+  font-size: calc(32 * var(--u));
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgb(42, 36, 40);
+}
+.case-row__desc {
+  margin-top: calc(20 * var(--u));
+  font-weight: 400;
+  font-size: calc(20 * var(--u));
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+}
+.case-row__link {
+  display: inline-block;
+  margin-top: calc(24 * var(--u));
+  font-weight: 500;
+  font-size: calc(18 * var(--u));
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+  color: rgb(42, 36, 40);
+  text-decoration: none;
+}
+.case-row__link:hover { text-decoration: underline; }
+.case-row__text > .case__metrics { margin-top: calc(32 * var(--u)); }
+/* слово с дефисом не рвётся по дефису */
+.nowrap { white-space: nowrap; }
+.cases__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(24 * var(--u));
+}
 
 .tile--named .tile__label {
   font-weight: 500;
@@ -1396,6 +1544,228 @@ body::before {
   }
   .contact-cols { padding-left: clamp(32px, calc(-94.6px + 39.57vw), 123px); }
 }
+
+/* ─── Cases: адаптив ───
+   Строка перестраивается в одну колонку: текст сверху, медиа под ним — слайдером вбок,
+   кадры одной высоты, ширина по --ar. Липкость снимается — колонок рядом больше нет.
+   Кейс склада перестраивается раньше остальных: на ≤1600. */
+@media (max-width: 1600px) {
+  .case-row--case {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(24px, calc(18.18px + 1.818vw), 40px);
+  }
+  .case-row--case .case-row__media {
+    order: 2;
+    position: static;
+    /* самый широкий кадр кейса целиком влезает в экран */
+    --row-h: min(clamp(200px, calc(120px + 25vw), 420px), calc((100vw - 2 * var(--cases-pad)) / var(--ar-max, 1.8)));
+    flex-direction: row;
+    gap: clamp(12px, calc(6.54px + 1.707vw), 24px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* слайдер уходит к краям экрана, первый кадр — на линии текста */
+    margin-inline: calc(-1 * var(--cases-pad));
+    padding-inline: var(--cases-pad);
+    scroll-padding-inline: var(--cases-pad);
+  }
+  .case-row--case .case-row__media::-webkit-scrollbar { display: none; }
+  .case-row--case .case-row__texts { position: static; }
+  .case-row--case .case__metrics {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: calc(40 * var(--u));
+    row-gap: calc(20 * var(--u));
+  }
+  .case-row--case .case-row__line { display: contents; }
+  .case-row--case .case-row__line > img,
+  .case-row--case .case-row__line > video {
+    flex: 0 0 auto;
+    width: auto;
+    height: var(--row-h);
+    aspect-ratio: var(--ar);
+    object-fit: cover;
+    scroll-snap-align: start;
+    cursor: zoom-in;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cases {
+    --cases-pad: clamp(22px, calc(11.98px + 3.13vw), 44px);
+    gap: clamp(72px, calc(40px + 10vw), 160px);
+  }
+  .case-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(24px, calc(18.18px + 1.818vw), 40px);
+  }
+  .case-row__media {
+    order: 2;
+    position: static;
+    /* самый широкий кадр кейса целиком влезает в экран */
+    --row-h: min(clamp(200px, calc(120px + 25vw), 420px), calc((100vw - 2 * var(--cases-pad)) / var(--ar-max, 1.8)));
+    flex-direction: row;
+    gap: clamp(12px, calc(6.54px + 1.707vw), 24px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* слайдер уходит к краям экрана, первый кадр — на линии текста */
+    margin-inline: calc(-1 * var(--cases-pad));
+    padding-inline: var(--cases-pad);
+    scroll-padding-inline: var(--cases-pad);
+  }
+  .case-row__media::-webkit-scrollbar { display: none; }
+  .case-row > .case-row__text {
+    position: static;
+    max-width: 760px;
+  }
+  /* один файл в кейсе — не слайдер, а кадр по ширине текста */
+  .case-row__media--single {
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+    max-width: 760px;
+  }
+  .case-row__media--single .case-row__line > img,
+  .case-row__media--single .case-row__line > video {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    cursor: auto;
+  }
+  .case-row__line { display: contents; }
+  .case-row__line > img,
+  .case-row__line > video {
+    flex: 0 0 auto;
+    width: auto;
+    height: var(--row-h);
+    aspect-ratio: var(--ar);
+    object-fit: cover;
+    scroll-snap-align: start;
+    cursor: zoom-in;
+  }
+
+  /* тексты 1200→320 */
+  .case-row__kind { font-size: clamp(13px, calc(11.91px + 0.341vw), 16px); }
+  .case-row__tags { font-size: clamp(15px, calc(13.55px + 0.455vw), 19px); }
+  .case-row__title { font-size: clamp(24px, calc(21.09px + 0.909vw), 32px); }
+  .case-row__desc { font-size: clamp(16px, calc(14.55px + 0.455vw), 20px); }
+  .case-row__link {
+    font-size: clamp(15px, calc(13.91px + 0.341vw), 18px);
+    overflow-wrap: anywhere;
+  }
+  .case__heading { font-size: clamp(16px, calc(14.55px + 0.455vw), 20px); }
+  .case__title,
+  .project__title { font-size: clamp(22px, calc(19.82px + 0.682vw), 28px); }
+  .case__metric-value { font-size: clamp(30px, calc(24.91px + 1.591vw), 44px); }
+
+  .project__habr-mark {
+    width: clamp(260px, calc(158.18px + 31.82vw), 540px);
+    height: clamp(260px, calc(158.18px + 31.82vw), 540px);
+    right: calc(-1 * clamp(96px, calc(58.18px + 11.82vw), 200px));
+    bottom: calc(-1 * clamp(96px, calc(58.18px + 11.82vw), 200px));
+  }
+}
+
+@media (max-width: 860px) {
+  /* кейс склада: текстовые колонки друг под другом, секции — аккордеоном (JS) */
+  .case-row__texts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(24px, calc(18.18px + 1.818vw), 40px);
+  }
+  .case-row__texts > .case-row__text { position: static; }
+  /* медиа в разметке раньше текста (на экран переставлено order): без этого браузер держит
+     медиа на месте при раскрытии секции, и она растёт вверх */
+  .case-row--case .case-row__media { overflow-anchor: none; }
+  .cases__cards { grid-template-columns: minmax(0, 1fr); }
+  .project--habr { min-height: 240px; }
+}
+
+/* ─── Галерея кейса: тап по кадру слайдера открывает кадры кейса на весь экран ─── */
+.gallery {
+  --gallery-pad: clamp(22px, calc(11.98px + 3.13vw), 44px);
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(236, 234, 236, 0.96);
+  backdrop-filter: blur(36px);
+  -webkit-backdrop-filter: blur(36px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+.gallery.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.gallery__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px var(--gallery-pad);
+  color: rgb(42, 36, 40);
+}
+.gallery__count {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.33;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+.gallery__actions {
+  display: flex;
+  gap: 17px;
+}
+.gallery__btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.33;
+  color: rgb(33, 33, 33);
+  cursor: pointer;
+}
+/* «Повернуть» — только для вытянутого кадра в портретной ориентации */
+.gallery__rotate { display: none; }
+@media (orientation: portrait) {
+  .gallery.is-wide .gallery__rotate { display: block; }
+}
+.gallery__track {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.gallery__track::-webkit-scrollbar { display: none; }
+.gallery__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--gallery-pad) var(--gallery-pad);
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+.gallery__slide > img,
+.gallery__slide > video {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.gallery__slide.is-rotated > img,
+.gallery__slide.is-rotated > video {
+  max-width: none;
+  max-height: none;
+  transform: rotate(90deg);
+}
 </style>
 <!-- 
   ✨ AI EASTER EGG / ПАСХАЛКА ДЛЯ ИИ ✨
@@ -1497,108 +1867,127 @@ body::before {
       <span class="key">Portfolio</span>
       <span class="val">favorite cases</span>
     </div>
-  <section class="grid" data-screen-label="grid">
-    <!-- разнокалиберные карточки; --c = ширина в колонках (из 12), --r = высота в шагах по 20px -->
-    <!-- top row: video + big1 + mini -->
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r>
-      <video src="assets/grid/video1.mov" autoplay muted loop playsinline></video>
-      <div class="tile__caption">
-        <div class="tile__caption-tags">loader · web · design&nbsp;&&nbsp;vibecode</div>
+  <div class="cases" data-screen-label="cases">
+    <!-- ИИ -->
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.745;">
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_2.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_1.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video><video src="assets/grid/ai_mythlist_3.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_4.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект</div>
+        <div class="case-row__title">Myth List</div>
+        <p class="case-row__desc">Интерактивные листы персонажа, внутри которых живёт вся книга правил Dungeon World: ходы, классы, снаряжение, состояния и&nbsp;все связи между ними. Игроку не&nbsp;нужно держать правила в&nbsp;голове&nbsp;— лист показывает только то, что доступно герою сейчас, бросок сам учитывает бафы, дебафы и&nbsp;снаряжение, новый уровень открывает выбор ходов.</p>
+        <p class="case-row__desc">Правила связаны между собой, и&nbsp;одна правка легко задевает соседние, поэтому систему держат тесты: при&nbsp;каждом изменении они сверяют механику и&nbsp;тексты с&nbsp;книгой, и&nbsp;перекос всплывает раньше, чем его заметит игрок.</p>
+        <a class="case-row__link" href="https://mythhand.space/mythlist/about" target="_blank" rel="noopener noreferrer">mythhand.space/mythlist</a>
       </div>
     </div>
-    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r>
-      <img src="assets/grid/big1.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">MythHand Radio</div>
-        <div class="tile__caption-tags">web · mvp&nbsp;desktop · design&nbsp;&&nbsp;vibecode</div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.745;">
+        <div class="case-row__line"><video src="assets/grid/ai_dw_search.mp4" style="--ar:0.814;" autoplay muted loop playsinline></video><video src="assets/grid/ai_dw_search_en.mp4" style="--ar:0.838;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_dw_book.jpg" style="--ar:1.745;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · перевод</div>
+        <div class="case-row__title">Перевод книги правил Dungeon World&nbsp;1e</div>
+        <p class="case-row__desc">Перевёл книгу правил Dungeon World&nbsp;— правила, классы, заклинания, бестиарий, раздел мастера&nbsp;— и&nbsp;сверстал её <span class="nowrap">веб-версию</span>.</p>
+        <p class="case-row__desc">Книгу правил не&nbsp;читают подряд, в&nbsp;ней ищут посреди игры. Поэтому у&nbsp;каждой главы и&nbsp;раздела свой адрес, поиск идёт по&nbsp;всей книге, а&nbsp;рядом с&nbsp;правилом видно, как оно работает в&nbsp;листе персонажа Myth List. Два языка: перевод и&nbsp;оригинал. Термины держит канон перевода, дословность проверяют тесты&nbsp;— чтобы дварф не&nbsp;стал гномом на&nbsp;сотой странице.</p>
+        <a class="case-row__link" href="https://mythhand.space/dungeon-world" target="_blank" rel="noopener noreferrer">mythhand.space/dungeon-world</a>
       </div>
     </div>
-    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/med4.jpg" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Бармены: Последний ингредиентв</div>
-        <div class="tile__caption-tags">настольная&nbsp;игра · плейтест</div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.748;">
+        <div class="case-row__line"><video src="assets/grid/ai_radio_adaptive.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_radio_desktop.jpg" style="--ar:1.742;" alt=""><img src="assets/grid/ai_radio_phone.jpg" style="--ar:0.542;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · бета</div>
+        <div class="case-row__title">Myth Radio</div>
+        <p class="case-row__desc">Атмосфера для&nbsp;настольных ролевых игр из&nbsp;двух дорожек: тема задаёт настроение, а&nbsp;амбиент место. Любая пара даёт свою сцену.</p>
+        <p class="case-row__desc">Адаптив построен на&nbsp;соотношении сторон экрана, а&nbsp;не&nbsp;на&nbsp;брейкпоинтах: кольца выбора стоят по&nbsp;бокам на&nbsp;широком экране, у&nbsp;углов на&nbsp;квадратном, сверху и&nbsp;снизу на&nbsp;телефоне, и&nbsp;в&nbsp;любом промежуточном состоянии страница остаётся собой. Две громкости сведены в&nbsp;один элемент: квадрат с&nbsp;точкой, по&nbsp;вертикали общая громкость, по&nbsp;горизонтали баланс дорожек.</p>
+        <a class="case-row__link" href="http://radio.mythhand.space/" target="_blank" rel="noopener noreferrer">radio.mythhand.space</a>
       </div>
     </div>
-    <div class="tile" style="--c:5; --c-md:4; --c-sm:8;" data-auto-r ><img src="assets/grid/radio1.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">MythHand Radio</div>
-        <div class="tile__caption-tags">web · ui&nbsp;process · canon golden grid</div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.758;">
+        <div class="case-row__line"><video src="assets/grid/ai_p2p_audit.mp4" style="--ar:1.509;" autoplay muted loop playsinline></video><video src="assets/grid/ai_p2p_hand.mp4" style="--ar:1.758;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_p2p_release.mp4" style="--ar:1.524;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding · Open&nbsp;Source</div>
+        <div class="case-row__tags">свой проект · <span class="nowrap">p2p-версия</span> настольной игры</div>
+        <div class="case-row__title">Release любой ценой</div>
+        <p class="case-row__desc">Партия по&nbsp;сети в&nbsp;браузере, без&nbsp;сервера для&nbsp;игры. Нас двое с&nbsp;разработчиком: на&nbsp;нём движок и&nbsp;сеть, на&nbsp;мне всё, что видит игрок.</p>
+        <p class="case-row__desc">Интерфейс и&nbsp;отладка всех анимаций: движения карт собраны в&nbsp;словарь и&nbsp;вызываются по&nbsp;смыслу&nbsp;— сыграть карту, сложить пару, вернуть в&nbsp;колоду. Отказ в&nbsp;действии показывается вздрагиванием, и&nbsp;у&nbsp;каждого элемента оно своё.</p>
+        <a class="case-row__link" href="https://mythhand.github.io/ReleaseBoardGameP2P" target="_blank" rel="noopener noreferrer">mythhand.github.io/ReleaseBoardGameP2P</a>
       </div>
     </div>
-
-    <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med13.png" alt=""></div> -->
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm1.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Склад KazanExpress</div>
-        <div class="tile__caption-tags">проектирование складских процессов</div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.983;">
+        <div class="case-row__line"><img src="assets/grid/ai_lapka_home.jpg" style="--ar:1.983;" alt=""></div>
+        <div class="case-row__line"><img src="assets/grid/ai_lapka_player.jpg" style="--ar:1.983;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding · Open&nbsp;Source</div>
+        <div class="case-row__tags">свой проект · локальный <span class="nowrap">аниме-плеер</span></div>
+        <div class="case-row__title">Lapka</div>
+        <p class="case-row__desc">Отправная точка&nbsp;— не&nbsp;устройство плеера, а&nbsp;то, как смотрят аниме: франшизу целиком, в&nbsp;одной озвучке, с&nbsp;перерывами.</p>
+        <p class="case-row__desc">Отсюда решения. Все сезоны, фильмы и&nbsp;<span class="nowrap">спин-оффы</span> встают одной очередью в&nbsp;порядке выхода. Выбранная озвучка держится на&nbsp;весь сериал и&nbsp;переключается на&nbsp;ходу, как дорожка, хотя технически это чаще отдельный источник. Просмотр продолжается с&nbsp;того же места для&nbsp;каждой серии и&nbsp;озвучки, а&nbsp;мёртвый источник сам меняется на&nbsp;живой.</p>
+        <p class="case-row__desc">Мой первый опубликованный пакет в&nbsp;npm: Lapka запускается одной командой.</p>
+        <a class="case-row__link" href="https://github.com/MythHand/Lapka" target="_blank" rel="noopener noreferrer">github.com/MythHand/Lapka</a>
       </div>
     </div>
-    <!-- <div class="tile" style="--c:3; --r:4; --c-md:4; --r-md:5; --c-sm:4; --r-sm:3;"><img src="assets/grid/med12.png" alt=""></div> -->
-
-    <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini1.png" alt=""></div>
-
-     <div class="tile tile--named tile--project" style="--c:10; --r:16; --c-md:9; --r-md:15; --c-sm:8; --r-sm:14;">
-      <img class="project__logo" src="assets/MythHand.svg" alt="MythHand">
-      <p class="project__desc">Инди-студия которую основал и&nbsp;развиваю как&nbsp;продукт.</p>
-      <p class="project__desc">Настольные игры в&nbsp;финальном продакшне (тиражи 100 и&nbsp;200&nbsp;экз.) и веб-инструменты для&nbsp;нишевых сообществ. Каждый проект проходит полный цикл&nbsp;— от&nbsp;концепции до&nbsp;выхода на&nbsp;рынок. Смотрю на&nbsp;них одновременно как&nbsp;дизайнер и&nbsp;как&nbsp;основатель.</p>
-      <a class="project__link" href="https://mythhand.com/" target="_blank" rel="noopener noreferrer">mythhand.com</a>
-    </div>
-    
-    <div class="tile" style="--c:2; --r:5; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini2.png" alt=""></div>
-    <div class="tile" style="--c:4; --r:15; --c-md:4; --r-md:13; --c-sm:4; --r-sm:10;"><img src="assets/grid/med10.png" alt=""></div>
-    
-    <div class="tile" style="--c:3; --r:11;" data-hide-md data-hide-sm><img src="assets/grid/mini4.png" alt=""></div>
-    <div class="tile" style="--c:4; --r:12; --c-md:5; --r-md:12;" data-hide-sm><img src="assets/grid/med11.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Release любой ценой</div>
-        <div class="tile__caption-tags">настольная&nbsp;игра · вариации&nbsp;коробки</div>
+    <div class="case-row">
+      <div class="case-row__media case-row__media--single">
+        <div class="case-row__line"><video src="assets/grid/ai_nodari.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding · Landing</div>
+        <div class="case-row__tags">заказ · исследование · позиционирование</div>
+        <div class="case-row__title">Нодари Апполонов</div>
+        <p class="case-row__desc">Сайт специалиста по&nbsp;Яндекс Директу для&nbsp;производств. До&nbsp;первого макета&nbsp;— десять шагов исследования: аудитория, компании, поле конкурентов, анкеты и&nbsp;раунды вопросов, разбор старого сайта. Так сформировалась база из&nbsp;ответов, фактов и&nbsp;внутренних метрик.</p>
+        <p class="case-row__desc">Из&nbsp;«не&nbsp;знаю, что о&nbsp;себе рассказать» по&nbsp;кусочкам собрали позиционирование, а&nbsp;из&nbsp;него&nbsp;— структуру и&nbsp;страницу.</p>
+        <a class="case-row__link" href="https://directsolutions.ru/" target="_blank" rel="noopener noreferrer">directsolutions.ru</a>
       </div>
     </div>
-    <div class="tile" style="--c:6; --r:12; --c-md:8; --r-md:12;"><img src="assets/grid/big2.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Release любой ценой</div>
-        <div class="tile__caption-tags">настольная&nbsp;игра · фото отзыв</div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.956;">
+        <div class="case-row__line"><video src="assets/grid/ai_hcv_warehouse.mp4" style="--ar:1.739;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_hcv_debug.jpg" style="--ar:1.371;" alt=""><video src="assets/grid/ai_hcv_cursor.mp4" style="--ar:1.956;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_hcv_pashalka.mp4" style="--ar:1.736;" autoplay muted loop playsinline></video><img src="assets/grid/ai_hcv_regress.png" style="--ar:1.197;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · эксперимент</div>
+        <div class="case-row__title">Heavy CV with living interface</div>
+        <p class="case-row__desc">Экспериментальное портфолио, которым управляют руками через обычную вебкамеру. Страница собирает отражение посетителя из&nbsp;частиц, разделы открываются жестом, всё считается на&nbsp;устройстве, видео никуда не&nbsp;уходит. Макетов не&nbsp;было: дизайн рождался сразу в&nbsp;коде, который писал Claude Code.</p>
+        <p class="case-row__desc">Жесты я не&nbsp;придумывал заранее&nbsp;— проверял сайт на&nbsp;себе и&nbsp;на&nbsp;знакомых, отмечал, где он меня не&nbsp;понял, и&nbsp;переделывал. Так выяснилось, что взмах рукой читается дважды: туда и&nbsp;на&nbsp;возврате. Решение&nbsp;— у&nbsp;каждого направления свой жест: ладонь листает вперёд, палец возвращает назад. Курсор на&nbsp;главном экране я сначала убрал, но&nbsp;люди не&nbsp;из&nbsp;ИТ без&nbsp;него терялись&nbsp;— вернул. Застрявшему посетителю подсказку показывает призрачная рука: запись моего собственного жеста.</p>
+        <a class="case-row__link" href="https://dimbo-design.github.io/dimbo_heavy-cv/" target="_blank" rel="noopener noreferrer">dimbo-design.github.io/dimbo_heavy-cv</a>
       </div>
     </div>
-
-    <div class="tile" style="--c:8; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm2.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Склад KazanExpress</div>
-        <div class="tile__caption-tags">вариации шагов процесса пересчета товара</div>
+    <!-- склад -->
+    <div class="case-row case-row--case">
+      <div class="case-row__media" style="--ar-max:2.34;">
+        <div class="case-row__line"><img src="assets/grid/sklad1.png" style="--ar:1.209;" alt=""><img src="assets/grid/sklad2.png" style="--ar:1.331;" alt=""></div>
+        <div class="case-row__line"><img src="assets/grid/fgm1.png" style="--ar:1.727;" alt=""></div>
+        <div class="case-row__line"><img src="assets/grid/fgm2.png" style="--ar:2.34;" alt=""></div>
       </div>
-    </div>
-    <div class="tile" style="--c:4; --c-md:3; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad1.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Склад KazanExpress</div>
-        <div class="tile__caption-tags">проектирование рабочего места</div>
-      </div>
-    </div>
-    
-    <div class="tile" style="--c:2; --r:9; --c-md:1; --r-md:3;" data-hide-sm><img src="assets/grid/mini3.png" alt=""></div>
-
-    <div class="tile" style="--c:2; --r:8;" data-hide-md data-hide-sm><img src="assets/grid/mini5.png" alt=""></div>
-    <div class="tile" style="--c:4; --c-md:4; --c-sm:4;" data-auto-r><img src="assets/grid/med3.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Бармены: Последний ингредиентв</div>
-        <div class="tile__caption-tags">настольная игра · дизайн&nbsp;карт · in&nbsp;progress</div>
-      </div>
-    </div>
-    <div class="tile" style="--c:2; --r:7;" data-hide-md data-hide-sm><img src="assets/grid/mini6.png" alt=""></div>
-
-
-    <div class="tile tile--named tile--case" data-auto-r-content style="--c:11; --c-md:9; --c-sm:8; --col:2; --col-sm:1;">
-      <div class="case__heading">КЕЙС <b>KazanExpress</b> &times; <b>Uzum</b></div>
-      <div class="case__body">
-        <div class="case__col-left">
-          <div class="case__title">"Можем улучшить стол пересчёта на&nbsp;приёмке?" →&nbsp;Перепроектировал процессы приёмки на складе маркетплейса</div>
+      <div class="case-row__texts">
+        <div class="case-row__text">
+          <div class="case__heading">КЕЙС <b>KazanExpress</b> &times; <b>Uzum</b></div>
+          <div class="case__title">«Можем улучшить стол пересчёта на&nbsp;приёмке?» →&nbsp;Перепроектировал процессы приёмки на&nbsp;складе маркетплейса</div>
           <div class="case__metrics">
             <div class="case__metric">
               <div class="case__metric-value">72% → 100%</div>
-              <div class="case__metric-label">SLA при кратном росте трафика SKU</div>
+              <div class="case__metric-label">SLA при&nbsp;кратном росте трафика SKU</div>
             </div>
             <div class="case__metric">
               <div class="case__metric-value">7% → 2%</div>
-              <div class="case__metric-label">Ошибки при приёмке</div>
+              <div class="case__metric-label">Ошибки при&nbsp;приёмке</div>
             </div>
             <div class="case__metric">
               <div class="case__metric-value">30 → 18 часов</div>
@@ -1606,75 +1995,100 @@ body::before {
             </div>
           </div>
         </div>
-        <div class="case__col-right">
-          <details class="case__section">
+        <div class="case-row__text case-row__text--sections">
+          <div class="case-row__kind">Product Design · Enterprise</div>
+          <div class="case-row__tags">склад маркетплейса · приёмка</div>
+          <details class="case__section" open>
             <summary class="case__section-heading">Проблема<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
               <div class="case__section-inner">
-                <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно — добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в существующем интерфейсе был, но таблица вокруг него не была спроектирована под физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для проблемного товара — без штрихкода или признаков принадлежности продавцу. SLA в 24 часа — от поступления до готовности товара к продаже — выполнялся на 72%.</p>
+                <p class="case__section-text">Склад решал проблему пропускной способности экстенсивно&nbsp;— добавлял столы пересчёта, усиливал контроль через камеры, накладывал дополнительные отчёты поверх основного процесса. Сканер в&nbsp;существующем интерфейсе был, но&nbsp;таблица вокруг него не&nbsp;была спроектирована под&nbsp;физический процесс: мелкий текст, ручной ввод количества как источник ошибок, отсутствие отдельного потока для&nbsp;проблемного товара&nbsp;— без&nbsp;штрихкода или признаков принадлежности продавцу. SLA в&nbsp;24&nbsp;часа&nbsp;— от&nbsp;поступления до&nbsp;готовности товара к&nbsp;продаже&nbsp;— выполнялся на&nbsp;72%.</p>
               </div>
             </div>
           </details>
-          <details class="case__section">
+          <details class="case__section" open>
             <summary class="case__section-heading">Подход<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
               <div class="case__section-inner">
-                <p class="case__section-text">Вышел на склад физически. Изучил операционный процесс изнутри — вплоть до того, что скотчем размечал рабочее место на полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и мыши, тогда как весь рабочий процесс строится на сканировании — руки заняты, внимание на физическом действии.</p>
-                <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей примки — его переработка потянула за собой переосмысление всех процессов целиком.</i></p>
+                <p class="case__section-text">Вышел на&nbsp;склад физически. Изучил операционный процесс изнутри&nbsp;— вплоть до&nbsp;того, что скотчем размечал рабочее место на&nbsp;полу. Выявил ключевое ограничение: существующий интерфейс требовал клавиатуры и&nbsp;мыши, тогда как весь рабочий процесс строится на&nbsp;сканировании&nbsp;— руки заняты, внимание на&nbsp;физическом действии.</p>
+                <p class="case__section-text"><i>Стол пересчёта был центральным узким местом всей приёмки&nbsp;— его переработка потянула за&nbsp;собой переосмысление всех процессов целиком.</i></p>
               </div>
             </div>
           </details>
-          <details class="case__section">
+          <details class="case__section" open>
             <summary class="case__section-heading">Решение<svg class="case__section-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
             <div class="case__section-body">
               <div class="case__section-inner">
-                <p class="case__section-text">Спроектировал интерфейс под физическую реальность склада: scan-first, без клавиатуры как основного ввода. Шаблонизировал поля с учётом всех зависимостей и развилок — интерфейс разворачивается пошагово, формируя страницу, по которой можно быстро вернуться к любому шагу без потери контекста.</p>
+                <p class="case__section-text">Спроектировал интерфейс под&nbsp;физическую реальность склада: <span class="nowrap">scan-first</span>, без&nbsp;клавиатуры как основного ввода. Шаблонизировал поля с&nbsp;учётом всех зависимостей и&nbsp;развилок&nbsp;— интерфейс разворачивается пошагово, формируя страницу, по&nbsp;которой можно быстро вернуться к&nbsp;любому шагу без&nbsp;потери контекста.</p>
               </div>
             </div>
           </details>
         </div>
       </div>
     </div>
-
-
-    <div class="tile" style="--c:7; --c-md:10; --c-sm:8;" data-auto-r><img src="assets/grid/big3.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">MythHand Radio Виджет</div>
-        <div class="tile__caption-tags">design&nbsp;&&nbsp;vibecode · in&nbsp;progress</div>
+    <div class="case-row">
+      <div class="case-row__media case-row__media--single">
+        <div class="case-row__line"><img src="assets/grid/fgm5.png" style="--ar:2.098;" alt=""></div>
       </div>
-    </div>
-    <div class="tile" style="--c:9; --c-md:10; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm5.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Spendora</div>
-        <div class="tile__caption-tags">home screen · design process</div>
-      </div>
-    </div>
-    <div class="tile" style="--c:7; --c-md:6; --c-sm:8;" data-auto-r ><img src="assets/grid/fgm3.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Склад Uzum</div>
-        <div class="tile__caption-tags">приложение сотрудника · flow · design</div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Redesign · Mobile App</div>
+        <div class="case-row__tags">заказ · учёт финансов</div>
+        <div class="case-row__title">Spendora</div>
+        <p class="case-row__desc">Автор собрал приложение с&nbsp;ИИ для&nbsp;себя и&nbsp;друзей по&nbsp;формуле из&nbsp;статьи. Логика работала, но&nbsp;интерфейс остался типичной генерацией: все показатели одним ровным рядом, без&nbsp;главного и&nbsp;второстепенного.</p>
+        <p class="case-row__desc">Я развёл показатели по&nbsp;важности, дал ключевым акцент, а&nbsp;нужной информации&nbsp;— свои места. Свободы строить новое не&nbsp;было, поэтому навигацию я пересобрал внутри привычных заказчику сценариев: пути остались знакомыми, но&nbsp;теперь ведут к&nbsp;тому, ради чего приложение задумано. По&nbsp;логике приложения предложил несколько доработок.</p>
       </div>
     </div>
 
-    <div class="tile" style="--c:8; --c-md:7; --c-sm:8;" data-auto-r><video src="assets/grid/video2.mov" autoplay muted loop playsinline></video>
-      <div class="tile__caption">
-        <div class="tile__caption-title">MythHand / 404 page</div>
-        <div class="tile__caption-tags">mini game · design&nbsp;&&nbsp;vibecode</div>
+    <!-- настолки -->
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.333;">
+        <div class="case-row__line"><img src="assets/grid/med10.png" style="--ar:0.791;" alt=""><img src="assets/grid/med11.png" style="--ar:1.0;" alt=""><img src="assets/grid/med5.png" style="--ar:0.563;" alt=""></div>
+        <div class="case-row__line"><img src="assets/grid/big2.png" style="--ar:1.333;" alt=""><img src="assets/grid/med7.png" style="--ar:0.75;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Board Game</div>
+        <div class="case-row__tags">свой проект · 2–6&nbsp;игроков · 15–45&nbsp;минут</div>
+        <div class="case-row__title">Release любой ценой</div>
+        <div class="case__metrics">
+          <div class="case__metric">
+            <div class="case__metric-value">100</div>
+            <div class="case__metric-label">экземпляров первого тиража продано</div>
+          </div>
+        </div>
+        <p class="case-row__desc">Первая настолка и&nbsp;первый опыт печати. Механики взяты из&nbsp;<span class="nowrap">IT-будней</span>: баги, хотфиксы, <span class="nowrap">AI-события</span>, <span class="nowrap">git-команды</span> над&nbsp;колодой. 37&nbsp;уникальных карт, правила на&nbsp;20&nbsp;страниц написаны нейтрально, как задача в&nbsp;разработку. Иконки карт&nbsp;— генерация по&nbsp;одному шаблону промпта с&nbsp;ручной сборкой.</p>
+        <p class="case-row__desc">Работа с&nbsp;типографией оказалась похожа на&nbsp;передачу макетов разработчикам, только теперь учитываешь плотность бумаги, виды печати и&nbsp;экономику тиража.</p>
+        <a class="case-row__link" href="https://mythhand.space/release/about" target="_blank" rel="noopener noreferrer">mythhand.space/release</a>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:0.729;">
+        <div class="case-row__line"><img src="assets/grid/med4.jpg" style="--ar:0.562;" alt=""><img src="assets/grid/med3.png" style="--ar:0.729;" alt=""><img src="assets/grid/med14.png" style="--ar:0.708;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Board Game</div>
+        <div class="case-row__tags">свой проект · заморожен<br>3–8&nbsp;игроков · 30–45&nbsp;минут</div>
+        <div class="case-row__title">Бармены: Последний ингредиент</div>
+        <p class="case-row__desc">Всё держится на&nbsp;одном правиле: коктейль забирает тот, кто положил последний нужный ингредиент. Из&nbsp;него растут воровство ингредиентов и&nbsp;срыв чужих заказов.</p>
+        <p class="case-row__desc">Иллюстрации сгенерированы ИИ и&nbsp;доведены руками. Игра прошла плейтесты. Сейчас проект заморожен на&nbsp;этапе печати.</p>
+        <a class="case-row__link" href="https://mythhand.space/barman/about" target="_blank" rel="noopener noreferrer">mythhand.space/barman</a>
       </div>
     </div>
 
-    <div class="tile" style="--c:3; --r:12;" data-hide-sm><img src="assets/grid/med7.png" alt=""></div>
-    <div class="tile" style="--c:5; --c-md:4; --c-sm:4;" data-auto-r ><img src="assets/grid/sklad2.png" alt="">
-      <div class="tile__caption">
-        <div class="tile__caption-title">Склад KazanExpress</div>
-        <div class="tile__caption-tags">проектирование рабочего места</div>
+    <!-- MythHand + Хабр -->
+    <div class="cases__cards">
+      <div class="tile--project">
+        <img class="project__logo" src="assets/MythHand.svg" alt="MythHand">
+        <p class="project__desc">MythHand&nbsp;— мой <span class="nowrap">инди-бренд</span>: настолки, <span class="nowrap">веб-инструменты</span> и&nbsp;сервисы. В&nbsp;основе одна идея: магия есть во&nbsp;всём, и&nbsp;её можно создать самому.</p>
+        <p class="project__desc">На&nbsp;своих проектах я убедился, что разработка&nbsp;— только часть продукта, и&nbsp;то, что внутри неё кажется главным, в&nbsp;продукте целиком весит иначе.</p>
+        <a class="project__link" href="https://mythhand.space/" target="_blank" rel="noopener noreferrer">mythhand.space</a>
+      </div>
+      <div class="tile--project project--habr">
+        <div class="project__title">Статьи на&nbsp;Хабре</div>
+        <a class="project__link" href="https://habr.com/ru/users/DimaDimbo/articles/" target="_blank" rel="noopener noreferrer">Почитать статьи</a>
+        <img class="project__habr-mark" src="assets/habr.svg" alt="">
       </div>
     </div>
-
-    <div class="tile" style="--c:4; --r:16; --c-md:4; --r-md:13; --c-sm:4; --r-sm:8;"><img src="assets/grid/med5.png" alt=""></div>
-    <div class="tile" style="--c:5; --r:14; --c-md:3; --r-md:12; --c-sm:4; --r-sm:8;"><img src="assets/grid/med14.png" alt=""></div>
-    <div class="tile" style="--c:6; --c-md:6; --c-sm:4;" data-auto-r ><img src="assets/grid/fgm4.png" alt=""></div>
-  </section>
+  </div>
   </section>
 
   <!-- ─── Experience ─── -->
@@ -2036,6 +2450,168 @@ body::before {
 
   setup();
   mq.addEventListener('change', setup);
+})();
+
+/* ─── Кейс склада: секции аккордеоном на ≤860, выше всегда раскрыты ─── */
+(function () {
+  var sections = document.querySelectorAll('.case-row--case details.case__section');
+  if (!sections.length) return;
+  var mq = window.matchMedia('(max-width: 860px)');
+
+  sections.forEach(function (d) {
+    var body = d.querySelector('.case__section-body');
+    d.querySelector('summary').addEventListener('click', function (e) {
+      if (!mq.matches) return;
+      e.preventDefault();
+      if (body.getAnimations().length) return;
+      var opening = !d.open;
+      if (opening) d.open = true;
+      // inline 1fr перебивает CSS-правило :not([open]) → 0fr на время закрытия
+      body.style.gridTemplateRows = '1fr';
+      var fullH = body.scrollHeight;
+      // та же кривая, что в прошлой версии: easeOutCubic, 400ms
+      var anim = body.animate(
+        { height: opening ? ['0px', fullH + 'px'] : [fullH + 'px', '0px'] },
+        { duration: 400, easing: 'cubic-bezier(0.33, 1, 0.68, 1)' }
+      );
+      anim.onfinish = function () {
+        if (!opening) d.open = false;
+        body.style.gridTemplateRows = '';
+      };
+    });
+  });
+
+  function sync() {
+    sections.forEach(function (d) { d.open = !mq.matches; });
+  }
+  mq.addEventListener('change', sync);
+  sync();
+})();
+
+/* ─── Кейс склада: теги под «КЕЙС» после перестройки (≤1600), на десктопе — над секциями ─── */
+(function () {
+  var row = document.querySelector('.case-row--case');
+  if (!row) return;
+  var heading = row.querySelector('.case__heading');
+  var sections = row.querySelector('.case-row__text--sections');
+  var kind = sections.querySelector('.case-row__kind');
+  var tags = sections.querySelector('.case-row__tags');
+  var mq = window.matchMedia('(max-width: 1600px)');
+
+  function place() {
+    if (mq.matches) heading.after(kind, tags);
+    else sections.prepend(kind, tags);
+  }
+  mq.addEventListener('change', place);
+  place();
+})();
+
+/* ─── Галерея кейса: только в режиме слайдера (склад ≤1600, остальные ≤1200) ─── */
+(function () {
+  var mqAll = window.matchMedia('(max-width: 1200px)');
+  var mqCase = window.matchMedia('(max-width: 1600px)');
+  var ITEMS = '.case-row__line > img, .case-row__line > video';
+
+  var gallery = document.createElement('div');
+  gallery.className = 'gallery';
+  gallery.setAttribute('role', 'dialog');
+  gallery.setAttribute('aria-modal', 'true');
+  gallery.innerHTML = '<div class="gallery__bar"><span class="gallery__count"></span>' +
+    '<div class="gallery__actions"><button class="gallery__btn gallery__rotate" type="button">Повернуть</button>' +
+    '<button class="gallery__btn gallery__close" type="button">Закрыть</button></div></div>' +
+    '<div class="gallery__track"></div>';
+  document.body.appendChild(gallery);
+  var track = gallery.querySelector('.gallery__track');
+  var count = gallery.querySelector('.gallery__count');
+  var rotateBtn = gallery.querySelector('.gallery__rotate');
+  var mqPortrait = window.matchMedia('(orientation: portrait)');
+  var total = 0;
+  var current = -1;
+  var clearTimer = null;
+
+  function isSlider(media) {
+    if (media.classList.contains('case-row__media--single')) return false;
+    return media.closest('.case-row--case') ? mqCase.matches : mqAll.matches;
+  }
+  function unrotate(slide) {
+    if (!slide || !slide.classList.contains('is-rotated')) return;
+    slide.classList.remove('is-rotated');
+    slide.firstChild.style.width = '';
+    slide.firstChild.style.height = '';
+  }
+  function update() {
+    var i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i !== current) {
+      unrotate(track.children[current]);
+      current = i;
+    }
+    count.textContent = (i + 1) + ' / ' + total;
+    var slide = track.children[i];
+    gallery.classList.toggle('is-wide', !!slide && Number(slide.dataset.ar) > 1);
+  }
+  function open(items, start) {
+    clearTimeout(clearTimer);
+    track.innerHTML = '';
+    items.forEach(function (el) {
+      var slide = document.createElement('div');
+      slide.className = 'gallery__slide';
+      var copy = el.cloneNode(false);
+      slide.dataset.ar = parseFloat(el.style.getPropertyValue('--ar')) || 1;
+      copy.removeAttribute('style');
+      if (copy.tagName === 'VIDEO') {
+        copy.muted = true;
+        copy.autoplay = true;
+        copy.loop = true;
+        copy.playsInline = true;
+      }
+      slide.appendChild(copy);
+      track.appendChild(slide);
+    });
+    total = items.length;
+    document.documentElement.style.overflow = 'hidden';
+    gallery.classList.add('is-open');
+    current = -1;
+    track.scrollLeft = start * track.clientWidth;
+    update();
+  }
+  function close() {
+    gallery.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    // видео не должны играть в закрытой галерее
+    clearTimer = setTimeout(function () { track.innerHTML = ''; }, 320);
+  }
+
+  document.querySelectorAll('.case-row__media').forEach(function (media) {
+    media.addEventListener('click', function (e) {
+      var el = e.target.closest(ITEMS);
+      if (!el || !isSlider(media)) return;
+      var items = Array.prototype.slice.call(media.querySelectorAll(ITEMS));
+      open(items, items.indexOf(el));
+    });
+  });
+  track.addEventListener('scroll', update);
+  // поворот: кадр вписывается в экран боком, его ширина = доступная высота
+  rotateBtn.addEventListener('click', function () {
+    var slide = track.children[current];
+    if (!slide) return;
+    if (slide.classList.contains('is-rotated')) { unrotate(slide); return; }
+    var cs = getComputedStyle(slide);
+    var boxW = slide.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var boxH = slide.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var ar = Number(slide.dataset.ar);
+    var w = Math.min(boxH, boxW * ar);
+    slide.firstChild.style.width = w + 'px';
+    slide.firstChild.style.height = (w / ar) + 'px';
+    slide.classList.add('is-rotated');
+  });
+  mqPortrait.addEventListener('change', function () { unrotate(track.children[current]); });
+  gallery.querySelector('.gallery__close').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (!gallery.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+    if (e.key === 'ArrowLeft') track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+  });
 })();
 
 function copyEmail(e) {
