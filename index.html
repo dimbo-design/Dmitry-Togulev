@@ -766,7 +766,7 @@ body::before {
 .case-row--case { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .case-row__texts {
   position: sticky;
-  top: calc(160 * var(--u));
+  top: calc(130 * var(--u));
   display: grid;
   grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
   column-gap: calc(64 * var(--u));
@@ -778,11 +778,12 @@ body::before {
 /* теги переезжают под «КЕЙС» на ≤1600 (JS), секции тогда начинаются с линии «КЕЙС» */
 .case-row__text--sections > .case__section:first-child { margin-top: 0; }
 .case__heading + .case-row__kind { margin-top: calc(16 * var(--u)); }
-/* обе колонки sticky: длинная занимает всю строку и стоит, короткая едет вдоль неё */
+/* обе колонки sticky: длинная занимает всю строку и стоит, короткая едет вдоль неё.
+   top 130 = низ сжатого правого хедера (14 + 82.6) + тот же зазор 34, что был под мини */
 .case-row__media,
 .case-row__text {
   position: sticky;
-  top: calc(160 * var(--u));
+  top: calc(130 * var(--u));
 }
 .case-row__media {
   display: flex;
@@ -1543,6 +1544,76 @@ body::before {
     padding-right: clamp(32px, calc(-12.52px + 13.91vw), 64px);
   }
   .contact-cols { padding-left: clamp(32px, calc(-94.6px + 39.57vw), 123px); }
+}
+
+/* ─── Right header: сжатое состояние при скролле (>730, без наведения) ───
+   Класс на body ставит JS, когда первый экран пройден на 65%. Всё в одну полосу высотой с блок
+   ссылок (46.5): текст 24/18 → 20/15, фото под высоту текста (62×64 → 45×46.5), отступы ×0.727.
+   Высота блока подобрана так, чтобы центр совпал с центром строки «DIMBO MX DESIGN»:
+   H = 2 × (top левого текста + 13.3 − top правого блока). Наведение раскрывает как обычно. */
+@media (min-width: 1200px) {
+  /* в мини стоят на месте; движутся только при переходе в сжатое и из него */
+  .header-right__divider-mini {
+    transition:
+      top 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      right 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      height 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .header-right__links-mini {
+    transition:
+      top 840ms cubic-bezier(0.32, 0.72, 0, 1),
+      right 840ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
+@media (min-width: 731px) {
+  body.header-right-compact .header-right:not(:hover) {
+    --c-band: calc(46.5 * var(--u));
+    --c-h: calc(82.6 * var(--u));
+    --c-pad-x: calc(23.3 * var(--u));
+    --c-pad-y: calc((var(--c-h) - var(--c-band)) / 2);
+    width: calc(493 * var(--u));
+    height: var(--c-h);
+  }
+  body.header-right-compact .header-right:not(:hover) .header-right__photo {
+    left: var(--c-pad-x);
+    top: var(--c-pad-y);
+    width: calc(45 * var(--u));
+    height: var(--c-band);
+  }
+  body.header-right-compact .header-right:not(:hover) .header-right__photo img {
+    left: calc(-36.4 * var(--u));
+    top: calc(-1.45 * var(--u));
+    width: calc(112 * var(--u));
+    height: calc(112 * var(--u));
+  }
+  body.header-right-compact .header-right:not(:hover) .header-right__mini {
+    left: calc(var(--c-pad-x) + 58 * var(--u));
+    top: var(--c-pad-y);
+  }
+  body.header-right-compact .header-right:not(:hover) .header-right__name { font-size: calc(20 * var(--u)); }
+  body.header-right-compact .header-right:not(:hover) .header-right__role-mini { font-size: calc(15 * var(--u)); }
+  body.header-right-compact .header-right:not(:hover) .header-right__divider-mini {
+    right: calc(192.5 * var(--u));
+    top: var(--c-pad-y);
+    height: var(--c-band);
+  }
+  body.header-right-compact .header-right:not(:hover) .header-right__links-mini {
+    right: calc(25.5 * var(--u));
+    top: var(--c-pad-y);
+  }
+}
+@media (min-width: 731px) and (max-width: 1199px) {
+  /* без разделителя и ссылок: справа запас = отступ слева + 18.5 (57 × 0.727 на 1023+) */
+  body.header-right-compact .header-right:not(:hover) {
+    width: calc(2 * var(--c-pad-x) + 258.6 * var(--u));
+  }
+}
+@media (min-width: 731px) and (max-width: 1023px) {
+  /* та же формула высоты, что выше, но на плавных значениях обеих шапок; отступ слева −8×0.727 к 500 */
+  body.header-right-compact .header-right:not(:hover) {
+    --c-h: calc(2 * (clamp(22px, calc(2.88px + 3.824vw), 42px) + 13.3px - clamp(6px, calc(-1.65px + 1.53vw), 14px)));
+    --c-pad-x: clamp(17.45px, calc(11.89px + 1.112vw), 23.3px);
+  }
 }
 
 /* ─── Cases: адаптив ───
@@ -2452,6 +2523,17 @@ body::before {
 
   setup();
   mq.addEventListener('change', setup);
+})();
+
+/* ─── Right header: сжатое состояние, когда первый экран пройден на 65% (действует на >730) ─── */
+(function () {
+  var hero = document.querySelector('.hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      document.body.classList.toggle('header-right-compact', entry.intersectionRatio < 0.35);
+    });
+  }, { threshold: [0.35] }).observe(hero);
 })();
 
 /* ─── Кейс склада: секции аккордеоном на ≤860, выше всегда раскрыты ─── */
