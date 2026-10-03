@@ -1552,7 +1552,7 @@ body::before {
 }
 
 /* ─── Right header: сжатое состояние при скролле (>730, без наведения) ───
-   Класс на body ставит JS, когда первый экран пройден на 65%. Всё в одну полосу высотой с блок
+   Класс на body ставит JS, когда первый экран пройден на 85%. Всё в одну полосу высотой с блок
    ссылок (46.5): текст 24/18 → 20/15, фото под высоту текста (62×64 → 45×46.5), отступы ×0.727.
    Высота блока подобрана так, чтобы центр совпал с центром строки «DIMBO MX DESIGN»:
    H = 2 × (top левого текста + 13.3 − top правого блока). Наведение раскрывает как обычно. */
@@ -2533,15 +2533,15 @@ body::before {
   mq.addEventListener('change', setup);
 })();
 
-/* ─── Right header: сжатое состояние, когда первый экран пройден на 65% (действует на >730) ─── */
+/* ─── Right header: сжатое состояние, когда первый экран пройден на 85% (действует на >730) ─── */
 (function () {
   var hero = document.querySelector('.hero');
   if (!hero || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      document.body.classList.toggle('header-right-compact', entry.intersectionRatio < 0.35);
+      document.body.classList.toggle('header-right-compact', entry.intersectionRatio < 0.15);
     });
-  }, { threshold: [0.35] }).observe(hero);
+  }, { threshold: [0.15] }).observe(hero);
 })();
 
 /* ─── Кейс склада: секции аккордеоном на ≤860, выше всегда раскрыты ─── */
