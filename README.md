@@ -37,7 +37,7 @@ Page covers:
 ## Notes
 
 - Single-file architecture by choice — portability + zero ceremony.
-- The site is a **teaser**; the [PDF resume](https://dimbo-design.github.io/Dmitry-Togulev/assets/Product_Design_Dmitry_Togulev.pdf) is the deeper document.
+- The site shows the projects; the PDF is the resume.
 
 ---
 
