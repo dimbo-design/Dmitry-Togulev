@@ -910,12 +910,14 @@ body::before {
   padding-right: calc(64 * var(--u));
 }
 /* ─── Portfolio: группы кейсов аккордеоном (JS), без JS всё раскрыто ───
-   отступ под заголовком переехал в .cases, чтобы свёрнутая группа не держала его */
+   отступ под заголовком переехал внутрь .cases, к первому ряду: высота .cases анимируется
+   от 0, и отступ раскрывается вместе с содержимым. В padding его не ставить — высота
+   не опускается ниже padding, и на старте и в конце анимации выходит скачок */
 .section--group > .section__title {
   margin-bottom: 0;
   cursor: pointer;
 }
-.section--group > .cases { padding-top: calc(71 * var(--u)); }
+.section--group > .cases > :first-child { margin-top: calc(71 * var(--u)); }
 .section--group.is-closed > .cases { display: none; }
 /* свёрнутые группы стоят плотнее; под раскрытой — обычный отступ секции.
    Отступ едет вместе с раскрытием: та же длительность и кривая, что в JS */
