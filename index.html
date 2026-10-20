@@ -2022,7 +2022,7 @@ body::before {
       <span class="val">3 cases</span>
     </div>
   <div class="cases">
-    <div class="case-row case-row--case">
+    <div class="case-row case-row--case" data-preview="2">
       <div class="case-row__media" style="--ar-max:2.34;">
         <div class="case-row__line"><img src="assets/grid/sklad1.png" style="--ar:1.209;" alt=""><img src="assets/grid/sklad2.png" style="--ar:1.331;" alt=""></div>
         <div class="case-row__line"><img src="assets/grid/fgm1.png" style="--ar:1.727;" alt=""></div>
@@ -2115,7 +2115,7 @@ body::before {
       <span class="val">3 cases</span>
     </div>
   <div class="cases">
-    <div class="case-row">
+    <div class="case-row" data-preview="3">
       <div class="case-row__media" style="--ar-max:1.758;">
         <div class="case-row__line"><video src="assets/grid/ai_p2p_audit.mp4" style="--ar:1.509;" autoplay muted loop playsinline></video><video src="assets/grid/ai_p2p_hand.mp4" style="--ar:1.758;" autoplay muted loop playsinline></video></div>
         <div class="case-row__line"><video src="assets/grid/ai_p2p_release.mp4" style="--ar:1.524;" autoplay muted loop playsinline></video></div>
@@ -2169,7 +2169,7 @@ body::before {
       <span class="val">3 cases</span>
     </div>
   <div class="cases">
-    <div class="case-row">
+    <div class="case-row" data-preview="4">
       <div class="case-row__media" style="--ar-max:1.745;">
         <div class="case-row__line"><video src="assets/grid/ai_mythlist_2.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
         <div class="case-row__line"><video src="assets/grid/ai_mythlist_1.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video><video src="assets/grid/ai_mythlist_3.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
@@ -2222,7 +2222,7 @@ body::before {
       <span class="val">2 cases</span>
     </div>
   <div class="cases">
-    <div class="case-row">
+    <div class="case-row" data-preview="4">
       <div class="case-row__media" style="--ar-max:1.333;">
         <div class="case-row__line"><img src="assets/grid/med10.png" style="--ar:0.791;" alt=""><img src="assets/grid/med11.png" style="--ar:1.0;" alt=""><img src="assets/grid/med5.png" style="--ar:0.563;" alt=""></div>
         <div class="case-row__line"><img src="assets/grid/big2.png" style="--ar:1.333;" alt=""><img src="assets/grid/med7.png" style="--ar:0.75;" alt=""></div>
@@ -2682,12 +2682,14 @@ body::before {
       };
     }
 
-    // превью: первый кадр каждого кейса группы; видео играют только пока наведено
+    // превью: по кадру от каждого кейса группы — первый или номер из data-preview;
+    // видео играют только пока наведено
     var previews = document.createElement('div');
     previews.className = 'section__previews';
     previews.setAttribute('aria-hidden', 'true');
     group.querySelectorAll('.case-row').forEach(function (row) {
-      var src = row.querySelector('.case-row__line > img, .case-row__line > video');
+      var items = row.querySelectorAll('.case-row__line > img, .case-row__line > video');
+      var src = items[(+row.dataset.preview || 1) - 1] || items[0];
       if (!src) return;
       var el = document.createElement(src.tagName === 'VIDEO' ? 'video' : 'img');
       el.style.setProperty('--ar', src.style.getPropertyValue('--ar'));
