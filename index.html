@@ -936,9 +936,14 @@ body::before {
   flex-shrink: 0;
   transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
 }
-/* превью свёрнутой группы: первые кадры кейсов справа в строке заголовка, только мышь на >730.
-   Висят поверх, на раскладку и отступы не влияют */
-.section__previews { display: none; }
+/* превью свёрнутой группы: по кадру от каждого кейса.
+   Мышь на >730 — справа в строке заголовка при наведении, висят поверх, на раскладку не влияют.
+   Тач и ≤730 — рядом под заголовком, видны всегда (ниже) */
+.section__previews {
+  /* полная высота: 128.8 до 1200, плавно до 180.32 к 1728, дальше растёт с --u.
+     --pv-fit ставит JS: высота, при которой ряд влезает в своё место */
+  --pv-max: clamp(128.8px, calc(11.71px + 9.758vw), 180.32px);
+}
 @media (hover: hover) and (pointer: fine) and (min-width: 731px) {
   .section--group > .section__title { position: relative; }
   /* зона наведения — строка с половинами отступа сверху и снизу */
@@ -951,9 +956,6 @@ body::before {
     bottom: calc(-22 * var(--u));
   }
   .section__previews {
-    /* полная высота: 128.8 до 1200, плавно до 180.32 к 1728, дальше растёт с --u.
-       --pv-fit ставит JS: высота, при которой ряд влезает между заголовком и правым краем */
-    --pv-max: clamp(128.8px, calc(11.71px + 9.758vw), 180.32px);
     display: flex;
     gap: calc(12 * var(--u));
     position: absolute;
@@ -980,6 +982,43 @@ body::before {
 }
 @media (hover: hover) and (pointer: fine) and (min-width: 1729px) {
   .section__previews { --pv-max: calc(180.32 * var(--u)); }
+}
+/* тач и узкий экран: ряд превью всегда виден под заголовком свёрнутой группы.
+   При раскрытии ряд схлопывается, а первый кейс встаёт на его место — та же длительность
+   и кривая, что у раскрытия в JS */
+@media (hover: none), (pointer: coarse), (max-width: 730px) {
+  .section--group > .section__title { flex-wrap: wrap; }
+  .section__previews {
+    display: flex;
+    order: 2;
+    flex-basis: 100%;
+    /* иначе ширина ряда = сумма кадров, он распирает строку и JS не может его ужать */
+    min-width: 0;
+    gap: calc(12 * var(--u));
+    height: min(var(--pv-max), var(--pv-fit, var(--pv-max)));
+    margin-top: calc(16 * var(--u));
+    /* справа тот же отступ, что слева у текста */
+    padding-right: clamp(22px, calc(11.98px + 3.13vw), calc(44 * var(--u)));
+    overflow: clip;
+    transition:
+      height 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      margin-top 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 600ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .section--group:not(.is-closed):not(.is-closing) .section__previews {
+    height: 0;
+    margin-top: 0;
+    opacity: 0;
+  }
+  .section__previews > img,
+  .section__previews > video {
+    display: block;
+    flex: none;
+    height: 100%;
+    width: auto;
+    aspect-ratio: var(--ar);
+    object-fit: cover;
+  }
 }
 /* на ≤730 отступ слева меньше шеврона — он уходит в конец строки, как у секций склада */
 @media (max-width: 730px) {
@@ -2024,7 +2063,7 @@ body::before {
   <section class="section section--group" data-screen-label="portfolio-clients">
     <div class="section__title">
       <svg class="section__chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="key">Product Design</span>
+      <span class="key">Teams &amp; Clients</span>
       <span class="val">3 cases</span>
     </div>
   <div class="cases">
@@ -2656,6 +2695,7 @@ body::before {
 
 /* ─── Portfolio: группы свёрнуты, клик по заголовку раскрывает; открыто может быть несколько ─── */
 (function () {
+  var hoverMode = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 731px)');
   document.querySelectorAll('.section--group').forEach(function (group) {
     var title = group.querySelector('.section__title');
     var body = group.querySelector('.cases');
@@ -2667,12 +2707,17 @@ body::before {
     function toggle() {
       if (body.getAnimations().length) return;
       var opening = group.classList.contains('is-closed');
+      // на таче ряд превью стоит в потоке и схлопывается вместе с раскрытием:
+      // конечный верх группы выше текущего на его высоту
+      var pvShift = opening && getComputedStyle(previews).position !== 'absolute'
+        ? previews.offsetHeight + parseFloat(getComputedStyle(previews).marginTop)
+        : 0;
       group.classList.toggle('is-closed', false);
       group.classList.toggle('is-closing', !opening);
       title.setAttribute('aria-expanded', String(opening));
       // анимируется только видимая часть: ниже экрана движения не видно, а на полной
       // высоте группа в несколько тысяч px пролетает за первые кадры
-      var shownH = Math.min(body.offsetHeight, Math.max(0, window.innerHeight - body.getBoundingClientRect().top));
+      var shownH = Math.min(body.offsetHeight, Math.max(0, window.innerHeight - body.getBoundingClientRect().top + pvShift));
       // clip, а не hidden: hidden делает .cases областью прокрутки, липкий текст кейсов
       // на время анимации цепляется к ней, а не к экрану, и в конце перескакивает
       body.style.overflow = 'clip';
@@ -2713,13 +2758,17 @@ body::before {
       previews.appendChild(el);
     });
     title.appendChild(previews);
-    // ряд не заходит на заголовок: зазор до «N cases» не меньше левого отступа текста
+    // наведение: ряд справа от заголовка, зазор до «N cases» не меньше левого отступа текста;
+    // тач: ряд под заголовком во всю ширину строки
     function fitPreviews() {
       var val = title.querySelector('.val');
+      var cs = getComputedStyle(previews);
       var sumAr = 0;
       [].forEach.call(previews.children, function (el) { sumAr += parseFloat(el.style.getPropertyValue('--ar')) || 0; });
-      var gaps = (parseFloat(getComputedStyle(previews).columnGap) || 0) * (previews.children.length - 1);
-      var room = previews.offsetLeft + previews.offsetWidth - (val.offsetLeft + val.offsetWidth) - parseFloat(getComputedStyle(title).paddingLeft) - gaps;
+      var gaps = (parseFloat(cs.columnGap) || 0) * (previews.children.length - 1);
+      var room = hoverMode.matches
+        ? previews.offsetLeft + previews.offsetWidth - (val.offsetLeft + val.offsetWidth) - parseFloat(getComputedStyle(title).paddingLeft) - gaps
+        : previews.clientWidth - parseFloat(cs.paddingRight) - gaps;
       if (sumAr) previews.style.setProperty('--pv-fit', Math.max(0, room / sumAr) + 'px');
     }
     fitPreviews();
@@ -2727,7 +2776,7 @@ body::before {
     if (document.fonts) document.fonts.ready.then(fitPreviews);
     var videos = previews.querySelectorAll('video');
     title.addEventListener('mouseenter', function () {
-      if (group.classList.contains('is-closed')) videos.forEach(function (v) { v.play().catch(function () {}); });
+      if (hoverMode.matches && group.classList.contains('is-closed')) videos.forEach(function (v) { v.play().catch(function () {}); });
     });
     title.addEventListener('mouseleave', function () {
       videos.forEach(function (v) { v.pause(); });
