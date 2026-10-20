@@ -2663,7 +2663,9 @@ body::before {
       // анимируется только видимая часть: ниже экрана движения не видно, а на полной
       // высоте группа в несколько тысяч px пролетает за первые кадры
       var shownH = Math.min(body.offsetHeight, Math.max(0, window.innerHeight - body.getBoundingClientRect().top));
-      body.style.overflow = 'hidden';
+      // clip, а не hidden: hidden делает .cases областью прокрутки, липкий текст кейсов
+      // на время анимации цепляется к ней, а не к экрану, и в конце перескакивает
+      body.style.overflow = 'clip';
       var shut = { height: '0px', opacity: 0 };
       var shown = { height: shownH + 'px', opacity: 1 };
       var anim = body.animate(
@@ -2672,7 +2674,6 @@ body::before {
       );
       anim.onfinish = function () {
         if (!opening) group.classList.replace('is-closing', 'is-closed');
-        // overflow снимается: иначе внутри не работает sticky колонок кейса
         body.style.overflow = '';
       };
     }
