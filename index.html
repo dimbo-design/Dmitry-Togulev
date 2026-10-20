@@ -930,6 +930,45 @@ body::before {
   flex-shrink: 0;
   transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
 }
+/* превью свёрнутой группы: первые кадры кейсов справа в строке заголовка, только мышь на >730.
+   Висят поверх, на раскладку и отступы не влияют */
+.section__previews { display: none; }
+@media (hover: hover) and (pointer: fine) and (min-width: 731px) {
+  .section--group > .section__title { position: relative; }
+  /* зона наведения — строка с половинами отступа сверху и снизу */
+  .section--group > .section__title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(-22 * var(--u));
+    bottom: calc(-22 * var(--u));
+  }
+  .section__previews {
+    display: flex;
+    gap: calc(12 * var(--u));
+    position: absolute;
+    /* правый край — на той же линии, что левый отступ текста */
+    right: clamp(22px, calc(11.98px + 3.13vw), calc(44 * var(--u)));
+    top: 50%;
+    transform: translate(calc(16 * var(--u)), -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 360ms ease, transform 480ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .section--group.is-closed > .section__title:hover .section__previews {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+  .section__previews > img,
+  .section__previews > video {
+    display: block;
+    height: calc(56 * var(--u));
+    width: auto;
+    aspect-ratio: var(--ar);
+    object-fit: cover;
+  }
+}
 /* на ≤730 отступ слева меньше шеврона — он уходит в конец строки, как у секций склада */
 @media (max-width: 730px) {
   .section__chevron {
@@ -2635,6 +2674,37 @@ body::before {
         body.style.overflow = '';
       };
     }
+
+    // превью: первый кадр каждого кейса группы; видео играют только пока наведено
+    var previews = document.createElement('div');
+    previews.className = 'section__previews';
+    previews.setAttribute('aria-hidden', 'true');
+    group.querySelectorAll('.case-row').forEach(function (row) {
+      var src = row.querySelector('.case-row__line > img, .case-row__line > video');
+      if (!src) return;
+      var el = document.createElement(src.tagName === 'VIDEO' ? 'video' : 'img');
+      el.style.setProperty('--ar', src.style.getPropertyValue('--ar'));
+      if (el.tagName === 'VIDEO') {
+        el.muted = true;
+        el.loop = true;
+        el.playsInline = true;
+        el.preload = 'auto';
+        // #t — чтобы Safari показал первый кадр до запуска
+        el.src = src.getAttribute('src') + '#t=0.1';
+      } else {
+        el.src = src.getAttribute('src');
+        el.alt = '';
+      }
+      previews.appendChild(el);
+    });
+    title.appendChild(previews);
+    var videos = previews.querySelectorAll('video');
+    title.addEventListener('mouseenter', function () {
+      if (group.classList.contains('is-closed')) videos.forEach(function (v) { v.play().catch(function () {}); });
+    });
+    title.addEventListener('mouseleave', function () {
+      videos.forEach(function (v) { v.pause(); });
+    });
 
     title.addEventListener('click', toggle);
     title.addEventListener('keydown', function (e) {
