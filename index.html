@@ -798,12 +798,16 @@ body::before {
   display: flex;
   gap: calc(24 * var(--u));
 }
+/* высота из --ar, а не из файла: раскладка известна до загрузки видео
+   (иначе раскрытая группа дорастает, пока кадры грузятся по сети) */
 .case-row__line > img,
 .case-row__line > video {
   flex: var(--ar) 1 0%;
   min-width: 0;
   width: 100%;
   height: auto;
+  aspect-ratio: var(--ar);
+  object-fit: cover;
   display: block;
 }
 /* заглушка под медиа, которого пока нет */
