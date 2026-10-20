@@ -884,9 +884,8 @@ body::before {
   margin-top: calc(186 * var(--u));
   position: relative;
 }
-/* Portfolio: убираем отступ-разделитель — заголовок должен сидеть сразу под hero,
-   плитки сетки выглядывают из-под hero как раньше */
-.section[data-screen-label="portfolio"] { margin-top: 0; }
+/* первая группа портфолио: без отступа-разделителя, заголовок сидит сразу под hero */
+.hero + .section { margin-top: 0; }
 .section__title {
   display: flex;
   align-items: baseline;
@@ -1940,115 +1939,13 @@ body::before {
     </div>
   </section>
 
-  <!-- ─── Portfolio ─── -->
-  <section class="section" data-screen-label="portfolio">
+  <!-- ─── Portfolio: группы кейсов ─── -->
+  <section class="section" data-screen-label="portfolio-product">
     <div class="section__title">
-      <span class="key">Portfolio</span>
-      <span class="val">favorite cases</span>
+      <span class="key">Product Design</span>
+      <span class="val">3 cases</span>
     </div>
-  <div class="cases" data-screen-label="cases">
-    <!-- ИИ -->
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.745;">
-        <div class="case-row__line"><video src="assets/grid/ai_mythlist_2.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><video src="assets/grid/ai_mythlist_1.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video><video src="assets/grid/ai_mythlist_3.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><video src="assets/grid/ai_mythlist_4.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Product Design · Vibe Coding</div>
-        <div class="case-row__tags">свой проект</div>
-        <div class="case-row__title">Myth List</div>
-        <p class="case-row__desc">Интерактивные листы персонажа, внутри которых живёт вся книга правил Dungeon World: ходы, классы, снаряжение, состояния и&nbsp;все связи между ними. Игроку не&nbsp;нужно держать правила в&nbsp;голове&nbsp;— лист показывает только то, что доступно герою сейчас, бросок сам учитывает бафы, дебафы и&nbsp;снаряжение, новый уровень открывает выбор ходов.</p>
-        <p class="case-row__desc">Правила связаны между собой, и&nbsp;одна правка легко задевает соседние, поэтому систему держат тесты: при&nbsp;каждом изменении они сверяют механику и&nbsp;тексты с&nbsp;книгой, и&nbsp;перекос всплывает раньше, чем его заметит игрок.</p>
-        <a class="case-row__link" href="https://mythhand.space/mythlist/about" target="_blank" rel="noopener noreferrer">mythhand.space/mythlist</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.745;">
-        <div class="case-row__line"><video src="assets/grid/ai_dw_search.mp4" style="--ar:0.814;" autoplay muted loop playsinline></video><video src="assets/grid/ai_dw_search_en.mp4" style="--ar:0.838;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><img src="assets/grid/ai_dw_book.jpg" style="--ar:1.745;" alt=""></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Product Design · Vibe Coding</div>
-        <div class="case-row__tags">свой проект · перевод</div>
-        <div class="case-row__title">Перевод книги правил Dungeon World&nbsp;1e</div>
-        <p class="case-row__desc">Перевёл книгу правил Dungeon World&nbsp;— правила, классы, заклинания, бестиарий, раздел мастера&nbsp;— и&nbsp;сверстал её <span class="nowrap">веб-версию</span>.</p>
-        <p class="case-row__desc">Книгу правил не&nbsp;читают подряд, в&nbsp;ней ищут посреди игры. Поэтому у&nbsp;каждой главы и&nbsp;раздела свой адрес, поиск идёт по&nbsp;всей книге, а&nbsp;рядом с&nbsp;правилом видно, как оно работает в&nbsp;листе персонажа Myth List. Два языка: перевод и&nbsp;оригинал. Термины держит канон перевода, дословность проверяют тесты&nbsp;— чтобы дварф не&nbsp;стал гномом на&nbsp;сотой странице.</p>
-        <a class="case-row__link" href="https://mythhand.space/dungeon-world" target="_blank" rel="noopener noreferrer">mythhand.space/dungeon-world</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.748;">
-        <div class="case-row__line"><video src="assets/grid/ai_radio_adaptive.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><img src="assets/grid/ai_radio_desktop.jpg" style="--ar:1.742;" alt=""><img src="assets/grid/ai_radio_phone.jpg" style="--ar:0.542;" alt=""></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
-        <div class="case-row__tags">свой проект · бета</div>
-        <div class="case-row__title">Myth Radio</div>
-        <p class="case-row__desc">Атмосфера для&nbsp;настольных ролевых игр из&nbsp;двух дорожек: тема задаёт настроение, а&nbsp;амбиент место. Любая пара даёт свою сцену.</p>
-        <p class="case-row__desc">Адаптив построен на&nbsp;соотношении сторон экрана, а&nbsp;не&nbsp;на&nbsp;брейкпоинтах: кольца выбора стоят по&nbsp;бокам на&nbsp;широком экране, у&nbsp;углов на&nbsp;квадратном, сверху и&nbsp;снизу на&nbsp;телефоне, и&nbsp;в&nbsp;любом промежуточном состоянии страница остаётся собой. Две громкости сведены в&nbsp;один элемент: квадрат с&nbsp;точкой, по&nbsp;вертикали общая громкость, по&nbsp;горизонтали баланс дорожек.</p>
-        <a class="case-row__link" href="http://radio.mythhand.space/" target="_blank" rel="noopener noreferrer">radio.mythhand.space</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.758;">
-        <div class="case-row__line"><video src="assets/grid/ai_p2p_audit.mp4" style="--ar:1.509;" autoplay muted loop playsinline></video><video src="assets/grid/ai_p2p_hand.mp4" style="--ar:1.758;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><video src="assets/grid/ai_p2p_release.mp4" style="--ar:1.524;" autoplay muted loop playsinline></video></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Interaction Design · Vibe Coding · Open&nbsp;Source</div>
-        <div class="case-row__tags">свой проект · <span class="nowrap">p2p-версия</span> настольной игры</div>
-        <div class="case-row__title">Release любой ценой</div>
-        <p class="case-row__desc">Партия по&nbsp;сети в&nbsp;браузере, без&nbsp;сервера для&nbsp;игры. Нас двое с&nbsp;разработчиком: на&nbsp;нём движок и&nbsp;сеть, на&nbsp;мне всё, что видит игрок.</p>
-        <p class="case-row__desc">Интерфейс и&nbsp;отладка всех анимаций: движения карт собраны в&nbsp;словарь и&nbsp;вызываются по&nbsp;смыслу&nbsp;— сыграть карту, сложить пару, вернуть в&nbsp;колоду. Отказ в&nbsp;действии показывается вздрагиванием, и&nbsp;у&nbsp;каждого элемента оно своё.</p>
-        <a class="case-row__link" href="https://mythhand.github.io/ReleaseBoardGameP2P" target="_blank" rel="noopener noreferrer">mythhand.github.io/ReleaseBoardGameP2P</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.983;">
-        <div class="case-row__line"><video src="assets/grid/ai_lapka_video.mp4" style="--ar:1.742;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><img src="assets/grid/ai_lapka_player.jpg" style="--ar:1.983;" alt=""></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Product Design · Vibe Coding · Open&nbsp;Source</div>
-        <div class="case-row__tags">свой проект · локальный <span class="nowrap">аниме-плеер</span></div>
-        <div class="case-row__title">Lapka</div>
-        <p class="case-row__desc">Отправная точка&nbsp;— не&nbsp;устройство плеера, а&nbsp;то, как смотрят аниме: франшизу целиком, в&nbsp;одной озвучке, с&nbsp;перерывами.</p>
-        <p class="case-row__desc">Отсюда решения. Все сезоны, фильмы и&nbsp;<span class="nowrap">спин-оффы</span> встают одной очередью в&nbsp;порядке выхода. Выбранная озвучка держится на&nbsp;весь сериал и&nbsp;переключается на&nbsp;ходу, как дорожка, хотя технически это чаще отдельный источник. Просмотр продолжается с&nbsp;того же места для&nbsp;каждой серии и&nbsp;озвучки, а&nbsp;мёртвый источник сам меняется на&nbsp;живой.</p>
-        <p class="case-row__desc">Мой первый опубликованный пакет в&nbsp;npm: Lapka запускается одной командой.</p>
-        <a class="case-row__link" href="https://github.com/MythHand/Lapka" target="_blank" rel="noopener noreferrer">github.com/MythHand/Lapka</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media case-row__media--single">
-        <div class="case-row__line"><video src="assets/grid/ai_nodari.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Product Design · Vibe Coding · Landing</div>
-        <div class="case-row__tags">заказ · исследование · позиционирование</div>
-        <div class="case-row__title">Нодари Апполонов</div>
-        <p class="case-row__desc">Сайт специалиста по&nbsp;Яндекс Директу для&nbsp;производств. До&nbsp;первого макета&nbsp;— десять шагов исследования: аудитория, компании, поле конкурентов, анкеты и&nbsp;раунды вопросов, разбор старого сайта. Так сформировалась база из&nbsp;ответов, фактов и&nbsp;внутренних метрик.</p>
-        <p class="case-row__desc">Из&nbsp;«не&nbsp;знаю, что о&nbsp;себе рассказать» по&nbsp;кусочкам собрали позиционирование, а&nbsp;из&nbsp;него&nbsp;— структуру и&nbsp;страницу.</p>
-        <a class="case-row__link" href="https://directsolutions.ru/" target="_blank" rel="noopener noreferrer">directsolutions.ru</a>
-      </div>
-    </div>
-    <div class="case-row">
-      <div class="case-row__media" style="--ar-max:1.956;">
-        <div class="case-row__line"><video src="assets/grid/ai_hcv_warehouse.mp4" style="--ar:1.739;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><img src="assets/grid/ai_hcv_debug.jpg" style="--ar:1.371;" alt=""><video src="assets/grid/ai_hcv_cursor.mp4" style="--ar:1.956;" autoplay muted loop playsinline></video></div>
-        <div class="case-row__line"><video src="assets/grid/ai_hcv_pashalka.mp4" style="--ar:1.736;" autoplay muted loop playsinline></video><img src="assets/grid/ai_hcv_regress.png" style="--ar:1.197;" alt=""></div>
-      </div>
-      <div class="case-row__text">
-        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
-        <div class="case-row__tags">свой проект · эксперимент</div>
-        <div class="case-row__title">Heavy CV with living interface</div>
-        <p class="case-row__desc">Экспериментальное портфолио, которым управляют руками через обычную вебкамеру. Страница собирает отражение посетителя из&nbsp;частиц, разделы открываются жестом, всё считается на&nbsp;устройстве, видео никуда не&nbsp;уходит. Макетов не&nbsp;было: дизайн рождался сразу в&nbsp;коде, который писал Claude Code.</p>
-        <p class="case-row__desc">Жесты я не&nbsp;придумывал заранее&nbsp;— проверял сайт на&nbsp;себе и&nbsp;на&nbsp;знакомых, отмечал, где он меня не&nbsp;понял, и&nbsp;переделывал. Так выяснилось, что взмах рукой читается дважды: туда и&nbsp;на&nbsp;возврате. Решение&nbsp;— у&nbsp;каждого направления свой жест: ладонь листает вперёд, палец возвращает назад. Курсор на&nbsp;главном экране я сначала убрал, но&nbsp;люди не&nbsp;из&nbsp;ИТ без&nbsp;него терялись&nbsp;— вернул. Застрявшему посетителю подсказку показывает призрачная рука: запись моего собственного жеста.</p>
-        <a class="case-row__link" href="https://dimbo-design.github.io/dimbo_heavy-cv/" target="_blank" rel="noopener noreferrer">dimbo-design.github.io/dimbo_heavy-cv</a>
-      </div>
-    </div>
-    <!-- склад -->
+  <div class="cases">
     <div class="case-row case-row--case">
       <div class="case-row__media" style="--ar-max:2.34;">
         <div class="case-row__line"><img src="assets/grid/sklad1.png" style="--ar:1.209;" alt=""><img src="assets/grid/sklad2.png" style="--ar:1.331;" alt=""></div>
@@ -2106,6 +2003,19 @@ body::before {
       </div>
     </div>
     <div class="case-row">
+      <div class="case-row__media case-row__media--single">
+        <div class="case-row__line"><video src="assets/grid/ai_nodari.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding · Landing</div>
+        <div class="case-row__tags">заказ · исследование · позиционирование</div>
+        <div class="case-row__title">Нодари Апполонов</div>
+        <p class="case-row__desc">Сайт специалиста по&nbsp;Яндекс Директу для&nbsp;производств. До&nbsp;первого макета&nbsp;— десять шагов исследования: аудитория, компании, поле конкурентов, анкеты и&nbsp;раунды вопросов, разбор старого сайта. Так сформировалась база из&nbsp;ответов, фактов и&nbsp;внутренних метрик.</p>
+        <p class="case-row__desc">Из&nbsp;«не&nbsp;знаю, что о&nbsp;себе рассказать» по&nbsp;кусочкам собрали позиционирование, а&nbsp;из&nbsp;него&nbsp;— структуру и&nbsp;страницу.</p>
+        <a class="case-row__link" href="https://directsolutions.ru/" target="_blank" rel="noopener noreferrer">directsolutions.ru</a>
+      </div>
+    </div>
+    <div class="case-row">
       <div class="case-row__media" style="--ar-max:2.44;">
         <div class="case-row__line"><img src="assets/grid/spendora01.png" style="--ar:2.018;" alt=""></div>
         <div class="case-row__line"><img src="assets/grid/fgm5.png" style="--ar:2.098;" alt=""></div>
@@ -2119,8 +2029,120 @@ body::before {
         <p class="case-row__desc">Я развёл показатели по&nbsp;важности, дал ключевым акцент, а&nbsp;нужной информации&nbsp;— свои места. Свободы строить новое не&nbsp;было, поэтому навигацию я пересобрал внутри привычных заказчику сценариев: пути остались знакомыми, но&nbsp;теперь ведут к&nbsp;тому, ради чего приложение задумано. По&nbsp;логике приложения предложил несколько доработок.</p>
       </div>
     </div>
+  </div>
+  </section>
 
-    <!-- настолки -->
+  <section class="section" data-screen-label="portfolio-code">
+    <div class="section__title">
+      <span class="key">Design in Code</span>
+      <span class="val">3 cases</span>
+    </div>
+  <div class="cases">
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.758;">
+        <div class="case-row__line"><video src="assets/grid/ai_p2p_audit.mp4" style="--ar:1.509;" autoplay muted loop playsinline></video><video src="assets/grid/ai_p2p_hand.mp4" style="--ar:1.758;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_p2p_release.mp4" style="--ar:1.524;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding · Open&nbsp;Source</div>
+        <div class="case-row__tags">свой проект · <span class="nowrap">p2p-версия</span> настольной игры</div>
+        <div class="case-row__title">Release любой ценой</div>
+        <p class="case-row__desc">Партия по&nbsp;сети в&nbsp;браузере, без&nbsp;сервера для&nbsp;игры. Нас двое с&nbsp;разработчиком: на&nbsp;нём движок и&nbsp;сеть, на&nbsp;мне всё, что видит игрок.</p>
+        <p class="case-row__desc">Интерфейс и&nbsp;отладка всех анимаций: движения карт собраны в&nbsp;словарь и&nbsp;вызываются по&nbsp;смыслу&nbsp;— сыграть карту, сложить пару, вернуть в&nbsp;колоду. Отказ в&nbsp;действии показывается вздрагиванием, и&nbsp;у&nbsp;каждого элемента оно своё.</p>
+        <a class="case-row__link" href="https://mythhand.github.io/ReleaseBoardGameP2P" target="_blank" rel="noopener noreferrer">mythhand.github.io/ReleaseBoardGameP2P</a>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.983;">
+        <div class="case-row__line"><video src="assets/grid/ai_lapka_video.mp4" style="--ar:1.742;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_lapka_player.jpg" style="--ar:1.983;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding · Open&nbsp;Source</div>
+        <div class="case-row__tags">свой проект · локальный <span class="nowrap">аниме-плеер</span></div>
+        <div class="case-row__title">Lapka</div>
+        <p class="case-row__desc">Отправная точка&nbsp;— не&nbsp;устройство плеера, а&nbsp;то, как смотрят аниме: франшизу целиком, в&nbsp;одной озвучке, с&nbsp;перерывами.</p>
+        <p class="case-row__desc">Отсюда решения. Все сезоны, фильмы и&nbsp;<span class="nowrap">спин-оффы</span> встают одной очередью в&nbsp;порядке выхода. Выбранная озвучка держится на&nbsp;весь сериал и&nbsp;переключается на&nbsp;ходу, как дорожка, хотя технически это чаще отдельный источник. Просмотр продолжается с&nbsp;того же места для&nbsp;каждой серии и&nbsp;озвучки, а&nbsp;мёртвый источник сам меняется на&nbsp;живой.</p>
+        <p class="case-row__desc">Мой первый опубликованный пакет в&nbsp;npm: Lapka запускается одной командой.</p>
+        <a class="case-row__link" href="https://github.com/MythHand/Lapka" target="_blank" rel="noopener noreferrer">github.com/MythHand/Lapka</a>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.956;">
+        <div class="case-row__line"><video src="assets/grid/ai_hcv_warehouse.mp4" style="--ar:1.739;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_hcv_debug.jpg" style="--ar:1.371;" alt=""><video src="assets/grid/ai_hcv_cursor.mp4" style="--ar:1.956;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_hcv_pashalka.mp4" style="--ar:1.736;" autoplay muted loop playsinline></video><img src="assets/grid/ai_hcv_regress.png" style="--ar:1.197;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · эксперимент</div>
+        <div class="case-row__title">Heavy CV with living interface</div>
+        <p class="case-row__desc">Экспериментальное портфолио, которым управляют руками через обычную вебкамеру. Страница собирает отражение посетителя из&nbsp;частиц, разделы открываются жестом, всё считается на&nbsp;устройстве, видео никуда не&nbsp;уходит. Макетов не&nbsp;было: дизайн рождался сразу в&nbsp;коде, который писал Claude Code.</p>
+        <p class="case-row__desc">Жесты я не&nbsp;придумывал заранее&nbsp;— проверял сайт на&nbsp;себе и&nbsp;на&nbsp;знакомых, отмечал, где он меня не&nbsp;понял, и&nbsp;переделывал. Так выяснилось, что взмах рукой читается дважды: туда и&nbsp;на&nbsp;возврате. Решение&nbsp;— у&nbsp;каждого направления свой жест: ладонь листает вперёд, палец возвращает назад. Курсор на&nbsp;главном экране я сначала убрал, но&nbsp;люди не&nbsp;из&nbsp;ИТ без&nbsp;него терялись&nbsp;— вернул. Застрявшему посетителю подсказку показывает призрачная рука: запись моего собственного жеста.</p>
+        <a class="case-row__link" href="https://dimbo-design.github.io/dimbo_heavy-cv/" target="_blank" rel="noopener noreferrer">dimbo-design.github.io/dimbo_heavy-cv</a>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section class="section" data-screen-label="portfolio-rpg">
+    <div class="section__title">
+      <span class="key">Tabletop RPG</span>
+      <span class="val">3 cases</span>
+    </div>
+  <div class="cases">
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.745;">
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_2.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_1.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video><video src="assets/grid/ai_mythlist_3.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><video src="assets/grid/ai_mythlist_4.mp4" style="--ar:1.745;" autoplay muted loop playsinline></video></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект</div>
+        <div class="case-row__title">Myth List</div>
+        <p class="case-row__desc">Интерактивные листы персонажа, внутри которых живёт вся книга правил Dungeon World: ходы, классы, снаряжение, состояния и&nbsp;все связи между ними. Игроку не&nbsp;нужно держать правила в&nbsp;голове&nbsp;— лист показывает только то, что доступно герою сейчас, бросок сам учитывает бафы, дебафы и&nbsp;снаряжение, новый уровень открывает выбор ходов.</p>
+        <p class="case-row__desc">Правила связаны между собой, и&nbsp;одна правка легко задевает соседние, поэтому систему держат тесты: при&nbsp;каждом изменении они сверяют механику и&nbsp;тексты с&nbsp;книгой, и&nbsp;перекос всплывает раньше, чем его заметит игрок.</p>
+        <a class="case-row__link" href="https://mythhand.space/mythlist/about" target="_blank" rel="noopener noreferrer">mythhand.space/mythlist</a>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.745;">
+        <div class="case-row__line"><video src="assets/grid/ai_dw_search.mp4" style="--ar:0.814;" autoplay muted loop playsinline></video><video src="assets/grid/ai_dw_search_en.mp4" style="--ar:0.838;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_dw_book.jpg" style="--ar:1.745;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Product Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · перевод</div>
+        <div class="case-row__title">Перевод книги правил Dungeon World&nbsp;1e</div>
+        <p class="case-row__desc">Перевёл книгу правил Dungeon World&nbsp;— правила, классы, заклинания, бестиарий, раздел мастера&nbsp;— и&nbsp;сверстал её <span class="nowrap">веб-версию</span>.</p>
+        <p class="case-row__desc">Книгу правил не&nbsp;читают подряд, в&nbsp;ней ищут посреди игры. Поэтому у&nbsp;каждой главы и&nbsp;раздела свой адрес, поиск идёт по&nbsp;всей книге, а&nbsp;рядом с&nbsp;правилом видно, как оно работает в&nbsp;листе персонажа Myth List. Два языка: перевод и&nbsp;оригинал. Термины держит канон перевода, дословность проверяют тесты&nbsp;— чтобы дварф не&nbsp;стал гномом на&nbsp;сотой странице.</p>
+        <a class="case-row__link" href="https://mythhand.space/dungeon-world" target="_blank" rel="noopener noreferrer">mythhand.space/dungeon-world</a>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-row__media" style="--ar-max:1.748;">
+        <div class="case-row__line"><video src="assets/grid/ai_radio_adaptive.mp4" style="--ar:1.748;" autoplay muted loop playsinline></video></div>
+        <div class="case-row__line"><img src="assets/grid/ai_radio_desktop.jpg" style="--ar:1.742;" alt=""><img src="assets/grid/ai_radio_phone.jpg" style="--ar:0.542;" alt=""></div>
+      </div>
+      <div class="case-row__text">
+        <div class="case-row__kind">Interaction Design · Vibe Coding</div>
+        <div class="case-row__tags">свой проект · бета</div>
+        <div class="case-row__title">Myth Radio</div>
+        <p class="case-row__desc">Атмосфера для&nbsp;настольных ролевых игр из&nbsp;двух дорожек: тема задаёт настроение, а&nbsp;амбиент место. Любая пара даёт свою сцену.</p>
+        <p class="case-row__desc">Адаптив построен на&nbsp;соотношении сторон экрана, а&nbsp;не&nbsp;на&nbsp;брейкпоинтах: кольца выбора стоят по&nbsp;бокам на&nbsp;широком экране, у&nbsp;углов на&nbsp;квадратном, сверху и&nbsp;снизу на&nbsp;телефоне, и&nbsp;в&nbsp;любом промежуточном состоянии страница остаётся собой. Две громкости сведены в&nbsp;один элемент: квадрат с&nbsp;точкой, по&nbsp;вертикали общая громкость, по&nbsp;горизонтали баланс дорожек.</p>
+        <a class="case-row__link" href="http://radio.mythhand.space/" target="_blank" rel="noopener noreferrer">radio.mythhand.space</a>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section class="section" data-screen-label="portfolio-board">
+    <div class="section__title">
+      <span class="key">Board Games</span>
+      <span class="val">2 cases</span>
+    </div>
+  <div class="cases">
     <div class="case-row">
       <div class="case-row__media" style="--ar-max:1.333;">
         <div class="case-row__line"><img src="assets/grid/med10.png" style="--ar:0.791;" alt=""><img src="assets/grid/med11.png" style="--ar:1.0;" alt=""><img src="assets/grid/med5.png" style="--ar:0.563;" alt=""></div>
@@ -2154,8 +2176,15 @@ body::before {
         <a class="case-row__link" href="https://mythhand.space/barman/about" target="_blank" rel="noopener noreferrer">mythhand.space/barman</a>
       </div>
     </div>
+  </div>
+  </section>
 
-    <!-- MythHand + Хабр -->
+  <section class="section" data-screen-label="portfolio-also">
+    <div class="section__title">
+      <span class="key">Also</span>
+      <span class="val">brand &amp; articles</span>
+    </div>
+  <div class="cases">
     <div class="cases__cards">
       <div class="tile--project">
         <img class="project__logo" src="assets/MythHand.svg" alt="MythHand">
