@@ -984,18 +984,19 @@ body::before {
   .section__previews { --pv-max: calc(180.32 * var(--u)); }
 }
 /* тач и узкий экран: ряд превью всегда виден под заголовком свёрнутой группы.
-   При раскрытии ряд схлопывается, а первый кейс встаёт на его место — та же длительность
-   и кривая, что у раскрытия в JS */
+   При раскрытии кадры уезжают вверх, ряд под ними схлопывается, первый кейс встаёт на его
+   место; при сворачивании кадры спускаются обратно. Та же длительность и кривая, что в JS */
 @media (hover: none), (pointer: coarse), (max-width: 730px) {
   .section--group > .section__title { flex-wrap: wrap; }
   .section__previews {
+    --pv-h: min(var(--pv-max), var(--pv-fit, var(--pv-max)));
     display: flex;
     order: 2;
     flex-basis: 100%;
     /* иначе ширина ряда = сумма кадров, он распирает строку и JS не может его ужать */
     min-width: 0;
     gap: calc(12 * var(--u));
-    height: min(var(--pv-max), var(--pv-fit, var(--pv-max)));
+    height: var(--pv-h);
     margin-top: calc(16 * var(--u));
     /* справа тот же отступ, что слева у текста */
     padding-right: clamp(22px, calc(11.98px + 3.13vw), calc(44 * var(--u)));
@@ -1010,15 +1011,18 @@ body::before {
     margin-top: 0;
     opacity: 0;
   }
+  /* кадр держит свой размер: уезжает целиком, а не сжимается вместе с рядом */
   .section__previews > img,
   .section__previews > video {
     display: block;
     flex: none;
-    height: 100%;
+    height: var(--pv-h);
     width: auto;
     aspect-ratio: var(--ar);
     object-fit: cover;
+    transition: transform 600ms cubic-bezier(0.65, 0, 0.35, 1);
   }
+  .section--group:not(.is-closed):not(.is-closing) .section__previews > * { transform: translateY(-100%); }
 }
 /* на ≤730 отступ слева меньше шеврона — он уходит в конец строки, как у секций склада */
 @media (max-width: 730px) {
