@@ -951,6 +951,9 @@ body::before {
     bottom: calc(-22 * var(--u));
   }
   .section__previews {
+    /* полная высота: 128.8 до 1200, плавно до 180.32 к 1728, дальше растёт с --u.
+       --pv-fit ставит JS: высота, при которой ряд влезает между заголовком и правым краем */
+    --pv-max: clamp(128.8px, calc(11.71px + 9.758vw), 180.32px);
     display: flex;
     gap: calc(12 * var(--u));
     position: absolute;
@@ -969,11 +972,14 @@ body::before {
   .section__previews > img,
   .section__previews > video {
     display: block;
-    height: calc(128.8 * var(--u));
+    height: min(var(--pv-max), var(--pv-fit, var(--pv-max)));
     width: auto;
     aspect-ratio: var(--ar);
     object-fit: cover;
   }
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 1729px) {
+  .section__previews { --pv-max: calc(180.32 * var(--u)); }
 }
 /* на ≤730 отступ слева меньше шеврона — он уходит в конец строки, как у секций склада */
 @media (max-width: 730px) {
@@ -2707,6 +2713,18 @@ body::before {
       previews.appendChild(el);
     });
     title.appendChild(previews);
+    // ряд не заходит на заголовок: зазор до «N cases» не меньше левого отступа текста
+    function fitPreviews() {
+      var val = title.querySelector('.val');
+      var sumAr = 0;
+      [].forEach.call(previews.children, function (el) { sumAr += parseFloat(el.style.getPropertyValue('--ar')) || 0; });
+      var gaps = (parseFloat(getComputedStyle(previews).columnGap) || 0) * (previews.children.length - 1);
+      var room = previews.offsetLeft + previews.offsetWidth - (val.offsetLeft + val.offsetWidth) - parseFloat(getComputedStyle(title).paddingLeft) - gaps;
+      if (sumAr) previews.style.setProperty('--pv-fit', Math.max(0, room / sumAr) + 'px');
+    }
+    fitPreviews();
+    window.addEventListener('resize', fitPreviews);
+    if (document.fonts) document.fonts.ready.then(fitPreviews);
     var videos = previews.querySelectorAll('video');
     title.addEventListener('mouseenter', function () {
       if (group.classList.contains('is-closed')) videos.forEach(function (v) { v.play().catch(function () {}); });
