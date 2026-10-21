@@ -14,8 +14,9 @@ Old-school static site — pure HTML/CSS + minimal vanilla JS. No frameworks, no
 
 Page covers:
 - Hero with positioning
-- Portfolio as case rows: media on the left, text on the right, the shorter column sticks to the longer one
-- 11 cases: AI-built products (Myth List, Dungeon World rulebook, Myth Radio, Release at any cost web, Lapka, Nodari Appolonov, Heavy CV), warehouse case KazanExpress × Uzum, Spendora, two board games
+- Portfolio in four collapsible groups, 11 cases: Teams & Clients (warehouse case KazanExpress × Uzum, Nodari Appolonov, Spendora), Experiments (Lapka, Heavy CV), Tabletop RPG (Myth List, Dungeon World rulebook, Myth Radio), Board Games (Release at any cost in print and on the web, one more board game)
+- A collapsed group shows previews of its cases: on hover with a mouse, always on touch screens
+- Case rows: media on the left, text on the right, the shorter column sticks to the longer one
 - MythHand and Habr articles cards
 - Experience timeline (10+ years)
 - Contacts with copy-to-clipboard email and PDF download
@@ -23,7 +24,7 @@ Page covers:
 ## Stack
 
 - **HTML5 / CSS** — all styles in single `<style>` block inside `index.html`
-- **Vanilla JS** — clipboard copy, right header that compacts on scroll, case media slider with a fullscreen gallery (rotate for wide frames on phones), warehouse case accordion
+- **Vanilla JS** — clipboard copy, right header that compacts on scroll, collapsible case groups with previews, case media slider with a fullscreen gallery (rotate for wide frames on phones), warehouse case accordion
 - **Font**: Fixel Display (OTF, weights 400–700)
 - **No build, no dependencies**
 - **Hosted on GitHub Pages**
