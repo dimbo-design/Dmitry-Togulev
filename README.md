@@ -14,7 +14,7 @@ Old-school static site — pure HTML/CSS + minimal vanilla JS. No frameworks, no
 
 Page covers:
 - Hero with positioning
-- Portfolio in four collapsible groups, 11 cases: Teams & Clients (warehouse case KazanExpress × Uzum, Nodari Appolonov, Spendora), Experiments (Lapka, Heavy CV), Tabletop RPG (Myth List, Dungeon World rulebook, Myth Radio), Board Games (Release at any cost in print and on the web, one more board game)
+- Portfolio in four collapsible groups, 12 cases: Teams & Clients (warehouse case KazanExpress × Uzum, Nodari Appolonov, Spendora), Experiments (Lapka, Heavy CV), Tabletop RPG (Myth List, Dungeon World rulebook, DnD Spellbook Offline, Myth Radio), Board Games (Release at any cost in print and on the web, one more board game)
 - A collapsed group shows previews of its cases: on hover with a mouse, always on touch screens
 - Case rows: media on the left, text on the right, the shorter column sticks to the longer one
 - MythHand and Habr articles cards
